@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'pt.amane'
+group = 'pt.amane.application'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
@@ -10,6 +10,12 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":domain"))
+
+    implementation('io.vavr:vavr:0.10.6')
+
+    testImplementation('org.mockito:mockito-junit-jupiter:5.16.0')
+    
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
