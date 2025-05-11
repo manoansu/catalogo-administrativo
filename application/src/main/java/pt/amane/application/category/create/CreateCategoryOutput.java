@@ -7,6 +7,7 @@ public record CreateCategoryOutput(
     CategoryID id
 ) {
 
+  //Factory method
   public static CreateCategoryOutput from(final CategoryID anId) {
     return new CreateCategoryOutput(anId);
   }
