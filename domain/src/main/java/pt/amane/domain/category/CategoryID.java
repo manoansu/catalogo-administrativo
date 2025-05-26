@@ -3,6 +3,7 @@ package pt.amane.domain.category;
 import java.util.Objects;
 import java.util.UUID;
 import pt.amane.Identifier;
+import pt.amane.domain.validation.ObjectsValidator;
 
 /**
  * Class CategoryID generate Id from classes.
@@ -11,9 +12,8 @@ public class CategoryID extends Identifier {
 
   private final String value;
 
-  public CategoryID(final String value) {
-    Objects.requireNonNull(value);
-    this.value = value;
+  public CategoryID(final String categoryID) {
+    this.value = ObjectsValidator.objectValidation(categoryID);
   }
 
   /**

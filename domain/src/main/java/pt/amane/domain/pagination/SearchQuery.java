@@ -5,7 +5,7 @@ public record SearchQuery(
     int perPage,
     String terms,
     String sort,
-    String duration
+    String direction
 ) {
 
 }

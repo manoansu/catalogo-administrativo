@@ -1,0 +1,80 @@
+#amqp:
+#  admin:
+#    auto-create: false
+#  queues:
+#    video-created:
+#      exchange: video.events
+#      routing-key: video.created
+#      queue: video.created.queue
+#    video-encoded:
+#      exchange: video.events
+#      routing-key: video.encoded
+#      queue: video.encoded.queue
+#
+#google:
+#  cloud:
+#    credentials: ${GOOGLE_CLOUD_CREDENTIALS}
+#    project-id: ${GOOGLE_CLOUD_PROJECT}
+#    storage:
+#      catalogo-videos:
+#        bucket: fc3_videos
+#        connect-timeout: 250
+#        read-timeout: 5000
+#        retry-delay: 50
+#        retry-max-delay: 50
+#        retry-max-attempts: 2
+#        retry-multiplier: 1.0
+
+logging:
+  level:
+    ROOT: INFO
+#    pt.amane: DEBUG
+
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true #Whether response compression is enabled.
+    mime-types: text/html, text/xml,text/plain,text/css,text/javascript,application/javascript,application/json # Comma-separeted list of MIME types that should be compressed.
+    min-response-size: 1024 # Minimum "Content-Length" value that is required for comprression to be performed.
+  undertow:
+    threads:
+      worker: 64 # Generally this should be reasonably high, at lest 10 per CPU core:
+      io: 4 # One IO thread per CPU ia a resonable default
+
+spring:
+  datasource:
+    url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
+    username: ${mysql.username}
+    password: ${mysql.password}
+    hikari: #Responsavel por configurar o pool de conexao.
+      auto-commit: false # sendo false o spring jpa que vei gerenciar o auto-commit.
+      connection-timeout: 250 # É uma configuração em milliseconds. O ideal é manter baixo para que a esture timeout logo e não prenda as threads.
+      max-lifetime: 600000 # Tempo máximo que uma conexão pode ficar aberta (10 min) - security.
+      maximum-pool-size: 20 # Mantemos até no máx 20 conexões com o banco de dados. O ideal é baixo mesmo, pois é algo custoso para o banco gerenciar https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+      minimum-idle: 10
+      pool-name: master
+#  flyway:
+#    baseline-description: true
+#    baseline-on-migrate: true
+#    create-schemas: true
+#    default-schema: public
+#    enabled: true
+#    locations: classpath:db/migration
+#    validate-on-migrate: true
+
+  jpa:
+    open-in-view: false # abrir uma conexao ou segurar uma conexao é muito custoso no controller, é por isso que sempre fica false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+#      "[hibernate.dialect]": org.hibernate.dialect.MySQLDialect
+      "[hibernate.generate_statistics]": true # printa a estatistica do hibernate, é importante no troubleshooting..
+      "[hibernate.connection.provider_disables_autocommit]": true
+      # Para aumentar a performance ao máximo, desabilitamos o auto-commit e o open-in-view.
+      # Link abaixo explica a configuração de hibernate..
+      # https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
+
+
