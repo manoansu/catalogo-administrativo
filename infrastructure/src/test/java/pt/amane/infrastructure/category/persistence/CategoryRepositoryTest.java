@@ -9,7 +9,7 @@ import pt.amane.MySQLGatewayTest;
 import pt.amane.domain.category.Category;
 
 @MySQLGatewayTest
-public class CategoryRepositoryTest {
+class CategoryRepositoryTest {
 
   @Autowired
   private CategoryRepository categoryRepository;

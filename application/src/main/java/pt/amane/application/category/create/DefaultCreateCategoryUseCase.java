@@ -26,7 +26,7 @@ public non-sealed class DefaultCreateCategoryUseCase extends CreateCategoryUseCa
     final var aCategory = Category.newCategory(aName, aDescription, isActive);
     aCategory.validate(notification);
 
-    return notification.hasError() ? API.Left(notification) : create(aCategory);
+    return notification.hasErrors() ? API.Left(notification) : create(aCategory);
   }
 
   private Either<Notification, CreateCategoryOutput> create(final Category aCategory) {

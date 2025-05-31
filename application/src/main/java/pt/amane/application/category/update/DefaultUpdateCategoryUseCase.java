@@ -35,7 +35,7 @@ public non-sealed class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCa
         .validate(notification);
 
 
-    return notification.hasError() ? API.Left(notification) : update(aCategory);
+    return notification.hasErrors() ? API.Left(notification) : update(aCategory);
   }
 
   private Either<Notification, UpdateCategoryOutput> update(final Category aCategory) {

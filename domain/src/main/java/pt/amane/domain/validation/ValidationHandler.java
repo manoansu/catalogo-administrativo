@@ -16,7 +16,7 @@ public interface ValidationHandler {
    * verify if list hass error or not.
    * @return
    */
-  default boolean hasError() {
+  default boolean hasErrors() {
     return getErrors() != null && !getErrors().isEmpty();
   }
 
