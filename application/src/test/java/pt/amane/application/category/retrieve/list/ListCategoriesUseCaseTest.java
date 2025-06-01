@@ -18,7 +18,7 @@ import pt.amane.domain.pagination.SearchQuery;
 class ListCategoriesUseCaseTest extends UseCaseTest {
 
   @InjectMocks
-  private DefaultListCategoriesUseCase useCase;
+  private ListCategoriesUseCaseImpl useCase;
 
   @Mock
   private CategoryGateway categoryGateway;

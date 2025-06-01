@@ -4,11 +4,11 @@ import java.util.Objects;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 
-public non-sealed class DefaultDeleteCategoryUseCase extends DeleteCategoryUseCase {
+public non-sealed class DeleteCategoryUseCaseImpl extends DeleteCategoryUseCase {
 
   private final CategoryGateway categoryGateway;
 
-  public DefaultDeleteCategoryUseCase(final CategoryGateway categoryGateway) {
+  public DeleteCategoryUseCaseImpl(final CategoryGateway categoryGateway) {
     this.categoryGateway = Objects.requireNonNull(categoryGateway);
   }
 

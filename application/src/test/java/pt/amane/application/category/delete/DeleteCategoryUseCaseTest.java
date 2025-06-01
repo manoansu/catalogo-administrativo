@@ -14,7 +14,7 @@ import pt.amane.domain.category.CategoryID;
 class DeleteCategoryUseCaseTest extends UseCaseTest {
 
   @InjectMocks
-  private DefaultDeleteCategoryUseCase useCase;
+  private DeleteCategoryUseCaseImpl useCase;
 
   @Mock
   private CategoryGateway categoryGateway;

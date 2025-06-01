@@ -8,6 +8,6 @@ import pt.amane.UnitUseCase;
  */
 public sealed abstract class DeleteCategoryUseCase
     extends UnitUseCase<String>
-    permits DefaultDeleteCategoryUseCase {
+    permits DeleteCategoryUseCaseImpl {
 
 }

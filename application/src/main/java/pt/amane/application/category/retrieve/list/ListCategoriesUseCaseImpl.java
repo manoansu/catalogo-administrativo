@@ -5,11 +5,11 @@ import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.pagination.SearchQuery;
 
-public non-sealed class DefaultListCategoriesUseCase extends ListCategoriesUseCase{
+public non-sealed class ListCategoriesUseCaseImpl extends ListCategoriesUseCase{
 
   private final CategoryGateway categoryGateway;
 
-  public DefaultListCategoriesUseCase(CategoryGateway categoryGateway) {
+  public ListCategoriesUseCaseImpl(CategoryGateway categoryGateway) {
     this.categoryGateway = Objects.requireNonNull(categoryGateway);
   }
 

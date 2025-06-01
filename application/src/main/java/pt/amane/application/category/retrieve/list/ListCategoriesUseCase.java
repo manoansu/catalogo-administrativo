@@ -10,6 +10,6 @@ import pt.amane.domain.pagination.SearchQuery;
  */
 public sealed abstract class ListCategoriesUseCase
     extends UseCase<SearchQuery, Pagination<CategoryListOutput>>
-    permits DefaultListCategoriesUseCase {
+    permits ListCategoriesUseCaseImpl {
 
 }

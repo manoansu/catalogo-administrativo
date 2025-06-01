@@ -7,11 +7,11 @@ import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.NotFoundException;
 
-public non-sealed class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase{
+public non-sealed class GetCategoryByIdUseCaseImpl extends GetCategoryByIdUseCase{
 
   private final CategoryGateway categoryGateway;
 
-  public DefaultGetCategoryByIdUseCase(CategoryGateway categoryGateway) {
+  public GetCategoryByIdUseCaseImpl(CategoryGateway categoryGateway) {
     this.categoryGateway = Objects.requireNonNull(categoryGateway);
   }
 

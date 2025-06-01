@@ -28,7 +28,7 @@ import pt.amane.domain.exception.NotFoundException;
 class UpdateCategoryUseCaseTest extends UseCaseTest {
 
   @InjectMocks
-  private DefaultUpdateCategoryUseCase useCase;
+  private UpdateCategoryUseCaseImpl useCase;
 
   @Mock
   private CategoryGateway categoryGateway;

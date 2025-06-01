@@ -8,6 +8,6 @@ import pt.amane.UseCase;
  */
 public sealed abstract class GetCategoryByIdUseCase
     extends UseCase<String, CategoryOutput>
-    permits DefaultGetCategoryByIdUseCase {
+    permits GetCategoryByIdUseCaseImpl {
 
 }

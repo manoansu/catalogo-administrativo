@@ -10,6 +10,6 @@ import pt.amane.domain.validation.handler.Notification;
  */
 public sealed abstract class CreateCategoryUseCase
     extends UseCase<CreateCategoryCommand, Either<Notification, CreateCategoryOutput>>
-    permits DefaultCreateCategoryUseCase {
+    permits CreateCategoryUseCaseImpl {
 
 }

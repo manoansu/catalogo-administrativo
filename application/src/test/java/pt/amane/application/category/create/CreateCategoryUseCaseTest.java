@@ -19,7 +19,7 @@ import pt.amane.domain.category.CategoryGateway;
 class CreateCategoryUseCaseTest extends UseCaseTest {
 
   @InjectMocks
-  private DefaultCreateCategoryUseCase useCase;
+  private CreateCategoryUseCaseImpl useCase;
 
   @Mock
   private CategoryGateway categoryGateway;
