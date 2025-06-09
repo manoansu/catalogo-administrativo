@@ -1,16 +1,16 @@
-#amqp:
-#  admin:
-#    auto-create: false
-#  queues:
-#    video-created:
-#      exchange: video.events
-#      routing-key: video.created
-#      queue: video.created.queue
-#    video-encoded:
-#      exchange: video.events
-#      routing-key: video.encoded
-#      queue: video.encoded.queue
-#
+amqp:
+  admin:
+    auto-create: false
+  queues:
+    video-created:
+      exchange: video.events
+      routing-key: video.createdAt
+      queue: video.createdAt.queue
+    video-encoded:
+      exchange: video.events
+      routing-key: video.encoded
+      queue: video.encoded.queue
+
 #google:
 #  cloud:
 #    credentials: ${GOOGLE_CLOUD_CREDENTIALS}
@@ -31,7 +31,7 @@ logging:
 #    pt.amane: DEBUG
 
 server:
-  port: 8081
+  port: 8083
   servlet:
     context-path: /api
   compression:
@@ -55,14 +55,14 @@ spring:
       maximum-pool-size: 20 # Mantemos até no máx 20 conexões com o banco de dados. O ideal é baixo mesmo, pois é algo custoso para o banco gerenciar https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
       minimum-idle: 10
       pool-name: master
-#  flyway:
-#    baseline-description: true
-#    baseline-on-migrate: true
-#    create-schemas: true
-#    default-schema: public
-#    enabled: true
-#    locations: classpath:db/migration
-#    validate-on-migrate: true
+  flyway:
+    baseline-description: true
+    baseline-on-migrate: true
+    create-schemas: true
+    default-schema: public
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
 
   jpa:
     open-in-view: false # abrir uma conexao ou segurar uma conexao é muito custoso no controller, é por isso que sempre fica false

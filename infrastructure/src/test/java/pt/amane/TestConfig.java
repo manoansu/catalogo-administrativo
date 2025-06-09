@@ -3,7 +3,7 @@ package pt.amane;
 import java.util.Objects;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import pt.amane.infrastructure.CategoryMySQLGateway;
+import pt.amane.infrastructure.category.CategoryMySQLGateway;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 
 @TestConfiguration

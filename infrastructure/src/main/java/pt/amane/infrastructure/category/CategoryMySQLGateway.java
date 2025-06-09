@@ -1,4 +1,4 @@
-package pt.amane.infrastructure;
+package pt.amane.infrastructure.category;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
@@ -17,6 +18,7 @@ import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.utils.SpecificationUtils;
 
+@Component
 public class CategoryMySQLGateway implements CategoryGateway {
 
   private final CategoryRepository categoryRepository;

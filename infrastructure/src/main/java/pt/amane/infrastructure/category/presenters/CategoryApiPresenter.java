@@ -1,6 +1,7 @@
 package pt.amane.infrastructure.category.presenters;
 
 import pt.amane.application.category.retrieve.get.CategoryOutput;
+import pt.amane.application.category.retrieve.list.CategoryListOutput;
 import pt.amane.infrastructure.category.model.CategoryListResponse;
 import pt.amane.infrastructure.category.model.CategoryResponse;
 
@@ -18,14 +19,14 @@ public interface CategoryApiPresenter {
     );
   }
 
-  static CategoryListResponse present(final CategoryListResponse listResponse) {
+  static CategoryListResponse present(final CategoryListOutput categoryListOutput) {
     return new CategoryListResponse(
-        listResponse.id(),
-        listResponse.name(),
-        listResponse.description(),
-        listResponse.active(),
-        listResponse.createdAt(),
-        listResponse.deletedAt()
+        categoryListOutput.id().getValue(),
+        categoryListOutput.name(),
+        categoryListOutput.description(),
+        categoryListOutput.isActive(),
+        categoryListOutput.createdAt(),
+        categoryListOutput.deletedAt()
     );
   }
 

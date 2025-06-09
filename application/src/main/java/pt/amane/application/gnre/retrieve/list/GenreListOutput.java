@@ -10,8 +10,8 @@ public record GenreListOutput(
     String name,
     boolean isActive,
     List<String> categories,
-    Instant created,
-    Instant deleted
+    Instant createdAt,
+    Instant deletedAt
 ) {
 
   public static GenreListOutput from(final Genre aGenre) {

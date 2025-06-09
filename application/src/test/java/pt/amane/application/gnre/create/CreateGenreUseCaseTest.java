@@ -1,4 +1,4 @@
-package pt.amane.application.gnre;
+package pt.amane.application.gnre.create;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import pt.amane.application.UseCaseTest;
-import pt.amane.application.gnre.create.CreateGenreCommand;
-import pt.amane.application.gnre.create.CreateGenreUseCaseImpl;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.NotificationException;

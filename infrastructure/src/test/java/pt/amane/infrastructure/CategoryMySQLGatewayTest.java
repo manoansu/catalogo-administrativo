@@ -1,22 +1,18 @@
 package pt.amane.infrastructure;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import pt.amane.MySQLGatewayTest;
+import pt.amane.TestConfig;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.pagination.SearchQuery;
-import pt.amane.MySQLGatewayTest;
-import pt.amane.TestConfig;
-import pt.amane.infrastructure.category.persistence.CategoryRepository;
+import pt.amane.infrastructure.category.CategoryMySQLGateway;
 import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
+import pt.amane.infrastructure.category.persistence.CategoryRepository;
 
 @MySQLGatewayTest
 @Import(TestConfig.class)
