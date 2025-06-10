@@ -10,14 +10,14 @@ public class CastmemberValidator extends Validator {
   private static final int NAME_MAX_LENGTH = 255;
   private static final int NAME_MIN_LENGTH = 3;
 
-  private final Castmember castmember;
+  private final CastMember castmember;
 
   protected CastmemberValidator(
-      final Castmember castmember,
+      final CastMember castmember,
       final ValidationHandler handler
   ) {
     super(handler);
-    this.castmember = (Castmember) ObjectsValidator.objectValidation(castmember);
+    this.castmember = (CastMember) ObjectsValidator.objectValidation(castmember);
   }
 
   @Override

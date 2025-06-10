@@ -7,14 +7,14 @@ import pt.amane.domain.utils.InstantUtils;
 import pt.amane.domain.validation.ValidationHandler;
 import pt.amane.domain.validation.handler.Notification;
 
-public class Castmember extends AggregateRoot<CastmemberID> {
+public class CastMember extends AggregateRoot<CastmemberID> {
 
   private String name;
   private CastMemberType type;
   private Instant createdAt;
   private Instant updatedAt;
 
-  protected Castmember(
+  protected CastMember(
       final CastmemberID castmemberID,
       final String name,
       final CastMemberType type,
@@ -29,23 +29,23 @@ public class Castmember extends AggregateRoot<CastmemberID> {
     selfValidate();
   }
 
-  public static Castmember newCastmember(final String name, final CastMemberType type) {
+  public static CastMember newCastmember(final String name, final CastMemberType type) {
     final var now = InstantUtils.now();
-    return new Castmember(CastmemberID.unique(), name, type, now, now);
+    return new CastMember(CastmemberID.unique(), name, type, now, now);
   }
 
-  public static Castmember with(
+  public static CastMember with(
       final CastmemberID castmemberID,
       final String name,
       final CastMemberType type,
       final Instant createdAt,
       final Instant updatedAt) {
-    return new Castmember(castmemberID, name, type, createdAt, updatedAt);
+    return new CastMember(castmemberID, name, type, createdAt, updatedAt);
 
   }
 
-  public static Castmember with(Castmember castmember) {
-    return new Castmember(
+  public static CastMember with(CastMember castmember) {
+    return new CastMember(
         castmember.getId(),
         castmember.getName(),
         castmember.getType(),
@@ -53,7 +53,7 @@ public class Castmember extends AggregateRoot<CastmemberID> {
         castmember.getUpdatedAt());
   }
 
-  public Castmember update(final String name, final CastMemberType type) {
+  public CastMember update(final String name, final CastMemberType type) {
     this.name = name;
     this.type = type;
     this.updatedAt = Instant.now();

@@ -7,15 +7,15 @@ import pt.amane.domain.pagination.SearchQuery;
 
 public interface CastMemberGateway {
 
-  Castmember create(Castmember castmember);
+  CastMember create(CastMember castmember);
 
-  Castmember update(Castmember castmember);
+  CastMember update(CastMember castmember);
 
-  void delete(CastmemberID castmemberID);
+  void deleteById(CastmemberID castmemberID);
 
-  Optional<Castmember> findById(CastmemberID castmemberID);
+  Optional<CastMember> findById(CastmemberID castmemberID);
 
-  Pagination<Castmember> findAll(SearchQuery query);
+  Pagination<CastMember> findAll(SearchQuery query);
 
   List<CastmemberID> existsByIds(Iterable<CastmemberID> castmemberID);
 

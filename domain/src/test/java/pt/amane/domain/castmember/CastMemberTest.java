@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import pt.amane.domain.category.UnitTest;
 import pt.amane.domain.exception.NotificationException;
 
-class CastmemberTest extends UnitTest {
+class CastMemberTest extends UnitTest {
 
 
   @Test
@@ -13,7 +13,7 @@ class CastmemberTest extends UnitTest {
     final var expectedName = "Vin Diesel";
     final var expectedType = CastMemberType.ACTOR;
 
-    final var actualCastmember = Castmember.newCastmember(expectedName, expectedType);
+    final var actualCastmember = CastMember.newCastmember(expectedName, expectedType);
 
     Assertions.assertNotNull(actualCastmember);
     Assertions.assertNotNull(actualCastmember.getId());
@@ -32,7 +32,7 @@ class CastmemberTest extends UnitTest {
     final var expectedType = CastMemberType.ACTOR;
 
     final var notification = Assertions.assertThrows(NotificationException.class,
-        () -> Castmember.newCastmember(expectedName, expectedType));
+        () -> CastMember.newCastmember(expectedName, expectedType));
 
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
@@ -48,7 +48,7 @@ class CastmemberTest extends UnitTest {
     final var expectedType = CastMemberType.ACTOR;
 
     final var notification = Assertions.assertThrows(NotificationException.class,
-        () -> Castmember.newCastmember(expectedName, expectedType));
+        () -> CastMember.newCastmember(expectedName, expectedType));
 
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
@@ -68,7 +68,7 @@ class CastmemberTest extends UnitTest {
     final var expectedType = CastMemberType.ACTOR;
 
     final var notification = Assertions.assertThrows(NotificationException.class,
-        () -> Castmember.newCastmember(expectedName, expectedType));
+        () -> CastMember.newCastmember(expectedName, expectedType));
 
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
@@ -83,7 +83,7 @@ class CastmemberTest extends UnitTest {
     final var expectedType = CastMemberType.ACTOR;
 
     final var notification = Assertions.assertThrows(NotificationException.class,
-        () -> Castmember.newCastmember(expectedName, expectedType));
+        () -> CastMember.newCastmember(expectedName, expectedType));
 
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
@@ -98,7 +98,7 @@ class CastmemberTest extends UnitTest {
     final CastMemberType expectedType = null;
 
     final var notification = Assertions.assertThrows(NotificationException.class,
-        () -> Castmember.newCastmember(expectedName, expectedType));
+        () -> CastMember.newCastmember(expectedName, expectedType));
 
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
@@ -111,7 +111,7 @@ class CastmemberTest extends UnitTest {
     final var expectedName = "Vin Diesel";
     final var expectedType = CastMemberType.ACTOR;
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -137,7 +137,7 @@ class CastmemberTest extends UnitTest {
     final var expectedErrorCount = 1;
     final String expectedErrorMessage = "'name' should not be null";
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -157,7 +157,7 @@ class CastmemberTest extends UnitTest {
     final var expectedErrorCount = 1;
     final String expectedErrorMessage = "'name' should not be empty";
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -182,7 +182,7 @@ class CastmemberTest extends UnitTest {
     final var expectedErrorCount = 1;
     final String expectedErrorMessage = "'name' must be between 3 and 255 characters";
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -202,7 +202,7 @@ class CastmemberTest extends UnitTest {
     final var expectedErrorCount = 1;
     final String expectedErrorMessage = "'name' must be between 3 and 255 characters";
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -222,7 +222,7 @@ class CastmemberTest extends UnitTest {
     final var expectedErrorCount = 1;
     final String expectedErrorMessage = "'type' should not be null";
 
-    final var aCastMember = Castmember.newCastmember("Vin", CastMemberType.DIRECTOR);
+    final var aCastMember = CastMember.newCastmember("Vin", CastMemberType.DIRECTOR);
 
     Assertions.assertNotNull(aCastMember);
     Assertions.assertNotNull(aCastMember.getId());
@@ -233,7 +233,7 @@ class CastmemberTest extends UnitTest {
     Assertions.assertNotNull(notification);
     Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
     Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
-  
+
   }
 
 
