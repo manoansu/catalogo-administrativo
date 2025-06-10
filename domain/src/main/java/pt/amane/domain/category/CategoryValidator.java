@@ -34,7 +34,6 @@ public class CategoryValidator extends Validator {
     final var length = name.trim().length();
     if (length > 255 || length < 3) {
       this.validationHandler().append(new Error("'name' must be between 3 and 255 characters"));
-      return;
     }
   }
 }
