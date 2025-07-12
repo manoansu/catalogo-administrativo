@@ -19,11 +19,11 @@ import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.utils.SpecificationUtils;
 
 @Component
-public class CategoryMySQLGateway implements CategoryGateway {
+public class CategoryGatewayImpl implements CategoryGateway {
 
   private final CategoryRepository categoryRepository;
 
-  public CategoryMySQLGateway(final CategoryRepository categoryRepository) {
+  public CategoryGatewayImpl(final CategoryRepository categoryRepository) {
     this.categoryRepository = (CategoryRepository) ObjectsValidator.objectValidation(categoryRepository);
   }
 

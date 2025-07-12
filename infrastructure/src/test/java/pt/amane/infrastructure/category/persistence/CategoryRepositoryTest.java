@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import pt.amane.MySQLGatewayTest;
+import pt.amane.GatewayTest;
 import pt.amane.domain.category.Category;
 
-@MySQLGatewayTest
+@GatewayTest
 class CategoryRepositoryTest {
 
   @Autowired

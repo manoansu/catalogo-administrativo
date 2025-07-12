@@ -21,11 +21,11 @@ import pt.amane.infrastructure.utils.SpecificationUtils;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Component
-public class GenreMySQLGateway implements GenreGateway {
+public class GenreGatewayImpl implements GenreGateway {
 
     private final GenreRepository genreRepository;
 
-    public GenreMySQLGateway(final GenreRepository genreRepository) {
+    public GenreGatewayImpl(final GenreRepository genreRepository) {
         this.genreRepository = Objects.requireNonNull(genreRepository);
     }
 

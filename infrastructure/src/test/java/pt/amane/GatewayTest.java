@@ -20,12 +20,12 @@ import org.springframework.test.context.ActiveProfiles;
     basePackages = "pt.amane",
     useDefaultFilters = false,
     includeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*Gateway")
     }
 )
 @DataJpaTest
-@ExtendWith(MySQLCleanUpExtension.class)
+@ExtendWith(CleanUpExtension.class)
 @Tag("integrationTest")
-public @interface MySQLGatewayTest {
+public @interface GatewayTest {
 
 }

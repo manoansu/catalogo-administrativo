@@ -1,28 +1,34 @@
-package pt.amane.infrastructure;
+package pt.amane.infrastructure.category;
 
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import pt.amane.MySQLGatewayTest;
+import pt.amane.GatewayTest;
 import pt.amane.TestConfig;
 import pt.amane.domain.category.Category;
+import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.pagination.SearchQuery;
-import pt.amane.infrastructure.category.CategoryMySQLGateway;
 import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 
-@MySQLGatewayTest
+@GatewayTest
 @Import(TestConfig.class)
-class CategoryMySQLGatewayTest {
+class CategoryGatewayTest {
 
   @Autowired
-  private CategoryMySQLGateway categoryGateway;
+  private CategoryGateway categoryGateway;
 
   @Autowired
   private CategoryRepository categoryRepository;
+
+  @Test
+  void testDependencies() {
+    Assertions.assertNotNull(categoryGateway);
+    Assertions.assertNotNull(categoryRepository);
+  }
 
   @Test
   void givenAValidCategory_whenCallsCreate_shouldReturnANewCategory() {
@@ -31,7 +37,6 @@ class CategoryMySQLGatewayTest {
     final var expectedActive = true;
 
     final var aCategory = Category.newCategory(expectedName, expectedDescription, expectedActive);
-
 
     Assertions.assertEquals(0, categoryRepository.count());
 
