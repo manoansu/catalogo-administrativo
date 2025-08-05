@@ -1,7 +1,7 @@
 package pt.amane.application.castmember.update;
 
 import pt.amane.domain.castmember.CastMember;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 
 public record UpdateCastMemberOutput(
     String id
@@ -12,7 +12,7 @@ public record UpdateCastMemberOutput(
         castMember.getId().getValue());
   }
 
-  public static UpdateCastMemberOutput from(final CastmemberID castmemberID) {
+  public static UpdateCastMemberOutput from(final CastMemberID castmemberID) {
     return new UpdateCastMemberOutput(castmemberID.getValue());
   }
 }

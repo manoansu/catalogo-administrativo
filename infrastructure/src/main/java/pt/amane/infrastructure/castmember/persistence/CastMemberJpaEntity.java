@@ -9,10 +9,10 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberType;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 
 @Entity(name = "CastMember")
-@Table(name = "cast_members")
+@Table(name = "cast_members", schema = "adm_videos")
 public class CastMemberJpaEntity {
 
   @Id
@@ -69,7 +69,7 @@ public class CastMemberJpaEntity {
    */
   public CastMember toAggregate() {
     return CastMember.with(
-        CastmemberID.from(getId()),
+        CastMemberID.from(getId()),
         getName(),
         getType(),
         getCreatedAt(),

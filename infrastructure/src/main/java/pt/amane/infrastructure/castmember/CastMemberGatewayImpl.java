@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.pagination.SearchQuery;
 import pt.amane.domain.validation.ObjectsValidator;
@@ -39,7 +39,7 @@ public class CastMemberGatewayImpl implements CastMemberGateway {
   }
 
   @Override
-  public void deleteById(CastmemberID castmemberID) {
+  public void deleteById(CastMemberID castmemberID) {
     final var anId = castmemberID.getValue();
     if (castMemberRepository.existsById(anId)) {
       castMemberRepository.deleteById(anId);
@@ -47,7 +47,7 @@ public class CastMemberGatewayImpl implements CastMemberGateway {
   }
 
   @Override
-  public Optional<CastMember> findById(CastmemberID castmemberID) {
+  public Optional<CastMember> findById(CastMemberID castmemberID) {
     return castMemberRepository.findById(castmemberID.getValue())
         .map(CastMemberJpaEntity::toAggregate);
   }
@@ -77,12 +77,12 @@ public class CastMemberGatewayImpl implements CastMemberGateway {
   }
 
   @Override
-  public List<CastmemberID> existsByIds(Iterable<CastmemberID> castMemberIDS) {
+  public List<CastMemberID> existsByIds(Iterable<CastMemberID> castMemberIDS) {
     final var ids = StreamSupport.stream(castMemberIDS.spliterator(), false)
-        .map(CastmemberID::getValue)
+        .map(CastMemberID::getValue)
         .toList();
     return this.castMemberRepository.existsByIdIn(ids).stream()
-        .map(CastmemberID::from)
+        .map(CastMemberID::from)
         .toList();
   }
 

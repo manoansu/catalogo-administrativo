@@ -1,7 +1,7 @@
 package pt.amane.application.castmember.delete;
 
 import pt.amane.domain.castmember.CastMemberGateway;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.validation.ObjectsValidator;
 
 public non-sealed class DeleteCastMemberUseCaseImpl extends DeleteCastMemberUseCase{
@@ -14,6 +14,6 @@ public non-sealed class DeleteCastMemberUseCaseImpl extends DeleteCastMemberUseC
 
   @Override
   public void execute(String anIn) {
-   this.castMemberGateway.deleteById(CastmemberID.from(anIn));
+   this.castMemberGateway.deleteById(CastMemberID.from(anIn));
   }
 }

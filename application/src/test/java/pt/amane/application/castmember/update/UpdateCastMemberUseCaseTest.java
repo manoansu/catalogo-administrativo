@@ -19,7 +19,7 @@ import pt.amane.application.UseCaseTest;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.castmember.CastMemberType;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.exception.NotFoundException;
 import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.utils.FixtureUtils;
@@ -150,7 +150,7 @@ class UpdateCastMemberUseCaseTest extends UseCaseTest {
     // given
     CastMember.newCastmember("vin diesel", CastMemberType.DIRECTOR);
 
-    final var expectedId = CastmemberID.from("123");
+    final var expectedId = CastMemberID.from("123");
     final var expectedName = FixtureUtils.name();
     final var expectedType = FixtureUtils.CastMembers.type();
 

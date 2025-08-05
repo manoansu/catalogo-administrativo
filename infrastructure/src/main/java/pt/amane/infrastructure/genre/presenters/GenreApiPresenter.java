@@ -1,7 +1,7 @@
 package pt.amane.infrastructure.genre.presenters;
 
-import pt.amane.application.gnre.retrieve.get.GenreOutput;
-import pt.amane.application.gnre.retrieve.list.GenreListOutput;
+import pt.amane.application.genre.retrieve.get.GenreOutput;
+import pt.amane.application.genre.retrieve.list.GenreListOutput;
 import pt.amane.infrastructure.genre.models.GenreListResponse;
 import pt.amane.infrastructure.genre.models.GenreResponse;
 

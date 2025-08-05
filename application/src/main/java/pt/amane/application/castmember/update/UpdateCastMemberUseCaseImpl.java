@@ -3,7 +3,7 @@ package pt.amane.application.castmember.update;
 import java.util.function.Supplier;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
-import pt.amane.domain.castmember.CastmemberID;
+import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.exception.NotFoundException;
 import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.validation.ObjectsValidator;
@@ -19,7 +19,7 @@ public non-sealed class UpdateCastMemberUseCaseImpl extends UpdateCastMemberUseC
 
   @Override
   public UpdateCastMemberOutput execute(UpdateCastMemberCommand  castMemberCommand) {
-    final var anId = CastmemberID.from(castMemberCommand.id());
+    final var anId = CastMemberID.from(castMemberCommand.id());
     final var aName = castMemberCommand.name();
     final var aType = castMemberCommand.type();
 
@@ -36,12 +36,12 @@ public non-sealed class UpdateCastMemberUseCaseImpl extends UpdateCastMemberUseC
     return UpdateCastMemberOutput.from(castMemberGateway.update(aCastMember));
   }
 
-  private void notify(CastmemberID anId, Notification notification) {
+  private void notify(CastMemberID anId, Notification notification) {
     throw new NotificationException("Could not update Aggregate CastMember %s".formatted(anId.getValue()), notification);
 
   }
 
-  private Supplier<NotFoundException> notFound(CastmemberID anId) {
+  private Supplier<NotFoundException> notFound(CastMemberID anId) {
     return () -> NotFoundException.with(CastMember.class, anId);
   }
 }

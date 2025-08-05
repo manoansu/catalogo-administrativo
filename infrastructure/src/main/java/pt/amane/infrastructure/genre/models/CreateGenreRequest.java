@@ -6,8 +6,8 @@ import java.util.List;
 
 public record CreateGenreRequest(
     @JsonProperty("name") String name,
-    @JsonProperty("is_active") Boolean active,
-    @JsonProperty("categories_id") List<String> categories
+    @JsonProperty("categories_id") List<String> categories,
+    @JsonProperty("is_active") Boolean active
 ) {
 
   public Boolean isActive() {

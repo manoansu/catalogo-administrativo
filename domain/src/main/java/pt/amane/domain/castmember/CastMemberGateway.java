@@ -11,13 +11,13 @@ public interface CastMemberGateway {
 
   CastMember update(CastMember castmember);
 
-  void deleteById(CastmemberID castmemberID);
+  void deleteById(CastMemberID castmemberID);
 
-  Optional<CastMember> findById(CastmemberID castmemberID);
+  Optional<CastMember> findById(CastMemberID castmemberID);
 
   Pagination<CastMember> findAll(SearchQuery query);
 
-  List<CastmemberID> existsByIds(Iterable<CastmemberID> castmemberID);
+  List<CastMemberID> existsByIds(Iterable<CastMemberID> castmemberID);
 
 
 }

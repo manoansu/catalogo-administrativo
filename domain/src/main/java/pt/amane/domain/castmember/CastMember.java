@@ -7,7 +7,7 @@ import pt.amane.domain.utils.InstantUtils;
 import pt.amane.domain.validation.ValidationHandler;
 import pt.amane.domain.validation.handler.Notification;
 
-public class CastMember extends AggregateRoot<CastmemberID> {
+public class CastMember extends AggregateRoot<CastMemberID> {
 
   private String name;
   private CastMemberType type;
@@ -15,7 +15,7 @@ public class CastMember extends AggregateRoot<CastmemberID> {
   private Instant updatedAt;
 
   protected CastMember(
-      final CastmemberID castmemberID,
+      final CastMemberID castmemberID,
       final String name,
       final CastMemberType type,
       final Instant createdAt,
@@ -31,11 +31,11 @@ public class CastMember extends AggregateRoot<CastmemberID> {
 
   public static CastMember newCastmember(final String name, final CastMemberType type) {
     final var now = InstantUtils.now();
-    return new CastMember(CastmemberID.unique(), name, type, now, now);
+    return new CastMember(CastMemberID.unique(), name, type, now, now);
   }
 
   public static CastMember with(
-      final CastmemberID castmemberID,
+      final CastMemberID castmemberID,
       final String name,
       final CastMemberType type,
       final Instant createdAt,
