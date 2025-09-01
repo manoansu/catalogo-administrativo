@@ -276,7 +276,7 @@ public class Video extends AggregateRoot<VideoID> {
   public Video updateTrailerMedia(final AudioVideoMedia trailer) {
     this.trailer = trailer;
     this.updatedAt = InstantUtils.now();
-//    onAudioVideoMediaUpdated(trailer);
+    onAudioVideoMediaUpdated(trailer);
     return this;
   }
 
@@ -390,11 +390,6 @@ public class Video extends AggregateRoot<VideoID> {
         aVideo.getDomainEvents()
     );
   }
-
-
-//  private void onAudioVideoMediaUpdated(AudioVideoMedia media) {
-//    if (media != null && media.is) {
-//  }
 
   private void setCastMembers(final Set<CastMemberID> members) {
     this.castMembers = members != null ? new HashSet<>(members) : Collections.emptySet();

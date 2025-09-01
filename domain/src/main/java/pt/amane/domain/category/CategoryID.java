@@ -1,8 +1,8 @@
 package pt.amane.domain.category;
 
 import java.util.Objects;
-import java.util.UUID;
 import pt.amane.Identifier;
+import pt.amane.domain.utils.IdUtils;
 import pt.amane.domain.validation.ObjectsValidator;
 
 /**
@@ -21,7 +21,7 @@ public class CategoryID extends Identifier {
    * @return
    */
   public static CategoryID unique() {
-    return CategoryID.from(UUID.randomUUID());
+    return CategoryID.from(IdUtils.uuid());
   }
 
   /**
@@ -31,10 +31,6 @@ public class CategoryID extends Identifier {
    */
   public static CategoryID from(final String anId) {
     return new CategoryID(anId);
-  }
-
-  public static CategoryID from(final UUID anId) {
-    return new CategoryID(anId.toString().toLowerCase());
   }
 
   @Override

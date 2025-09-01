@@ -1,21 +1,25 @@
 package pt.amane.domain.utils;
 
-//import com.github.javafaker.Faker;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
 import static io.vavr.API.List;
 import static io.vavr.API.Match;
 
+import java.time.Year;
 import java.util.Random;
-import pt.amane.domain.castmember.CastMemberType;
+import java.util.Set;
 import pt.amane.domain.castmember.CastMember;
+import pt.amane.domain.castmember.CastMemberType;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.genre.Genre;
+import pt.amane.domain.video.AudioVideoMedia;
+import pt.amane.domain.video.ImageMedia;
+import pt.amane.domain.video.Rating;
+import pt.amane.domain.video.Resource;
+import pt.amane.domain.video.Video;
+import pt.amane.domain.video.VideoMediaType;
 
-
-
-//import static io.vavr.API.*;
 
 public final class FixtureUtils {
 
@@ -48,20 +52,20 @@ public final class FixtureUtils {
         return "03fe62de";
     }
 
-//    public static Video video() {
-//        return Video.newVideo(
-//                FixtureUtils.title(),
-//                Videos.description(),
-//                Year.of(FixtureUtils.year()),
-//                FixtureUtils.duration(),
-//                FixtureUtils.bool(),
-//                FixtureUtils.bool(),
-//                Videos.rating(),
-//                Set.of(Categories.aulas().getId()),
-//                Set.of(Genres.tech().getId()),
-//                Set.of(CastMembers.wesley().getId(), CastMembers.gabriel().getId())
-//        );
-//    }
+    public static Video video() {
+        return Video.newVideo(
+                FixtureUtils.title(),
+                Videos.description(),
+                Year.of(FixtureUtils.year()),
+                FixtureUtils.duration(),
+                FixtureUtils.bool(),
+                FixtureUtils.bool(),
+                Videos.rating(),
+                Set.of(Categories.aulas().getId()),
+                Set.of(Genres.tech().getId()),
+                Set.of(CastMembers.wesley().getId(), CastMembers.gabriel().getId())
+        );
+    }
 
     public static final class Categories {
 
@@ -118,44 +122,44 @@ public final class FixtureUtils {
         }
     }
 
-//    public static final class Videos {
-//
-//        private static final Video SYSTEM_DESIGN = Video.newVideo(
-//                "System Design no Mercado Livre na prática",
-//                description(),
-//                Year.of(2022),
-//                FixtureUtils.duration(),
-//                FixtureUtils.bool(),
-//                FixtureUtils.bool(),
-//                rating(),
-//                Set.of(Categories.aulas().getId()),
-//                Set.of(Genres.tech().getId()),
-//                Set.of(CastMembers.wesley().getId(), CastMembers.gabriel().getId())
-//        );
-//
-//        public static Video systemDesign() {
-//            return Video.with(SYSTEM_DESIGN);
-//        }
-//
-//        public static Rating rating() {
-//            return getRatingEnumValue();
-//        }
-//
-//        public static VideoMediaType mediaType() {
-//            return getVideoMediaTypeEnumValue();
-//        }
-//
-//        public static Resource resource(final VideoMediaType type) {
-//            final String contentType = Match(type).of(
-//                    Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
-//                    Case($(), "image/jpg")
-//            );
-//
-//            final String checksum = IdUtils.uuid();
-//            final byte[] content = "Conteudo".getBytes();
-//
-//            return Resource.with(content, checksum, contentType, type.name().toLowerCase());
-//        }
+    public static final class Videos {
+
+        private static final Video SYSTEM_DESIGN = Video.newVideo(
+                "System Design no Mercado Livre na prática",
+                description(),
+                Year.of(2022),
+                FixtureUtils.duration(),
+                FixtureUtils.bool(),
+                FixtureUtils.bool(),
+                rating(),
+                Set.of(Categories.aulas().getId()),
+                Set.of(Genres.tech().getId()),
+                Set.of(CastMembers.wesley().getId(), CastMembers.gabriel().getId())
+        );
+
+        public static Video systemDesign() {
+            return Video.with(SYSTEM_DESIGN);
+        }
+
+        public static Rating rating() {
+            return getRatingEnumValue();
+        }
+
+        public static VideoMediaType mediaType() {
+            return getVideoMediaTypeEnumValue();
+        }
+
+        public static Resource resource(final VideoMediaType type) {
+            final String contentType = Match(type).of(
+                    Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
+                    Case($(), "image/jpg")
+            );
+
+            final String checksum = IdUtils.uuid();
+            final byte[] content = "Conteudo".getBytes();
+
+            return Resource.with(content, checksum, contentType, type.name().toLowerCase());
+        }
 
         public static String description() {
             final String aDescription[] = new String[]{
@@ -174,40 +178,40 @@ public final class FixtureUtils {
             return aDescription.toString();
         }
 
-//        public static AudioVideoMedia audioVideo(final VideoMediaType type) {
-//            final var checksum = FixtureUtils.checksum();
-//            return AudioVideoMedia.with(
-//                    checksum,
-//                    type.name().toLowerCase(),
-//                    "/videos/" + checksum
-//            );
-//        }
-//
-//        public static ImageMedia image(final VideoMediaType type) {
-//            final var checksum = FixtureUtils.checksum();
-//            return ImageMedia.with(
-//                    checksum,
-//                    type.name().toLowerCase(),
-//                    "/images/" + checksum
-//            );
-//        }
-//    }
+        public static AudioVideoMedia audioVideo(final VideoMediaType type) {
+            final var checksum = FixtureUtils.checksum();
+            return AudioVideoMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "/videos/" + checksum
+            );
+        }
+
+        public static ImageMedia image(final VideoMediaType type) {
+            final var checksum = FixtureUtils.checksum();
+            return ImageMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "/images/" + checksum
+            );
+        }
+    }
 
     /**
      *
      * @return the index positon of VideoMediaType enum value..
      */
-//    private static VideoMediaType getVideoMediaTypeEnumValue() {
-//        return VideoMediaType.values()[new Random().nextInt(VideoMediaType.values().length)];
-//    }
+    private static VideoMediaType getVideoMediaTypeEnumValue() {
+        return VideoMediaType.values()[new Random().nextInt(VideoMediaType.values().length)];
+    }
 
     /**
      *
      * @return the index positon of Rating enum value..
      */
-//    private static Rating getRatingEnumValue() {
-//        return Rating.values()[new Random().nextInt(Rating.values().length)];
-//    }
+    private static Rating getRatingEnumValue() {
+        return Rating.values()[new Random().nextInt(Rating.values().length)];
+    }
 
     /**
      *

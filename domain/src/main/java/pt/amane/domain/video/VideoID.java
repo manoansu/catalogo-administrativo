@@ -9,7 +9,7 @@ public class VideoID extends Identifier {
 
   private final String value;
 
-  public VideoID(final String value) {
+  private VideoID(final String value) {
     this.value = ObjectsValidator.objectValidation(value);
   }
 

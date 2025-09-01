@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
+import pt.amane.domain.utils.IdUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -127,15 +128,14 @@ class CategoryIDTest {
     @DisplayName("should create CategoryID with lowercase string value when given a valid UUID")
     void givenValidUUID_whenFromUUID_thenCreatesCategoryIDWithLowercaseValue() {
       // Arrange
-      final UUID uuid = UUID.randomUUID();
-      final String expectedId = uuid.toString().toLowerCase();
+      final String expectedValue = IdUtils.uuid();
 
       // Act
-      final CategoryID categoryID = CategoryID.from(uuid);
+      final CategoryID categoryID = CategoryID.from(expectedValue);
 
       // Assert
       assertNotNull(categoryID);
-      assertEquals(expectedId, categoryID.getValue());
+      assertEquals(expectedValue, categoryID.getValue());
     }
 
     @Test
@@ -144,12 +144,10 @@ class CategoryIDTest {
       // Arrange
       // UUID.fromString accepts uppercase, UUID.toString() produces lowercase.
       // This test verifies the .toLowerCase() call in your from(UUID) method.
-      final String uppercaseUuidString = "A987FBCB-4621-4A13-9057-79E085C7A5E0";
-      final UUID uuid = UUID.fromString(uppercaseUuidString);
-      final String expectedLowercaseId = uppercaseUuidString.toLowerCase();
+      final String expectedLowercaseId = IdUtils.uuid();
 
       // Act
-      final CategoryID categoryID = CategoryID.from(uuid);
+      final CategoryID categoryID = CategoryID.from(expectedLowercaseId);
 
       // Assert
       assertNotNull(categoryID);
@@ -160,7 +158,7 @@ class CategoryIDTest {
     @DisplayName("should throw NullPointerException when given a null UUID")
     void givenNullUUID_whenFromUUID_thenThrowsNullPointerException() {
       // Arrange
-      final UUID nullUuid = null;
+      final String nullUuid = null;
 
       // Act & Assert
       // This is because anId.toString() will be called on a null reference.
@@ -192,9 +190,8 @@ class CategoryIDTest {
     @DisplayName("should return the correct lowercase UUID string value after creation from UUID")
     void getValue_afterFromUUID_returnsCorrectLowercaseValue() {
       // Arrange
-      final UUID uuid = UUID.randomUUID();
-      final String expectedValue = uuid.toString().toLowerCase();
-      final CategoryID categoryID = CategoryID.from(uuid);
+      final String expectedValue = IdUtils.uuid();
+      final CategoryID categoryID = CategoryID.from(expectedValue);
 
       // Act
       final String actualValue = categoryID.getValue();

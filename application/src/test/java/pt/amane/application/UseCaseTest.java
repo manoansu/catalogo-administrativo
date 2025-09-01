@@ -1,6 +1,5 @@
 package pt.amane.application;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public abstract class UseCaseTest implements BeforeEachCallback {
         .collect(Collectors.toSet());
   }
 
-  // The Methos clean each test, and avoid or
+  // The Method clean each test, and avoid or
   // ensure that each test does not interfere with another
   protected List<String> asString(final List<? extends Identifier> ids) {
     return ids.stream()

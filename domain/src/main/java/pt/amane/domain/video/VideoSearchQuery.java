@@ -2,6 +2,8 @@ package pt.amane.domain.video;
 
 import java.util.Set;
 import pt.amane.domain.castmember.CastMemberID;
+import pt.amane.domain.category.CategoryID;
+import pt.amane.domain.genre.GenreID;
 
 public record VideoSearchQuery(
     int page,
@@ -10,8 +12,8 @@ public record VideoSearchQuery(
     String sort,
     String direction,
     Set<CastMemberID> categoryId,
-    Set<CastMemberID> genreId,
-    Set<CastMemberID> castMemberId
+    Set<CategoryID> genreId,
+    Set<GenreID> castMemberId
 ) {
 
 

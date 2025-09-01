@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.amane.domain.category.UnitTest;
 
-class AudioVideoMediaTest extends UnitTest {
+class
+AudioVideoMediaTest extends UnitTest {
 
   @Test
   void givenValidParams_whenCallsNewAudioVideo_ShouldReturnInstance() {
