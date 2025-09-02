@@ -66,9 +66,9 @@ public class VideoGatewayImpl implements VideoGateway {
 
     final var actualPage = this.videoRepository.findAll(
         SqlUtils.like(SqlUtils.upper(aQuery.terms())),
-        nullIfEmpty(mapTo(aQuery.castMemberId(), Identifier::getValue)),
-        nullIfEmpty(mapTo(aQuery.categoryId(), Identifier::getValue)),
-        nullIfEmpty(mapTo(aQuery.genreId(), Identifier::getValue)),
+        nullIfEmpty(mapTo(aQuery.castMembers(), Identifier::getValue)),
+        nullIfEmpty(mapTo(aQuery.categories(), Identifier::getValue)),
+        nullIfEmpty(mapTo(aQuery.genres(), Identifier::getValue)),
         page
     );
 

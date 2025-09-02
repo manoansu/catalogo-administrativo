@@ -51,7 +51,7 @@ public class VideoJpaEntity {
   @Enumerated(EnumType.STRING)
   private Rating rating;
 
-  @Column(name = "duration", precision = 2, scale = 2)
+  @Column(name = "duration", precision = 2)
   private Double duration;
 
   @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")

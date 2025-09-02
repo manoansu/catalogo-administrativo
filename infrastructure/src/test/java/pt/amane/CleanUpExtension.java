@@ -9,6 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
+import pt.amane.infrastructure.video.presistence.VideoRepository;
 
 public class CleanUpExtension implements BeforeEachCallback {
 
@@ -17,7 +18,7 @@ public class CleanUpExtension implements BeforeEachCallback {
     final var appContext = SpringExtension.getApplicationContext(context);
 
     cleanUp(List.of(
-//        appContext.getBean(VideoRepository.class),
+        appContext.getBean(VideoRepository.class),
         appContext.getBean(CastMemberRepository.class),
         appContext.getBean(GenreRepository.class),
         appContext.getBean(CategoryRepository.class)

@@ -11,9 +11,9 @@ public record VideoSearchQuery(
     String terms,
     String sort,
     String direction,
-    Set<CastMemberID> categoryId,
-    Set<CategoryID> genreId,
-    Set<GenreID> castMemberId
+    Set<CastMemberID> castMembers,
+    Set<CategoryID> categories,
+    Set<GenreID> genres
 ) {
 
 

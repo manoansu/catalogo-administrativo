@@ -29,6 +29,9 @@ dependencies {
 
     implementation 'io.vavr:vavr:0.10.6'
 
+    implementation("com.google.cloud:google-cloud-storage:2.56.0")
+    implementation("com.google.guava:guava:33.4.8-jre")
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
@@ -58,7 +61,9 @@ dependencies {
     testImplementation('org.testcontainers:mysql:1.20.6')
     testImplementation('org.testcontainers:junit-jupiter:1.20.6')
 
-    testRuntimeOnly('com.h2database:h2')
+    testImplementation 'com.h2database:h2'
+
+//    testRuntimeOnly('com.h2database:h2')
 
 }
 
