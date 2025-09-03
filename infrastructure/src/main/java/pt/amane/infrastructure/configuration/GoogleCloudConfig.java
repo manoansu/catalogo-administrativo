@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.threeten.bp.Duration;
-import pt.amane.infrastructure.configuration.proprieties.GoogleCloudProperties;
-import pt.amane.infrastructure.configuration.proprieties.GoogleStorageProperties;
+import pt.amane.infrastructure.configuration.proprieties.google.GoogleCloudProperties;
+import pt.amane.infrastructure.configuration.proprieties.google.GoogleStorageProperties;
 
 @Configuration
 @EnableConfigurationProperties(GoogleCloudProperties.class)

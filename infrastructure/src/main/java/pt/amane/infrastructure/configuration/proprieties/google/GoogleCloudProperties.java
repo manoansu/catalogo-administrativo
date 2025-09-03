@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.configuration.proprieties;
+package pt.amane.infrastructure.configuration.proprieties.google;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
