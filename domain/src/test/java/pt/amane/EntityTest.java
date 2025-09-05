@@ -14,7 +14,7 @@ import pt.amane.domain.validation.ValidationHandler;
 class EntityTest extends UnitTest {
 
   @Test
-  public void givenNullAsEvents_whenInstantiate_shouldBeOk() {
+  void givenNullAsEvents_whenInstantiate_shouldBeOk() {
 
     //given
     final List<DomainEvent> events = null;
@@ -28,7 +28,7 @@ class EntityTest extends UnitTest {
   }
 
   @Test
-  public void givenDomainEvents_whenPassInConstructor_shouldCreateADefensiveClone() {
+  void givenDomainEvents_whenPassInConstructor_shouldCreateADefensiveClone() {
 
     //given
     final List<DomainEvent> events = new ArrayList<>();
@@ -43,7 +43,7 @@ class EntityTest extends UnitTest {
   }
 
   @Test
-  public void givenEmptyDomainEvents_whenCallsRegisterEvent_shouldAddEventToList() {
+  void givenEmptyDomainEvents_whenCallsRegisterEvent_shouldAddEventToList() {
 
     // given
     final var expectedEvents = 1;
@@ -59,7 +59,7 @@ class EntityTest extends UnitTest {
   }
 
   @Test
-  public void givenAFewDomainEvents_whenCallsPublishEvents_shouldCallPublisherAndClearTheList() {
+  void givenAFewDomainEvents_whenCallsPublishEvents_shouldCallPublisherAndClearTheList() {
 
     // given
     final var expectedEvents = 0;

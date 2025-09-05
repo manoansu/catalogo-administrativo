@@ -39,7 +39,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 
     implementation('com.fasterxml.jackson.module:jackson-module-afterburner')
-    implementation('com.fasterxml.jackson.core:jackson-annotations:2.15.2')
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.16.1')
 
     implementation('mysql:mysql-connector-java:8.0.27')
     implementation('org.springframework.boot:spring-boot-starter-undertow')
@@ -52,7 +52,9 @@ dependencies {
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation('org.springframework.amqp:spring-rabbit-test:2.4.8')
+//    testImplementation('org.springframework.amqp:spring-rabbit-test:2.4.8')
+    testImplementation("org.springframework.amqp:spring-rabbit-test:3.2.6")
+
 
     testImplementation('org.flywaydb:flyway-core')
     testImplementation('org.flywaydb:flyway-mysql')

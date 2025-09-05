@@ -1,7 +1,7 @@
 package pt.amane.application.video.delete;
 
-import pt.amane.application.video.create.MediaResourceGateway;
 import pt.amane.domain.validation.ObjectsValidator;
+import pt.amane.domain.video.MediaResourceGateway;
 import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoID;
 

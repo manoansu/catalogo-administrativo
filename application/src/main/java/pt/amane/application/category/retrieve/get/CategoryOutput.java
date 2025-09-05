@@ -14,7 +14,7 @@ public record CategoryOutput(
     Instant deletedAt
 ) {
 
-  public static CategoryOutput form(final Category aCategory) {
+  public static CategoryOutput from(final Category aCategory) {
     return new CategoryOutput(
         aCategory.getId(),
         aCategory.getName(),

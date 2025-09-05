@@ -14,7 +14,7 @@ public record CategoryListOutput(
 ) {
 
   //Factory method
-  public static CategoryListOutput form(final Category aCategory) {
+  public static CategoryListOutput from(final Category aCategory) {
     return new CategoryListOutput(
         aCategory.getId(),
         aCategory.getName(),

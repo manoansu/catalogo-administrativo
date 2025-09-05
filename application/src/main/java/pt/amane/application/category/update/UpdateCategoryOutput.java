@@ -7,11 +7,11 @@ public record UpdateCategoryOutput(
 ) {
 
   //Factory Method
-  public static UpdateCategoryOutput with(final String anId) {
+  public static UpdateCategoryOutput from(final String anId) {
     return new UpdateCategoryOutput(anId);
   }
 
-  public static UpdateCategoryOutput form(final Category aCategory) {
+  public static UpdateCategoryOutput from(final Category aCategory) {
     return new UpdateCategoryOutput(aCategory.getId().getValue());
   }
 

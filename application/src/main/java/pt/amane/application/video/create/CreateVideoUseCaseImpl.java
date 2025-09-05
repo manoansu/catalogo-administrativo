@@ -19,6 +19,7 @@ import pt.amane.domain.validation.Error;
 import pt.amane.domain.validation.ObjectsValidator;
 import pt.amane.domain.validation.ValidationHandler;
 import pt.amane.domain.validation.handler.Notification;
+import pt.amane.domain.video.MediaResourceGateway;
 import pt.amane.domain.video.Rating;
 import pt.amane.domain.video.Video;
 import pt.amane.domain.video.VideoGateway;

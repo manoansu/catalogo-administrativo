@@ -6,7 +6,7 @@ public record CreateGenreOutput(
     String id
 ) {
 
-  public static CreateGenreOutput with(final String anId) {
+  public static CreateGenreOutput from(final String anId) {
     return new CreateGenreOutput(anId);
   }
 

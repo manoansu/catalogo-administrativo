@@ -41,7 +41,7 @@ public non-sealed class UpdateCategoryUseCaseImpl extends UpdateCategoryUseCase 
   private Either<Notification, UpdateCategoryOutput> update(final Category aCategory) {
     return API.Try(() -> this.categoryGateway.update(aCategory))
         .toEither()
-        .bimap(Notification::create, UpdateCategoryOutput::form);
+        .bimap(Notification::create, UpdateCategoryOutput::from);
   }
 
   private Supplier<DomainException> notFound(final CategoryID anId) {

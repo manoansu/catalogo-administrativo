@@ -25,7 +25,7 @@ import pt.amane.domain.video.Video;
 import pt.amane.domain.video.VideoID;
 
 @Table(name = "videos")
-@Entity(name = "video")
+@Entity(name = "Video")
 public class VideoJpaEntity {
 
   @Id

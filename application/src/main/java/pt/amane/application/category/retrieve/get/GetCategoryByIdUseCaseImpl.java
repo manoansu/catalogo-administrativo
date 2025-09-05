@@ -19,7 +19,7 @@ public non-sealed class GetCategoryByIdUseCaseImpl extends GetCategoryByIdUseCas
   public CategoryOutput execute(String anIn) {
     final var aCategoryID = CategoryID.from(anIn);
     return categoryGateway.findById(aCategoryID)
-        .map(CategoryOutput::form)
+        .map(CategoryOutput::from)
         .orElseThrow(notFound(aCategoryID));
   }
 

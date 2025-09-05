@@ -16,6 +16,6 @@ public non-sealed class ListCategoriesUseCaseImpl extends ListCategoriesUseCase{
   @Override
   public Pagination<CategoryListOutput> execute(SearchQuery anIn) {
     return categoryGateway.findAll(anIn)
-        .map(CategoryListOutput::form);
+        .map(CategoryListOutput::from);
   }
 }

@@ -10,7 +10,7 @@ import pt.amane.domain.video.AudioVideoMedia;
 import pt.amane.domain.video.MediaStatus;
 
 @Entity(name = "AudioVideoMedia")
-@Table(name = "audio_video_media")
+@Table(name = "videos_video_media")
 public class AudioVideoMediaJpaEntity {
 
   @Id

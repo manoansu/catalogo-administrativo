@@ -16,6 +16,8 @@ import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoID;
 import pt.amane.domain.video.VideoPreview;
 import pt.amane.domain.video.VideoSearchQuery;
+import pt.amane.infrastructure.configuration.annotations.VideoCreatedQueue;
+import pt.amane.infrastructure.services.EventService;
 import pt.amane.infrastructure.utils.SqlUtils;
 import pt.amane.infrastructure.video.presistence.VideoJpaEntity;
 import pt.amane.infrastructure.video.presistence.VideoRepository;
@@ -24,9 +26,14 @@ import pt.amane.infrastructure.video.presistence.VideoRepository;
 public class VideoGatewayImpl implements VideoGateway {
 
   private final VideoRepository videoRepository;
+  private final EventService eventService;
 
-  public VideoGatewayImpl(VideoRepository repository) {
+  public VideoGatewayImpl(
+      @VideoCreatedQueue  final VideoRepository repository,
+      final EventService eventService
+  ) {
     this.videoRepository = (VideoRepository) ObjectsValidator.objectValidation(repository);
+    this.eventService = (EventService) ObjectsValidator.objectValidation(eventService);
   }
 
   @Override
@@ -81,6 +88,12 @@ public class VideoGatewayImpl implements VideoGateway {
   }
 
   private Video save(Video aVideo) {
-    return videoRepository.save(VideoJpaEntity.from(aVideo)).toAggregate();
+    final var result = this.videoRepository
+        .save(VideoJpaEntity.from(aVideo))
+        .toAggregate();
+
+    aVideo.publishDomainEvents(this.eventService::send);
+
+    return result;
   }
 }

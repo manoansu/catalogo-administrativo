@@ -1,6 +1,7 @@
 package pt.amane.infrastructure.video;
 
 import java.util.Optional;
+import org.springframework.stereotype.Component;
 import pt.amane.domain.video.AudioVideoMedia;
 import pt.amane.domain.video.ImageMedia;
 import pt.amane.domain.video.MediaResourceGateway;
@@ -11,6 +12,7 @@ import pt.amane.domain.video.VideoResource;
 import pt.amane.infrastructure.configuration.proprieties.storage.StorageProperties;
 import pt.amane.infrastructure.services.StorageService;
 
+@Component
 public class MediaResourceGatewayImpl implements MediaResourceGateway {
 
   private final String filenamePattern;

@@ -29,7 +29,7 @@ class ListCategoriesUseCaseTest extends UseCaseTest {
   }
 
   @Test
-  public void givenAValidQuery_whenCallsListCategories_thenShouldReturnCategories() {
+  void givenAValidQuery_whenCallsListCategories_thenShouldReturnCategories() {
 
    //given
     final var categories = List.of(
@@ -49,7 +49,7 @@ class ListCategoriesUseCaseTest extends UseCaseTest {
     final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
 
     final var expectedItemCount = 2;
-    final var expectedResul  = expectedPagination.map(CategoryListOutput::form);
+    final var expectedResul  = expectedPagination.map(CategoryListOutput::from);
 
     Mockito.when(categoryGateway.findAll(aQuery))
         .thenReturn(expectedPagination);
@@ -65,7 +65,7 @@ class ListCategoriesUseCaseTest extends UseCaseTest {
   }
 
   @Test
-  public void givenAValidQuery_whenHasNoResults_thenShouldReturnEmptyCategories() {
+  void givenAValidQuery_whenHasNoResults_thenShouldReturnEmptyCategories() {
 
    //given
     final var categories = List.<Category>of();
@@ -82,7 +82,7 @@ class ListCategoriesUseCaseTest extends UseCaseTest {
     final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
 
     final var expectedItemCount = 0;
-    final var expectedResul  = expectedPagination.map(CategoryListOutput::form);
+    final var expectedResul  = expectedPagination.map(CategoryListOutput::from);
 
     Mockito.when(categoryGateway.findAll(aQuery))
         .thenReturn(expectedPagination);
@@ -99,7 +99,7 @@ class ListCategoriesUseCaseTest extends UseCaseTest {
   }
 
   @Test
-  public void givenAValidQuery_whenGatewayThrowsException_shouldReturnException() {
+  void givenAValidQuery_whenGatewayThrowsException_shouldReturnException() {
     final var expectedPage = 0;
     final var expectedPerPage = 10;
     final var expectedTerms = "";

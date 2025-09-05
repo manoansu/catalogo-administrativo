@@ -29,6 +29,7 @@ import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.utils.FixtureUtils;
 import pt.amane.domain.video.AudioVideoMedia;
 import pt.amane.domain.video.ImageMedia;
+import pt.amane.domain.video.MediaResourceGateway;
 import pt.amane.domain.video.Resource;
 import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoMediaType;

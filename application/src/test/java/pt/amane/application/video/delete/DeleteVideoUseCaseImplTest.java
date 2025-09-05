@@ -7,8 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import pt.amane.application.UseCaseTest;
-import pt.amane.application.video.create.MediaResourceGateway;
 import pt.amane.domain.exception.InternalErrorException;
+import pt.amane.domain.video.MediaResourceGateway;
 import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoID;
 
