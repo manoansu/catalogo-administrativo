@@ -36,11 +36,11 @@ public class VideoUseCaseConfig {
     private final VideoGateway videoGateway;
 
     public VideoUseCaseConfig(
-            final CategoryGateway categoryGateway,
-            final CastMemberGateway castMemberGateway,
-            final GenreGateway genreGateway,
-            final MediaResourceGateway mediaResourceGateway,
-            final VideoGateway videoGateway
+        final CategoryGateway categoryGateway,
+        final CastMemberGateway castMemberGateway,
+        final GenreGateway genreGateway,
+        final MediaResourceGateway mediaResourceGateway,
+        final VideoGateway videoGateway
     ) {
         this.categoryGateway = Objects.requireNonNull(categoryGateway);
         this.castMemberGateway = Objects.requireNonNull(castMemberGateway);
@@ -87,5 +87,6 @@ public class VideoUseCaseConfig {
     @Bean
     public UpdateMediaStatusUseCase updateMediaStatusUseCase() {
         return new UpdateMediaStatusUseCaseImpl(videoGateway);
+//        return new UpdateMediaStatusUseCase(videoGateway);
     }
 }

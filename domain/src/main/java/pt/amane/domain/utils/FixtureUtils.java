@@ -6,6 +6,7 @@ import static io.vavr.API.Case;
 import static io.vavr.API.List;
 import static io.vavr.API.Match;
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.Random;
 import java.util.Set;
@@ -31,9 +32,15 @@ public final class FixtureUtils {
         return new Random().nextInt(2020, 2030);
     }
 
-    public static Double duration() {
-        final Double aDuration[] = new Double[]{120.0, 15.5, 35.5, 10.0, 2.0};
-        return new Random().nextDouble(aDuration.length);
+    public static BigDecimal duration() {
+        final BigDecimal aDuration[] = new BigDecimal[] {
+            BigDecimal.valueOf(120.0),
+            BigDecimal.valueOf(15.5),
+            BigDecimal.valueOf(35.5),
+            BigDecimal.valueOf(10.0),
+            BigDecimal.valueOf(2.0)
+        };
+        return aDuration[new Random().nextInt(aDuration.length)];
     }
 
     public static boolean bool() {

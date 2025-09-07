@@ -1,21 +1,21 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.GenreID;
@@ -29,7 +29,7 @@ import pt.amane.domain.video.VideoID;
 public class VideoJpaEntity {
 
   @Id
-  @Column(name = "id", updatable = false, nullable = false)
+  @Column(name = "id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String id;
 
   @Column(name = "title", nullable = false)
@@ -38,21 +38,20 @@ public class VideoJpaEntity {
   @Column(name = "description", length = 4000)
   private String description;
 
-  @Column(name = "year_launched", nullable = false)
+  @Column(name = "year_launched", nullable = false, columnDefinition = "SMALLINT")
   private int yearLaunched;
 
   @Column(name = "opened", nullable = false)
-  private Boolean opened;
+  private boolean opened;
 
   @Column(name = "published", nullable = false)
-  private Boolean published;
+  private boolean published;
 
-  @Column(name = "rating", nullable = false)
-  @Enumerated(EnumType.STRING)
+  @Column(name = "rating")
   private Rating rating;
 
-  @Column(name = "duration", precision = 2)
-  private Double duration;
+  @Column(name = "duration", precision = 5, scale = 2)
+  private BigDecimal duration;
 
   @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
   private Instant createdAt;
@@ -89,31 +88,9 @@ public class VideoJpaEntity {
   @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<VideoCastMemberJpaEntity> castMembers;
 
-  /**
-   * Default constructor for Hibernate JPA.
-   */
   public VideoJpaEntity() {
   }
 
-  /**
-   * For security this constructor is private.
-   *
-   * @param id
-   * @param title
-   * @param description
-   * @param yearLaunched
-   * @param opened
-   * @param published
-   * @param rating
-   * @param duration
-   * @param createdAt
-   * @param updatedAt
-   * @param video
-   * @param trailer
-   * @param banner
-   * @param thumbnail
-   * @param thumbnailHalf
-   */
   private VideoJpaEntity(
       final String id,
       final String title,
@@ -122,7 +99,7 @@ public class VideoJpaEntity {
       final boolean opened,
       final boolean published,
       final Rating rating,
-      final double duration,
+      final BigDecimal duration,
       final Instant createdAt,
       final Instant updatedAt,
       final AudioVideoMediaJpaEntity video,
@@ -197,18 +174,6 @@ public class VideoJpaEntity {
     return entity;
   }
 
-  private void addCastMember(final CastMemberID castMemberID) {
-    this.castMembers.add(VideoCastMemberJpaEntity.from(this, castMemberID));
-  }
-
-  private void addGenre(final GenreID genreID) {
-    this.genres.add(VideoGenreJpaEntity.from(this, genreID));
-  }
-
-  private void addCategory(final CategoryID categoryID) {
-    this.categories.add(VideoCategoryJpaEntity.from(this, categoryID));
-  }
-
   /**
    * Factory method convert video to agegate.
    * @return
@@ -225,97 +190,200 @@ public class VideoJpaEntity {
         getRating(),
         getCreatedAt(),
         getUpdatedAt(),
-        Optional.of(getBanner())
+        Optional.ofNullable(getBanner())
             .map(ImageMediaJpaEntity::toDomain)
             .orElse(null),
-        Optional.of(getThumbnail())
+        Optional.ofNullable(getThumbnail())
             .map(ImageMediaJpaEntity::toDomain)
             .orElse(null),
-        Optional.of(getThumbnailHalf())
+        Optional.ofNullable(getThumbnailHalf())
             .map(ImageMediaJpaEntity::toDomain)
             .orElse(null),
-        Optional.of(getTrailer())
+        Optional.ofNullable(getTrailer())
             .map(AudioVideoMediaJpaEntity::toDomain)
             .orElse(null),
-        Optional.of(getVideo())
+        Optional.ofNullable(getVideo())
             .map(AudioVideoMediaJpaEntity::toDomain)
             .orElse(null),
-        null,
-        null,
-        null
+        getCategories().stream()
+            .map(it -> CategoryID.from(it.getId().getCategoryId()))
+            .collect(Collectors.toSet()),
+        getGenres().stream()
+            .map(it -> GenreID.from(it.getId().getGenreId()))
+            .collect(Collectors.toSet()),
+        getCastMembers().stream()
+            .map(it -> CastMemberID.from(it.getId().getCastMemberId()))
+            .collect(Collectors.toSet())
     );
+  }
+
+  public void addCategory(final CategoryID anId) {
+    this.categories.add(VideoCategoryJpaEntity.from(this, anId));
+  }
+
+  public void addGenre(final GenreID anId) {
+    this.genres.add(VideoGenreJpaEntity.from(this, anId));
+  }
+
+  public void addCastMember(final CastMemberID anId) {
+    this.castMembers.add(VideoCastMemberJpaEntity.from(this, anId));
   }
 
   public String getId() {
     return id;
   }
 
+  public VideoJpaEntity setId(String id) {
+    this.id = id;
+    return this;
+  }
+
   public String getTitle() {
     return title;
+  }
+
+  public VideoJpaEntity setTitle(String title) {
+    this.title = title;
+    return this;
   }
 
   public String getDescription() {
     return description;
   }
 
+  public VideoJpaEntity setDescription(String description) {
+    this.description = description;
+    return this;
+  }
+
   public int getYearLaunched() {
     return yearLaunched;
   }
 
-  public Boolean isOpened() {
+  public VideoJpaEntity setYearLaunched(int yearLaunched) {
+    this.yearLaunched = yearLaunched;
+    return this;
+  }
+
+  public boolean isOpened() {
     return opened;
   }
-  public Boolean isPublished() {
+
+  public VideoJpaEntity setOpened(boolean opened) {
+    this.opened = opened;
+    return this;
+  }
+
+  public boolean isPublished() {
     return published;
+  }
+
+  public VideoJpaEntity setPublished(boolean published) {
+    this.published = published;
+    return this;
   }
 
   public Rating getRating() {
     return rating;
   }
 
-  public double getDuration() {
+  public VideoJpaEntity setRating(Rating rating) {
+    this.rating = rating;
+    return this;
+  }
+
+  public BigDecimal getDuration() {
     return duration;
+  }
+
+  public VideoJpaEntity setDuration(BigDecimal duration) {
+    this.duration = duration;
+    return this;
   }
 
   public Instant getCreatedAt() {
     return createdAt;
   }
 
+  public VideoJpaEntity setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
   public Instant getUpdatedAt() {
     return updatedAt;
+  }
+
+  public VideoJpaEntity setUpdatedAt(Instant updatedAt) {
+    this.updatedAt = updatedAt;
+    return this;
   }
 
   public AudioVideoMediaJpaEntity getVideo() {
     return video;
   }
 
+  public VideoJpaEntity setVideo(AudioVideoMediaJpaEntity video) {
+    this.video = video;
+    return this;
+  }
+
   public AudioVideoMediaJpaEntity getTrailer() {
     return trailer;
+  }
+
+  public VideoJpaEntity setTrailer(AudioVideoMediaJpaEntity trailer) {
+    this.trailer = trailer;
+    return this;
   }
 
   public ImageMediaJpaEntity getBanner() {
     return banner;
   }
 
+  public VideoJpaEntity setBanner(ImageMediaJpaEntity banner) {
+    this.banner = banner;
+    return this;
+  }
+
   public ImageMediaJpaEntity getThumbnail() {
     return thumbnail;
+  }
+
+  public VideoJpaEntity setThumbnail(ImageMediaJpaEntity thumbnail) {
+    this.thumbnail = thumbnail;
+    return this;
   }
 
   public ImageMediaJpaEntity getThumbnailHalf() {
     return thumbnailHalf;
   }
 
-
-  public Set<VideoCastMemberJpaEntity> getCastMembers() {
-    return castMembers;
+  public VideoJpaEntity setThumbnailHalf(ImageMediaJpaEntity thumbnailHalf) {
+    this.thumbnailHalf = thumbnailHalf;
+    return this;
   }
 
   public Set<VideoCategoryJpaEntity> getCategories() {
     return categories;
   }
 
+  public VideoJpaEntity setCategories(Set<VideoCategoryJpaEntity> categories) {
+    this.categories = categories;
+    return this;
+  }
+
   public Set<VideoGenreJpaEntity> getGenres() {
     return genres;
+  }
+
+  public VideoJpaEntity setGenres(Set<VideoGenreJpaEntity> genres) {
+    this.genres = genres;
+    return this;
+  }
+
+  public Set<VideoCastMemberJpaEntity> getCastMembers() {
+    return castMembers;
   }
 
   public VideoJpaEntity setCastMembers(Set<VideoCastMemberJpaEntity> castMembers) {

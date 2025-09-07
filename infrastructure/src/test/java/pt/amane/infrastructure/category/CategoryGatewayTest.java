@@ -4,9 +4,10 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import pt.amane.GatewayTest;
-import pt.amane.TestConfig;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import pt.amane.Main;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
@@ -14,8 +15,9 @@ import pt.amane.domain.pagination.SearchQuery;
 import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 
-@GatewayTest
-@Import(TestConfig.class)
+@ActiveProfiles("test-integration")
+@SpringBootTest(classes = Main.class)
+@Transactional
 class CategoryGatewayTest {
 
   @Autowired

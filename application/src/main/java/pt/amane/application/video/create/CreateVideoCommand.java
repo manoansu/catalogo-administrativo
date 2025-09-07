@@ -1,5 +1,6 @@
 package pt.amane.application.video.create;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
 import pt.amane.domain.video.Resource;
@@ -8,7 +9,7 @@ public record CreateVideoCommand(
     String title,
     String description,
     Integer launchedAt,
-    Double duration,
+    BigDecimal duration,
     Boolean opened,
     Boolean published,
     String rating,
@@ -26,7 +27,7 @@ public record CreateVideoCommand(
       final String title,
       final String description,
       final Integer launchedAt,
-      final Double duration,
+      final BigDecimal duration,
       final Boolean opened,
       final Boolean published,
       final String rating,
@@ -62,7 +63,7 @@ public record CreateVideoCommand(
       final String title,
       final String description,
       final Integer launchedAt,
-      final Double duration,
+      final BigDecimal duration,
       final Boolean opened,
       final Boolean published,
       final String rating,

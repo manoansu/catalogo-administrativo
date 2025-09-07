@@ -2,6 +2,7 @@ package pt.amane.domain.video;
 
 
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +27,7 @@ class VideoValidatorTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -73,7 +74,7 @@ class VideoValidatorTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -127,7 +128,7 @@ class VideoValidatorTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -168,7 +169,7 @@ class VideoValidatorTest {
     final var expectedTitle = "System Design Interviews";
     final var expectedDescription = "";
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -227,7 +228,7 @@ class VideoValidatorTest {
                 Pensando mais a longo prazo, a determinação clara de objetivos ainda não demonstrou convincentemente que vai participar na mudança dos níveis de motivação departamental. Não obstante, o comprometimento entre as equipes é uma das consequências das formas de ação. Assim mesmo, o desafiador cenário globalizado maximiza as possibilidades por conta dos relacionamentos verticais entre as hierarquias.
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -268,7 +269,7 @@ class VideoValidatorTest {
     final var expectedTitle = "System Design Interviews";
     final var expectedDescription = "A description";
     final Year expectedLaunchedAt = null;
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -309,7 +310,7 @@ class VideoValidatorTest {
     final var expectedTitle = "System Design Interviews";
     final var expectedDescription = "A description";
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final Rating expectedRating = null;

@@ -7,7 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import pt.amane.GatewayTest;
+import pt.amane.Main;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.Genre;
@@ -18,6 +22,9 @@ import pt.amane.infrastructure.genre.persistence.GenreJpaEntity;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
 @GatewayTest
+@ActiveProfiles("test-integration")
+@SpringBootTest(classes = Main.class)
+@Transactional
 class GenreGatewayImplTest {
 
   @Autowired
@@ -30,7 +37,7 @@ class GenreGatewayImplTest {
   private GenreRepository genreRepository;
 
   @Test
-  public void testDependenciesInjected() {
+  void testDependenciesInjected() {
     Assertions.assertNotNull(categoryGateway);
     Assertions.assertNotNull(genreGateway);
     Assertions.assertNotNull(genreRepository);

@@ -1,5 +1,6 @@
 package pt.amane.domain.video;
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +25,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -83,7 +84,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -97,7 +98,7 @@ class VideoTest extends UnitTest {
         "Test title",
         "Lalala description",
         Year.of(1888),
-        0.0,
+        BigDecimal.valueOf(0.0),
         true,
         true,
         Rating.AGE_10,
@@ -161,7 +162,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -230,7 +231,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -302,7 +303,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -366,7 +367,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -430,7 +431,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;
@@ -493,7 +494,7 @@ class VideoTest extends UnitTest {
                 https://imersao.fullcycle.com.br/
                 """;
     final var expectedLaunchedAt = Year.of(2022);
-    final var expectedDuration = 120.10;
+    final var expectedDuration = BigDecimal.valueOf(120.10);;
     final var expectedOpened = false;
     final var expectedPublished = false;
     final var expectedRating = Rating.L;

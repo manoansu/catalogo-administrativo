@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +14,7 @@ import pt.amane.domain.video.MediaStatus;
 public class AudioVideoMediaJpaEntity {
 
   @Id
+  @Column(name = "id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String id;
 
   @Column(name = "checksum", nullable = false)
@@ -25,8 +26,8 @@ public class AudioVideoMediaJpaEntity {
   @Column(name = "file_path", nullable = false)
   private String filePath;
 
-  @Column(name = "encode_path", nullable = false)
-  private String encodePath;
+  @Column(name = "encoded_path", nullable = false)
+  private String encodedPath;
 
   @Column(name = "media_status", nullable = false)
   @Enumerated(EnumType.STRING)
@@ -35,31 +36,30 @@ public class AudioVideoMediaJpaEntity {
   public AudioVideoMediaJpaEntity() {
   }
 
-
-  public AudioVideoMediaJpaEntity(
+  private AudioVideoMediaJpaEntity(
       final String id,
       final String checksum,
       final String name,
       final String filePath,
-      final String encode,
+      final String encodedPath,
       final MediaStatus status
   ) {
     this.id = id;
     this.checksum = checksum;
     this.name = name;
     this.filePath = filePath;
-    this.encodePath = encode;
+    this.encodedPath = encodedPath;
     this.status = status;
   }
 
-  public static AudioVideoMediaJpaEntity from(final AudioVideoMedia entity) {
+  public static AudioVideoMediaJpaEntity from(final AudioVideoMedia media) {
     return new AudioVideoMediaJpaEntity(
-        entity.id(),
-        entity.checksum(),
-        entity.name(),
-        entity.rawLocation(),
-        entity.encodedLocation(),
-        entity.status()
+        media.id(),
+        media.checksum(),
+        media.name(),
+        media.rawLocation(),
+        media.encodedLocation(),
+        media.status()
     );
   }
 
@@ -69,7 +69,7 @@ public class AudioVideoMediaJpaEntity {
         getChecksum(),
         getName(),
         getFilePath(),
-        getEncodePath(),
+        getEncodedPath(),
         getStatus()
     );
   }
@@ -78,24 +78,53 @@ public class AudioVideoMediaJpaEntity {
     return id;
   }
 
+  public AudioVideoMediaJpaEntity setId(String id) {
+    this.id = id;
+    return this;
+  }
+
   public String getChecksum() {
     return checksum;
+  }
+
+  public AudioVideoMediaJpaEntity setChecksum(String checksum) {
+    this.checksum = checksum;
+    return this;
   }
 
   public String getName() {
     return name;
   }
 
+  public AudioVideoMediaJpaEntity setName(String name) {
+    this.name = name;
+    return this;
+  }
+
   public String getFilePath() {
     return filePath;
   }
 
-  public String getEncodePath() {
-    return encodePath;
+  public AudioVideoMediaJpaEntity setFilePath(String filePath) {
+    this.filePath = filePath;
+    return this;
+  }
+
+  public String getEncodedPath() {
+    return encodedPath;
+  }
+
+  public AudioVideoMediaJpaEntity setEncodedPath(String encodedPath) {
+    this.encodedPath = encodedPath;
+    return this;
   }
 
   public MediaStatus getStatus() {
     return status;
   }
 
+  public AudioVideoMediaJpaEntity setStatus(MediaStatus status) {
+    this.status = status;
+    return this;
+  }
 }

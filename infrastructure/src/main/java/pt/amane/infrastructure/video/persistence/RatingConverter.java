@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

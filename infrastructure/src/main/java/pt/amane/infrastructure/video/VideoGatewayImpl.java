@@ -1,8 +1,9 @@
 package pt.amane.infrastructure.video;
 
-import static pt.amane.domain.utils.CollectionUtils.nullIfEmpty;
 import static pt.amane.domain.utils.CollectionUtils.mapTo;
+import static pt.amane.domain.utils.CollectionUtils.nullIfEmpty;
 
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pt.amane.Identifier;
 import pt.amane.domain.pagination.Pagination;
-import pt.amane.domain.validation.ObjectsValidator;
 import pt.amane.domain.video.Video;
 import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoID;
@@ -19,8 +19,8 @@ import pt.amane.domain.video.VideoSearchQuery;
 import pt.amane.infrastructure.configuration.annotations.VideoCreatedQueue;
 import pt.amane.infrastructure.services.EventService;
 import pt.amane.infrastructure.utils.SqlUtils;
-import pt.amane.infrastructure.video.presistence.VideoJpaEntity;
-import pt.amane.infrastructure.video.presistence.VideoRepository;
+import pt.amane.infrastructure.video.persistence.VideoJpaEntity;
+import pt.amane.infrastructure.video.persistence.VideoRepository;
 
 @Component
 public class VideoGatewayImpl implements VideoGateway {
@@ -32,8 +32,8 @@ public class VideoGatewayImpl implements VideoGateway {
       @VideoCreatedQueue  final VideoRepository repository,
       final EventService eventService
   ) {
-    this.videoRepository = (VideoRepository) ObjectsValidator.objectValidation(repository);
-    this.eventService = (EventService) ObjectsValidator.objectValidation(eventService);
+    this.videoRepository = Objects.requireNonNull(repository);
+    this.eventService = Objects.requireNonNull(eventService);
   }
 
   @Override
@@ -52,6 +52,7 @@ public class VideoGatewayImpl implements VideoGateway {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Optional<Video> findById(VideoID anId) {
     return this.videoRepository.findById(anId.getValue())
         .map(VideoJpaEntity::toAggregate);
@@ -64,6 +65,7 @@ public class VideoGatewayImpl implements VideoGateway {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Pagination<VideoPreview> findAll(final VideoSearchQuery aQuery) {
     final var page = PageRequest.of(
         aQuery.page(),

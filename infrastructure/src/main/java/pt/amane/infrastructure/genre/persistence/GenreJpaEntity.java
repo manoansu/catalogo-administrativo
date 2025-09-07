@@ -21,7 +21,7 @@ import pt.amane.domain.genre.GenreID;
 public class GenreJpaEntity {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
     private String id;
 
     @Column(name = "name", nullable = false)
@@ -94,10 +94,6 @@ public class GenreJpaEntity {
         this.categories.add(GenreCategoryJpaEntity.from(this, anId));
     }
 
-    private void removeCategory(final CategoryID anId) {
-        this.categories.remove(GenreCategoryJpaEntity.from(this, anId));
-    }
-
     public String getId() {
         return id;
     }
@@ -127,7 +123,8 @@ public class GenreJpaEntity {
 
     public List<CategoryID> getCategoryIDs() {
         return getCategories().stream()
-                .map(it -> CategoryID.from(it.getId().getCategoryId()))
+                .map(it -> it.getId().getCategoryId())
+                .map(CategoryID::from)
                 .toList();
     }
 

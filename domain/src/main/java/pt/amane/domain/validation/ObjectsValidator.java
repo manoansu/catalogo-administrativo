@@ -16,7 +16,7 @@ public class ObjectsValidator {
 
   public static Object objectValidation(final Object anId) {
     if (anId == null) {
-      throw new NullPointerException("Object value cannot be null");
+      throw new NullPointerException("ID cannot be null");
     }
     return anId;
   }

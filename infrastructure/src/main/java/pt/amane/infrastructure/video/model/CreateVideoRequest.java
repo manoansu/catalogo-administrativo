@@ -2,12 +2,13 @@ package pt.amane.infrastructure.video.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 public record CreateVideoRequest(
         @JsonProperty("title") String title,
         @JsonProperty("description") String description,
-        @JsonProperty("duration") Double duration,
+        @JsonProperty("duration") BigDecimal duration,
         @JsonProperty("year_launched") Integer yearLaunched,
         @JsonProperty("opened") Boolean opened,
         @JsonProperty("published") Boolean published,

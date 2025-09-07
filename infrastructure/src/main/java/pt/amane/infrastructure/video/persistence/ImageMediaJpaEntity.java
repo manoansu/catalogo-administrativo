@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import pt.amane.domain.video.ImageMedia;
 public class ImageMediaJpaEntity {
 
   @Id
+  @Column(name = "id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String id;
 
   @Column(name = "checksum", nullable = false)
@@ -25,8 +26,7 @@ public class ImageMediaJpaEntity {
   public ImageMediaJpaEntity() {
   }
 
-
-  public ImageMediaJpaEntity(
+  private ImageMediaJpaEntity(
       final String id,
       final String checksum,
       final String name,
@@ -36,7 +36,7 @@ public class ImageMediaJpaEntity {
     this.checksum = checksum;
     this.name = name;
     this.filePath = filePath;
-    }
+  }
 
   public static ImageMediaJpaEntity from(final ImageMedia media) {
     return new ImageMediaJpaEntity(
@@ -60,8 +60,9 @@ public class ImageMediaJpaEntity {
     return id;
   }
 
-  public void setId(String id) {
+  public ImageMediaJpaEntity setId(String id) {
     this.id = id;
+    return this;
   }
 
   public String getChecksum() {

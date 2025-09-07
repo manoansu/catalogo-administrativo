@@ -12,10 +12,11 @@ import pt.amane.domain.castmember.CastMemberType;
 import pt.amane.domain.castmember.CastMemberID;
 
 @Entity(name = "CastMember")
-@Table(name = "cast_members", schema = "adm_videos")
+@Table(name = "cast_members")
 public class CastMemberJpaEntity {
 
   @Id
+  @Column(name = "id", length = 32, columnDefinition = "CHAR(32)")
   private String id;
 
   @Column(name = "name", nullable = false)

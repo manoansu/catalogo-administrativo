@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -7,33 +7,30 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import java.util.Objects;
-import pt.amane.domain.category.CategoryID;
+import pt.amane.domain.genre.GenreID;
 
-/**
- * The relationship classes between Video and Category in DB
- */
-@Entity(name = "VideoCategory")
-@Table(name = "videos_categories")
-public class VideoCategoryJpaEntity {
+@Entity(name = "VideoGenre")
+@Table(name = "videos_genres")
+public class VideoGenreJpaEntity {
 
   @EmbeddedId
-  private VideoCategoryID id;
+  private VideoGenreID id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("videoId")
   private VideoJpaEntity video;
 
-  public VideoCategoryJpaEntity() {
+  public VideoGenreJpaEntity() {
   }
 
-  private VideoCategoryJpaEntity(final VideoCategoryID id, final VideoJpaEntity video) {
+  private VideoGenreJpaEntity(final VideoGenreID id, final VideoJpaEntity video) {
     this.id = id;
     this.video = video;
   }
 
-  public static VideoCategoryJpaEntity from(final VideoJpaEntity video, final CategoryID category) {
-    return new VideoCategoryJpaEntity(
-        VideoCategoryID.from(video.getId(), category.getValue()),
+  public static VideoGenreJpaEntity from(final VideoJpaEntity video, final GenreID genre) {
+    return new VideoGenreJpaEntity(
+        VideoGenreID.from(video.getId(), genre.getValue()),
         video
     );
   }
@@ -42,7 +39,7 @@ public class VideoCategoryJpaEntity {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    VideoCategoryJpaEntity that = (VideoCategoryJpaEntity) o;
+    VideoGenreJpaEntity that = (VideoGenreJpaEntity) o;
     return Objects.equals(getId(), that.getId()) && Objects.equals(getVideo(), that.getVideo());
   }
 
@@ -51,11 +48,11 @@ public class VideoCategoryJpaEntity {
     return Objects.hash(getId(), getVideo());
   }
 
-  public VideoCategoryID getId() {
+  public VideoGenreID getId() {
     return id;
   }
 
-  public VideoCategoryJpaEntity setId(VideoCategoryID id) {
+  public VideoGenreJpaEntity setId(VideoGenreID id) {
     this.id = id;
     return this;
   }
@@ -64,7 +61,7 @@ public class VideoCategoryJpaEntity {
     return video;
   }
 
-  public VideoCategoryJpaEntity setVideo(VideoJpaEntity video) {
+  public VideoGenreJpaEntity setVideo(VideoJpaEntity video) {
     this.video = video;
     return this;
   }

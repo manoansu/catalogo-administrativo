@@ -2,6 +2,7 @@ package pt.amane.infrastructure.api.controllers;
 
 import static pt.amane.domain.utils.CollectionUtils.mapTo;
 
+import java.math.BigDecimal;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -96,7 +97,7 @@ public class VideoController implements VideoAPI {
             final String aTitle,
             final String aDescription,
             final Integer launchedAt,
-            final Double aDuration,
+            final BigDecimal aDuration,
             final Boolean wasOpened,
             final Boolean wasPublished,
             final String aRating,

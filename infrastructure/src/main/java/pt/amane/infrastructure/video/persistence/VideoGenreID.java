@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -8,10 +8,10 @@ import java.util.Objects;
 @Embeddable
 public class VideoGenreID implements Serializable {
 
-  @Column(name = "video_id", nullable = false)
+  @Column(name = "video_id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String videoId;
 
-  @Column(name = "genre_id", nullable = false)
+  @Column(name = "genre_id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String genreId;
 
   public VideoGenreID() {

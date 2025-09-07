@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.math.BigDecimal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public interface VideoAPI {
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "description", required = false) String description,
             @RequestParam(name = "year_launched", required = false) Integer yearLaunched,
-            @RequestParam(name = "duration", required = false) Double duration,
+            @RequestParam(name = "duration", required = false) BigDecimal duration,
             @RequestParam(name = "opened", required = false) Boolean opened,
             @RequestParam(name = "published", required = false) Boolean published,
             @RequestParam(name = "rating", required = false) String rating,

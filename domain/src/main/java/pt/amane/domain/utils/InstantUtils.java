@@ -12,7 +12,7 @@ public final class InstantUtils {
    * On some computer it returns 6th place = MICROSECONDS
    */
   public static Instant now() {
-    return Instant.now().truncatedTo(ChronoUnit.SECONDS);
+    return Instant.now().truncatedTo(ChronoUnit.MICROS);
   }
 
 

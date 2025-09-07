@@ -1,5 +1,6 @@
 package pt.amane.application.video.retrieve.get;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 import pt.amane.Identifier;
@@ -16,7 +17,7 @@ public record VideoOutput(
     String title,
     String description,
     Integer launchedAt,
-    Double duration,
+    BigDecimal duration,
     Boolean opened,
     Boolean published,
     Rating rating,

@@ -1,4 +1,4 @@
-package pt.amane.infrastructure.video.presistence;
+package pt.amane.infrastructure.video.persistence;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -7,31 +7,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import java.util.Objects;
-import pt.amane.domain.genre.GenreID;
+import pt.amane.domain.castmember.CastMemberID;
 
-@Entity(name = "VideoGenre")
-@Table(name = "videos_genres")
-public class VideoGenreJpaEntity {
+@Entity(name = "VideoCastMember")
+@Table(name = "videos_cast_members")
+public class VideoCastMemberJpaEntity {
 
   @EmbeddedId
-  private VideoGenreID id;
+  private VideoCastMemberID id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("videoId")
   private VideoJpaEntity video;
 
-  public VideoGenreJpaEntity() {
+  public VideoCastMemberJpaEntity() {
   }
 
-  private VideoGenreJpaEntity(final VideoGenreID id, final VideoJpaEntity video) {
+  private VideoCastMemberJpaEntity(final VideoCastMemberID id, final VideoJpaEntity video) {
     this.id = id;
     this.video = video;
   }
 
-  public static VideoGenreJpaEntity from(final VideoJpaEntity video, final GenreID genre) {
-    return new VideoGenreJpaEntity(
-        VideoGenreID.from(video.getId(), genre.getValue()),
-        video
+  public static VideoCastMemberJpaEntity from(final VideoJpaEntity entity, final CastMemberID castMemberID) {
+    return new VideoCastMemberJpaEntity(
+        VideoCastMemberID.from(entity.getId(), castMemberID.getValue()),
+        entity
     );
   }
 
@@ -39,7 +39,7 @@ public class VideoGenreJpaEntity {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    VideoGenreJpaEntity that = (VideoGenreJpaEntity) o;
+    VideoCastMemberJpaEntity that = (VideoCastMemberJpaEntity) o;
     return Objects.equals(getId(), that.getId()) && Objects.equals(getVideo(), that.getVideo());
   }
 
@@ -48,11 +48,11 @@ public class VideoGenreJpaEntity {
     return Objects.hash(getId(), getVideo());
   }
 
-  public VideoGenreID getId() {
+  public VideoCastMemberID getId() {
     return id;
   }
 
-  public VideoGenreJpaEntity setId(VideoGenreID id) {
+  public VideoCastMemberJpaEntity setId(VideoCastMemberID id) {
     this.id = id;
     return this;
   }
@@ -61,7 +61,7 @@ public class VideoGenreJpaEntity {
     return video;
   }
 
-  public VideoGenreJpaEntity setVideo(VideoJpaEntity video) {
+  public VideoCastMemberJpaEntity setVideo(VideoJpaEntity video) {
     this.video = video;
     return this;
   }

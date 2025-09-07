@@ -9,7 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
-import pt.amane.infrastructure.video.presistence.VideoRepository;
+import pt.amane.infrastructure.video.persistence.VideoRepository;
 
 public class CleanUpExtension implements BeforeEachCallback {
 

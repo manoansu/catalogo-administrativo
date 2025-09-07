@@ -1,6 +1,7 @@
 package pt.amane.infrastructure.video;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
@@ -25,7 +25,8 @@ import pt.amane.domain.video.ImageMedia;
 import pt.amane.domain.video.Video;
 import pt.amane.domain.video.VideoID;
 import pt.amane.domain.video.VideoSearchQuery;
-import pt.amane.infrastructure.video.presistence.VideoRepository;
+import pt.amane.infrastructure.video.persistence.VideoJpaEntity;
+import pt.amane.infrastructure.video.persistence.VideoRepository;
 
 @IntegrationTest
 class VideoGatewayImplTest {
@@ -76,7 +77,6 @@ class VideoGatewayImplTest {
   }
 
   @Test
-  @Transactional
   void givenAValidVideo_whenCallsCreate_shouldPersistIt() {
 
     // given
@@ -167,7 +167,6 @@ class VideoGatewayImplTest {
   }
 
   @Test
-  @Transactional
   void givenAValidVideoWithoutRelations_whenCallsCreate_shouldPersistIt() {
     // given
     final var expectedTitle = FixtureUtils.title();
@@ -237,7 +236,6 @@ class VideoGatewayImplTest {
   }
 
   @Test
-  @Transactional
   void givenAValidVideo_whenCallsUpdate_shouldPersistIt() {
     // given
     final var aVideo = videoGateway.create(Video.newVideo(
@@ -836,7 +834,7 @@ class VideoGatewayImplTest {
   }
 
   private void mockVideos() {
-    videoGateway.create(Video.newVideo(
+    final var video1 = Video.newVideo(
         "System Design no Mercado Livre na prática",
         FixtureUtils.Videos.description(),
         Year.of(2022),
@@ -847,9 +845,9 @@ class VideoGatewayImplTest {
         Set.of(lives.getId()),
         Set.of(tech.getId()),
         Set.of(wesley.getId(), gabriel.getId())
-    ));
+    );
 
-    videoGateway.create(Video.newVideo(
+    final var video2 = Video.newVideo(
         "Não cometa esses erros ao trabalhar com Microsserviços",
         FixtureUtils.Videos.description(),
         Year.of(FixtureUtils.year()),
@@ -860,9 +858,9 @@ class VideoGatewayImplTest {
         Set.of(),
         Set.of(),
         Set.of()
-    ));
+    );
 
-    videoGateway.create(Video.newVideo(
+    final var video3 = Video.newVideo(
         "21.1 Implementação dos testes integrados do findAll",
         FixtureUtils.Videos.description(),
         Year.of(FixtureUtils.year()),
@@ -873,9 +871,9 @@ class VideoGatewayImplTest {
         Set.of(aulas.getId()),
         Set.of(tech.getId()),
         Set.of(gabriel.getId())
-    ));
+    );
 
-    videoGateway.create(Video.newVideo(
+    final var video4 = Video.newVideo(
         "Aula de empreendedorismo",
         FixtureUtils.Videos.description(),
         Year.of(FixtureUtils.year()),
@@ -886,6 +884,13 @@ class VideoGatewayImplTest {
         Set.of(aulas.getId()),
         Set.of(business.getId()),
         Set.of(wesley.getId())
+    );
+
+    videoRepository.saveAllAndFlush(List.of(
+        VideoJpaEntity.from(video1),
+        VideoJpaEntity.from(video2),
+        VideoJpaEntity.from(video3),
+        VideoJpaEntity.from(video4)
     ));
   }
 }

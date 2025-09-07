@@ -1,5 +1,6 @@
 package pt.amane.domain.video;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.Year;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public class Video extends AggregateRoot<VideoID> {
   private String title;
   private String description;
   private Year launchedAt;
-  private double duration;
+  private BigDecimal duration;
   private Rating rating;
 
   private boolean opened;
@@ -46,7 +47,7 @@ public class Video extends AggregateRoot<VideoID> {
     final String title,
     final String description,
     final Year launchedAt,
-    final double duration,
+    final BigDecimal duration,
     final boolean opened,
     final boolean published,
     final Rating rating,
@@ -91,7 +92,7 @@ public class Video extends AggregateRoot<VideoID> {
       final String aTitle,
       final String aDescription,
       final Year aLaunchYear,
-      final double aDuration,
+      final BigDecimal aDuration,
       final boolean wasOpened,
       final boolean wasPublished,
       final Rating aRating,
@@ -137,11 +138,11 @@ public class Video extends AggregateRoot<VideoID> {
     this.launchedAt = launchedAt;
   }
 
-  public double getDuration() {
+  public BigDecimal getDuration() {
     return duration;
   }
 
-  public void setDuration(final double duration) {
+  public void setDuration(final BigDecimal duration) {
     this.duration = duration;
   }
 
@@ -291,7 +292,7 @@ public class Video extends AggregateRoot<VideoID> {
       final String aTitle,
       final String aDescription,
       final Year aLaunchYear,
-      final double aDuration,
+      final BigDecimal aDuration,
       final boolean wasOpened,
       final boolean wasPublished,
       final Rating aRating,
@@ -329,7 +330,7 @@ public class Video extends AggregateRoot<VideoID> {
       final String aTitle,
       final String aDescription,
       final Year aLaunchYear,
-      final double aDuration,
+      final BigDecimal aDuration,
       final boolean wasOpened,
       final boolean wasPublished,
       final Rating aRating,

@@ -8,6 +8,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import java.util.Objects;
 import pt.amane.domain.category.CategoryID;
+import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
 
 @Entity
 @Table(name = "genres_categories")
@@ -20,11 +21,17 @@ public class GenreCategoryJpaEntity {
     @MapsId("genreId")
     private GenreJpaEntity genre;
 
+    @ManyToOne
+    @MapsId("categoryId")
+    private CategoryJpaEntity category;
+
     public GenreCategoryJpaEntity() {}
 
     private GenreCategoryJpaEntity(final GenreJpaEntity aGenre, final CategoryID aCategoryId) {
         this.id = GenreCategoryID.from(aGenre.getId(), aCategoryId.getValue());
         this.genre = aGenre;
+        this.category = new CategoryJpaEntity();
+        this.category.setId(aCategoryId.getValue());
     }
 
     public static GenreCategoryJpaEntity from(final GenreJpaEntity aGenre, final CategoryID aCategoryId) {
@@ -59,6 +66,15 @@ public class GenreCategoryJpaEntity {
 
     public GenreCategoryJpaEntity setGenre(GenreJpaEntity genre) {
         this.genre = genre;
+        return this;
+    }
+
+    public CategoryJpaEntity getCategory() {
+        return category;
+    }
+
+    public GenreCategoryJpaEntity setCategory(CategoryJpaEntity category) {
+        this.category = category;
         return this;
     }
 }

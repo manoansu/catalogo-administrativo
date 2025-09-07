@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import pt.amane.infrastructure.configuration.WebServerConfig;
 
 @SpringBootApplication(scanBasePackages = "pt.amane")
-//@EnableJpaRepositories(basePackages = "pt.amane.infrastructure.video.presistence")
-//@EntityScan(basePackages = "pt.amane.infrastructure.video.presistence")
+//@EnableJpaRepositories(basePackages = "pt.amane.infrastructure.video.persistence")
+//@EntityScan(basePackages = "pt.amane.infrastructure.video.persistence")
 public class Main {
 
   private static final Logger LOG = LoggerFactory.getLogger(Main.class);

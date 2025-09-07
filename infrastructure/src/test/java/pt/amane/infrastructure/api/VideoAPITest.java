@@ -283,7 +283,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAnEmptyBody_whenCallsCreatePartial_shouldReturnError() throws Exception {
+    void givenAnEmptyBody_whenCallsCreatePartial_shouldReturnError() throws Exception {
         // when
         final var aRequest = post("/videos")
 //                .with(ApiTest.GENRES_JWT)
@@ -324,7 +324,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAValidId_whenCallsGetById_shouldReturnVideo() throws Exception {
+    void givenAValidId_whenCallsGetById_shouldReturnVideo() throws Exception {
         // given
         final var wesley = FixtureUtils.CastMembers.wesley();
         final var aulas = FixtureUtils.Categories.aulas();
@@ -420,7 +420,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAnInvalidId_whenCallsGetById_shouldReturnNotFound() throws Exception {
+    void givenAnInvalidId_whenCallsGetById_shouldReturnNotFound() throws Exception {
         // given
         final var expectedId = VideoID.unique();
         final var expectedErrorMessage = "Video with ID %s was not found".formatted(expectedId.getValue());
@@ -442,7 +442,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAValidCommand_whenCallsUpdateVideo_shouldReturnVideoId() throws Exception {
+    void givenAValidCommand_whenCallsUpdateVideo_shouldReturnVideoId() throws Exception {
         // given
         final var wesley = FixtureUtils.CastMembers.wesley();
         final var aulas = FixtureUtils.Categories.aulas();
@@ -515,7 +515,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAnInvalidCommand_whenCallsUpdateVideo_shouldReturnNotification() throws Exception {
+    void givenAnInvalidCommand_whenCallsUpdateVideo_shouldReturnNotification() throws Exception {
         // given
         final var wesley = FixtureUtils.CastMembers.wesley();
         final var aulas = FixtureUtils.Categories.aulas();
@@ -573,7 +573,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenAValidId_whenCallsDeleteById_shouldDeleteIt() throws Exception {
+    void givenAValidId_whenCallsDeleteById_shouldDeleteIt() throws Exception {
         // given
         final var expectedId = VideoID.unique();
 
@@ -592,7 +592,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenValidParams_whenCallsListVideos_shouldReturnPagination() throws Exception {
+    void givenValidParams_whenCallsListVideos_shouldReturnPagination() throws Exception {
         // given
         final var aVideo = new VideoPreview(FixtureUtils.video());
 
@@ -656,7 +656,7 @@ class VideoAPITest {
     }
 
     @Test
-    public void givenEmptyParams_whenCallsListVideosWithDefaultValues_shouldReturnPagination() throws Exception {
+    void givenEmptyParams_whenCallsListVideosWithDefaultValues_shouldReturnPagination() throws Exception {
         // given
         final var aVideo = new VideoPreview(FixtureUtils.video());
 

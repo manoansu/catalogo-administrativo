@@ -1,5 +1,6 @@
 package pt.amane.infrastructure.configuration.usecase;
 
+import java.util.Objects;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pt.amane.application.castmember.create.CreateCastMemberUseCase;
@@ -13,40 +14,44 @@ import pt.amane.application.castmember.retrieve.list.ListCastMembersUseCaseImpl;
 import pt.amane.application.castmember.update.UpdateCastMemberUseCase;
 import pt.amane.application.castmember.update.UpdateCastMemberUseCaseImpl;
 import pt.amane.domain.castmember.CastMemberGateway;
-import pt.amane.domain.validation.ObjectsValidator;
+import pt.amane.domain.category.CategoryGateway;
 
 @Configuration
 public class CastMemberUseCaseConfig {
 
-  private final CastMemberGateway castMemberGateway;
+  private final CategoryGateway categoryGateway;
+  private final CastMemberGateway CastMemberGateway;
 
-  public CastMemberUseCaseConfig(final CastMemberGateway castMemberGateway) {
-    this.castMemberGateway = (CastMemberGateway) ObjectsValidator.objectValidation(castMemberGateway);
+  public CastMemberUseCaseConfig(
+      final CategoryGateway categoryGateway,
+      final CastMemberGateway CastMemberGateway
+  ) {
+    this.categoryGateway = Objects.requireNonNull(categoryGateway);
+    this.CastMemberGateway = Objects.requireNonNull(CastMemberGateway);
   }
+
   @Bean
   public CreateCastMemberUseCase createCastMemberUseCase() {
-    return new CreateCastMemberUseCaseImpl(castMemberGateway);
-  }
-
-  @Bean
-  public UpdateCastMemberUseCase updateCastMemberUseCase() {
-    return new UpdateCastMemberUseCaseImpl(castMemberGateway);
-  }
-
-  @Bean
-  public GetCastMemberByIdUseCase getCastMemberByIdUseCase() {
-    return new GetCastMemberByIdUseCaseImpl(castMemberGateway);
-  }
-
-  @Bean
-  public ListCastMembersUseCase listCastMembersUseCase() {
-    return new ListCastMembersUseCaseImpl(castMemberGateway);
+    return new CreateCastMemberUseCaseImpl(CastMemberGateway);
   }
 
   @Bean
   public DeleteCastMemberUseCase deleteCastMemberUseCase() {
-    return new DeleteCastMemberUseCaseImpl(castMemberGateway);
+    return new DeleteCastMemberUseCaseImpl(CastMemberGateway);
   }
 
+  @Bean
+  public GetCastMemberByIdUseCase getCastMemberByIdUseCase() {
+    return new GetCastMemberByIdUseCaseImpl(CastMemberGateway);
+  }
 
+  @Bean
+  public ListCastMembersUseCase listCastMemberUseCase() {
+    return new ListCastMembersUseCaseImpl(CastMemberGateway);
+  }
+
+  @Bean
+  public UpdateCastMemberUseCase updateCastMemberUseCase() {
+    return new UpdateCastMemberUseCaseImpl(CastMemberGateway);
+  }
 }

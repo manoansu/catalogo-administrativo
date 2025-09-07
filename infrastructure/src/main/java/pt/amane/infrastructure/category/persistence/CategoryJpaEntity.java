@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Instant;
-import java.util.Objects;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryID;
 
@@ -14,7 +13,7 @@ import pt.amane.domain.category.CategoryID;
 public class CategoryJpaEntity {
 
   @Id
-  @Column(name = "id", nullable = false)
+  @Column(name = "id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
   private String id;
 
   @Column(name = "name", nullable = false)
@@ -24,7 +23,7 @@ public class CategoryJpaEntity {
   private String description;
 
   @Column(name = "active", nullable = false)
-  private boolean isActive;
+  private boolean active;
 
   @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
   private Instant createdAt;
@@ -32,33 +31,35 @@ public class CategoryJpaEntity {
   @Column(name = "updated_at", nullable = false, columnDefinition = "DATETIME(6)")
   private Instant updatedAt;
 
-  @Column(name = "deleted_at",  columnDefinition = "DATETIME(6)")
+  @Column(name = "deleted_at", columnDefinition = "DATETIME(6)")
   private Instant deletedAt;
 
-  public CategoryJpaEntity(){}
+  public CategoryJpaEntity() {
+  }
 
-  public CategoryJpaEntity(
+  private CategoryJpaEntity(
       final String id,
       final String name,
       final String description,
-      final boolean isActive,
+      final boolean active,
       final Instant createdAt,
       final Instant updatedAt,
-      final Instant deletedAt) {
+      final Instant deletedAt
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.isActive = isActive;
+    this.active = active;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
   }
 
   /**
-      * Method reference that return CategoryJpaEntity with param Category
-     * @param aCategory
-     * @return CategoryJpaEntity
-     */
+   * Method reference that return CategoryJpaEntity with param Category
+   * @param aCategory
+   * @return CategoryJpaEntity
+   */
   public static CategoryJpaEntity from(final Category aCategory) {
     return new CategoryJpaEntity(
         aCategory.getId().getValue(),
@@ -112,11 +113,11 @@ public class CategoryJpaEntity {
   }
 
   public boolean isActive() {
-    return isActive;
+    return active;
   }
 
   public void setActive(boolean active) {
-    isActive = active;
+    this.active = active;
   }
 
   public Instant getCreatedAt() {
@@ -141,22 +142,5 @@ public class CategoryJpaEntity {
 
   public void setDeletedAt(Instant deletedAt) {
     this.deletedAt = deletedAt;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    final CategoryJpaEntity that = (CategoryJpaEntity) o;
-    return Objects.equals(getId(), that.getId());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(getId());
   }
 }

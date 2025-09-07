@@ -8,10 +8,10 @@ import java.util.Objects;
 @Embeddable
 public class GenreCategoryID implements Serializable {
 
-    @Column(name = "genre_id", nullable = false)
+    @Column(name = "genre_id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
     private String genreId;
 
-    @Column(name = "category_id", nullable = false)
+    @Column(name = "category_id", nullable = false, length = 32, columnDefinition = "CHAR(32)")
     private String categoryId;
 
     public GenreCategoryID() {}
