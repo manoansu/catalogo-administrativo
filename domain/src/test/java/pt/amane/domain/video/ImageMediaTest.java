@@ -7,9 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pt.amane.domain.category.UnitTest;
 
-class ImageMediaTest extends UnitTest {
+class ImageMediaTest {
 
 
   @Test

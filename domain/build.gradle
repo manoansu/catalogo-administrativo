@@ -1,25 +1,11 @@
 plugins {
-    id 'java'
+    id 'java-conventions'
+    id 'java-library'
 }
 
-group = 'pt.amane.domain'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group 'pt.amane.domain'
 
 dependencies {
-
-    implementation 'io.vavr:vavr:0.10.6'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
 }
 
 configurations {
@@ -36,3 +22,44 @@ task testJar(type: Jar) {
 artifacts {
     testClasses testJar
 }
+
+
+
+//plugins {
+//    id 'java'
+//}
+//
+//group = 'pt.amane.domain'
+//version = '0.0.1-SNAPSHOT'
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//
+//    implementation 'io.vavr:vavr:0.10.6'
+//
+//    testImplementation platform('org.junit:junit-bom:5.10.0')
+//
+//    testImplementation 'org.junit.jupiter:junit-jupiter'
+//}
+//
+//test {
+//    useJUnitPlatform()
+//}
+//
+//configurations {
+//    testClasses {
+//        extendsFrom(testImplementation)
+//    }
+//}
+//
+//task testJar(type: Jar) {
+//    archiveClassifier.set('test')
+//    from sourceSets.test.output
+//}
+//
+//artifacts {
+//    testClasses testJar
+//}

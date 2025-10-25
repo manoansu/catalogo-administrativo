@@ -5,57 +5,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
+import pt.amane.UnitTest;
 import pt.amane.domain.utils.IdUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 // Assuming your CategoryID class is defined elsewhere and looks something like this:
-/*
-public final class CategoryID {
-    private final String value;
-
-    // Constructor is assumed to perform validation
-    private CategoryID(final String anId) {
-        if (anId == null) {
-            throw new IllegalArgumentException("ID cannot be null");
-        }
-        if (anId.trim().isEmpty()) {
-            throw new IllegalArgumentException("ID cannot be empty or blank");
-        }
-        this.value = anId;
-    }
-
-    public static CategoryID from(final String anId) {
-        return new CategoryID(anId);
-    }
-
-    public static CategoryID from(final UUID anId) {
-        // Original code: return new CategoryID(anId.toString().toLowerCase());
-        // If anId is null, anId.toString() will cause NullPointerException.
-        return new CategoryID(anId.toString().toLowerCase());
-    }
-
-    public String getValue() {
-        return this.value;
-    }
-
-    // equals and hashCode would be beneficial for a value object
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CategoryID that = (CategoryID) o;
-        return java.util.Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return java.util.Objects.hash(value);
-    }
-}
-*/
-
-class CategoryIDTest {
+class CategoryIDTest extends UnitTest {
 
   @Nested
   @DisplayName("Tests for from(String anId)")

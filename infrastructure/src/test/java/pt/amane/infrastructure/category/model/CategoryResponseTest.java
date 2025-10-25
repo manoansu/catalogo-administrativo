@@ -2,13 +2,14 @@ package pt.amane.infrastructure.category.model;
 
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
+import pt.amane.JacksonTest;
 
-@JsonTest
+@JacksonTest
 class CategoryResponseTest {
 
   @Autowired
@@ -20,9 +21,9 @@ class CategoryResponseTest {
     final var expectedName = "Filmes";
     final var expectedDescription = "A categoria mais assistida";
     final var expectedIsActive = false;
-    final var expectedCreatedAt = Instant.now();
-    final var expectedUpdatedAt = Instant.now();
-    final var expectedDeletedAt = Instant.now();
+    final var expectedCreatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+    final var expectedUpdatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+    final var expectedDeletedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
 
     final var response = new CategoryResponse(
         expectedId,
@@ -52,9 +53,9 @@ class CategoryResponseTest {
     final var expectedName = "Filmes";
     final var expectedDescription = "A categoria mais assistida";
     final var expectedIsActive = false;
-    final var expectedCreatedAt = Instant.now();
-    final var expectedUpdatedAt = Instant.now();
-    final var expectedDeletedAt = Instant.now();
+    final var expectedCreatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+    final var expectedUpdatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+    final var expectedDeletedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
 
     final var json = """
         {

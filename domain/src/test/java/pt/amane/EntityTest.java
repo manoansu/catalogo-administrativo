@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pt.amane.domain.category.UnitTest;
 import pt.amane.domain.event.DomainEvent;
 import pt.amane.domain.utils.IdUtils;
 import pt.amane.domain.validation.ValidationHandler;
 
-class EntityTest extends UnitTest {
+class EntityTest {
 
   @Test
   void givenNullAsEvents_whenInstantiate_shouldBeOk() {

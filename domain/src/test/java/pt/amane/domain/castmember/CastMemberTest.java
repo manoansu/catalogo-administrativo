@@ -2,7 +2,7 @@ package pt.amane.domain.castmember;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pt.amane.domain.category.UnitTest;
+import pt.amane.UnitTest;
 import pt.amane.domain.exception.NotificationException;
 
 class CastMemberTest extends UnitTest {

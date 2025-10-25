@@ -7,10 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pt.amane.domain.category.UnitTest;
 
 class
-AudioVideoMediaTest extends UnitTest {
+AudioVideoMediaTest {
 
   @Test
   void givenValidParams_whenCallsNewAudioVideo_ShouldReturnInstance() {

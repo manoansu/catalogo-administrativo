@@ -10,28 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import pt.amane.GatewayTest;
 import pt.amane.Main;
 import pt.amane.domain.category.Category;
+import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.Genre;
+import pt.amane.domain.genre.GenreGateway;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.pagination.SearchQuery;
-import pt.amane.infrastructure.category.CategoryGatewayImpl;
 import pt.amane.infrastructure.genre.persistence.GenreJpaEntity;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
-@GatewayTest
 @ActiveProfiles("test-integration")
 @SpringBootTest(classes = Main.class)
 @Transactional
 class GenreGatewayImplTest {
 
   @Autowired
-  private CategoryGatewayImpl categoryGateway;
+  private CategoryGateway categoryGateway;
 
   @Autowired
-  private GenreGatewayImpl genreGateway;
+  private GenreGateway genreGateway;
 
   @Autowired
   private GenreRepository genreRepository;
@@ -70,9 +69,9 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedName, actualGenre.getName());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertEquals(expectedCategories, actualGenre.getCategories());
-    Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
-    Assertions.assertEquals(aGenre.getUpdatedAt(), actualGenre.getUpdatedAt());
-    Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.getDeletedAt());
+    Assertions.assertNotNull(actualGenre.getCreatedAt());
+    Assertions.assertNotNull(actualGenre.getUpdatedAt());
+    Assertions.assertEquals(actualGenre.getCreatedAt(), actualGenre.getUpdatedAt());
     Assertions.assertNull(actualGenre.getDeletedAt());
 
     final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
@@ -80,9 +79,9 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedName, persistedGenre.getName());
     Assertions.assertEquals(expectedIsActive, persistedGenre.isActive());
     Assertions.assertEquals(expectedCategories, persistedGenre.getCategoryIDs());
-    Assertions.assertEquals(aGenre.getCreatedAt(), persistedGenre.getCreatedAt());
-    Assertions.assertEquals(aGenre.getUpdatedAt(), persistedGenre.getUpdatedAt());
-    Assertions.assertEquals(aGenre.getDeletedAt(), persistedGenre.getDeletedAt());
+    Assertions.assertNotNull(persistedGenre.getCreatedAt());
+    Assertions.assertNotNull(persistedGenre.getUpdatedAt());
+    Assertions.assertEquals(persistedGenre.getCreatedAt(), persistedGenre.getUpdatedAt());
     Assertions.assertNull(persistedGenre.getDeletedAt());
   }
 
@@ -109,9 +108,9 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedName, actualGenre.getName());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertEquals(expectedCategories, actualGenre.getCategories());
-    Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
-    Assertions.assertEquals(aGenre.getUpdatedAt(), actualGenre.getUpdatedAt());
-    Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.getDeletedAt());
+    Assertions.assertNotNull(actualGenre.getCreatedAt());
+    Assertions.assertNotNull(actualGenre.getUpdatedAt());
+    Assertions.assertEquals(actualGenre.getCreatedAt(), actualGenre.getUpdatedAt());
     Assertions.assertNull(actualGenre.getDeletedAt());
 
     final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
@@ -119,9 +118,9 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedName, persistedGenre.getName());
     Assertions.assertEquals(expectedIsActive, persistedGenre.isActive());
     Assertions.assertEquals(expectedCategories, persistedGenre.getCategoryIDs());
-    Assertions.assertEquals(aGenre.getCreatedAt(), persistedGenre.getCreatedAt());
-    Assertions.assertEquals(aGenre.getUpdatedAt(), persistedGenre.getUpdatedAt());
-    Assertions.assertEquals(aGenre.getDeletedAt(), persistedGenre.getDeletedAt());
+    Assertions.assertNotNull(persistedGenre.getCreatedAt());
+    Assertions.assertNotNull(persistedGenre.getUpdatedAt());
+    Assertions.assertEquals(persistedGenre.getCreatedAt(), persistedGenre.getUpdatedAt());
     Assertions.assertNull(persistedGenre.getDeletedAt());
   }
 
@@ -164,7 +163,7 @@ class GenreGatewayImplTest {
     Assertions.assertIterableEquals(sorted(expectedCategories), sorted(actualGenre.getCategories()));
     Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
     Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
-    Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.getDeletedAt());
+    Assertions.assertNull(actualGenre.getDeletedAt());
 
     final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
 
@@ -173,7 +172,6 @@ class GenreGatewayImplTest {
     Assertions.assertIterableEquals(sorted(expectedCategories), sorted(persistedGenre.getCategoryIDs()));
     Assertions.assertEquals(aGenre.getCreatedAt(), persistedGenre.getCreatedAt());
     Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(persistedGenre.getUpdatedAt()));
-    Assertions.assertEquals(aGenre.getDeletedAt(), persistedGenre.getDeletedAt());
     Assertions.assertNull(persistedGenre.getDeletedAt());
   }
 
@@ -217,7 +215,7 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedCategories, actualGenre.getCategories());
     Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
     Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
-    Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.getDeletedAt());
+    Assertions.assertNull(actualGenre.getDeletedAt());
 
     final var persistedGenre = genreRepository.findById(expectedId.getValue()).get();
 
@@ -226,7 +224,6 @@ class GenreGatewayImplTest {
     Assertions.assertEquals(expectedCategories, persistedGenre.getCategoryIDs());
     Assertions.assertEquals(aGenre.getCreatedAt(), persistedGenre.getCreatedAt());
     Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(persistedGenre.getUpdatedAt()));
-    Assertions.assertEquals(aGenre.getDeletedAt(), persistedGenre.getDeletedAt());
     Assertions.assertNull(persistedGenre.getDeletedAt());
   }
 

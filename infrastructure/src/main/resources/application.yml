@@ -45,6 +45,11 @@ spring:
     locations: classpath:db/migration
     validate-on-migrate: true
 
+#  servlet:
+#    multipart:
+#      max-file-size: 10GB
+#      max-request-size: 100GB
+
   jpa:
     open-in-view: false
     show-sql: true

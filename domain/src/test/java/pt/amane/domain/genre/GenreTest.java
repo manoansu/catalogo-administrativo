@@ -5,10 +5,9 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.amane.domain.category.CategoryID;
-import pt.amane.domain.category.UnitTest;
 import pt.amane.domain.exception.NotificationException;
 
-class GenreTest extends UnitTest {
+class GenreTest {
 
   @Test
   void givenAValidParams_whenCallsNewGenre_shouldInstantiateAGenre() {

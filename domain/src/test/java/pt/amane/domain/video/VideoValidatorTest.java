@@ -7,13 +7,14 @@ import java.time.Year;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pt.amane.UnitTest;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.DomainException;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.validation.handler.ThrowsValidationHandler;
 
-class VideoValidatorTest {
+class VideoValidatorTest  extends UnitTest {
 
   @Test
   void givenNullTitle_whenCallsValidate_shouldReceiveError() {

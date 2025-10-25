@@ -1,28 +1,44 @@
 plugins {
-    id 'java'
+    // Line below allow to import all configuraton from directory java-conventions.gradle in buildSrec/src/main/grove/java-conventions.gradle
+    id 'java-conventions'
+    id 'java-library'
 }
 
-group = 'pt.amane.application'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group 'pt.amane.application'
 
 dependencies {
     implementation(project(":domain"))
 
     implementation 'io.vavr:vavr:0.10.6'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation( 'org.junit.jupiter:junit-jupiter')
-
-    testImplementation('org.mockito:mockito-junit-jupiter:5.16.0')
-
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
-
 }
 
-test {
-    useJUnitPlatform()
-}
+
+//plugins {
+//    id 'java'
+//}
+//
+//group = 'pt.amane.application'
+//version = '0.0.1-SNAPSHOT'
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    implementation(project(":domain"))
+//
+//    implementation 'io.vavr:vavr:0.10.6'
+//
+//    testImplementation platform('org.junit:junit-bom:5.10.0')
+//    testImplementation( 'org.junit.jupiter:junit-jupiter')
+//
+//    testImplementation('org.mockito:mockito-junit-jupiter:5.16.0')
+//
+//    testImplementation(project(path: ':domain', configuration: 'testClasses'))
+//
+//}
+//
+//test {
+//    useJUnitPlatform()
+//}

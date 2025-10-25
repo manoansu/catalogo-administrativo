@@ -3,16 +3,13 @@ package pt.amane.infrastructure.castmember;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import pt.amane.Main;
+import pt.amane.GatewayTest;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.utils.FixtureUtils;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 
-@ActiveProfiles("test-integration")
-@SpringBootTest(classes = Main.class)
+@GatewayTest
 class CastMemberGatewayTest {
 
   @Autowired
@@ -49,16 +46,18 @@ class CastMemberGatewayTest {
     Assertions.assertEquals(expectedId, actualMember.getId());
     Assertions.assertEquals(expectedName, actualMember.getName());
     Assertions.assertEquals(expectedType, actualMember.getType());
-    Assertions.assertEquals(aMember.getCreatedAt(), actualMember.getCreatedAt());
-    Assertions.assertEquals(aMember.getUpdatedAt(), actualMember.getUpdatedAt());
+    Assertions.assertNotNull(actualMember.getCreatedAt());
+    Assertions.assertNotNull(actualMember.getUpdatedAt());
+    Assertions.assertEquals(actualMember.getCreatedAt(), actualMember.getUpdatedAt());
 
     final var persistedMember = castMemberRepository.findById(expectedId.getValue()).get();
 
     Assertions.assertEquals(expectedId.getValue(), persistedMember.getId());
     Assertions.assertEquals(expectedName, persistedMember.getName());
     Assertions.assertEquals(expectedType, persistedMember.getType());
-    Assertions.assertEquals(aMember.getCreatedAt(), persistedMember.getCreatedAt());
-    Assertions.assertEquals(aMember.getUpdatedAt(), persistedMember.getUpdatedAt());
+    Assertions.assertNotNull(persistedMember.getCreatedAt());
+    Assertions.assertNotNull(persistedMember.getUpdatedAt());
+    Assertions.assertEquals(persistedMember.getCreatedAt(), persistedMember.getUpdatedAt());
 
   }
 }

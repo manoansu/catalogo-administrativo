@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.category.CategoryID;
-import pt.amane.domain.category.UnitTest;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.utils.InstantUtils;
 import pt.amane.domain.validation.handler.ThrowsValidationHandler;
 
-class VideoTest extends UnitTest {
+class VideoTest {
 
   @Test
   void givenValidParams_whenCallsNewVideo_shouldInstantiate() {

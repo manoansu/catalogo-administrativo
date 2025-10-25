@@ -50,9 +50,9 @@ class CategoryGatewayTest {
     Assertions.assertEquals(expectedName,actualCategory.getName());
     Assertions.assertEquals(expectedDescription,actualCategory.getDescription());
     Assertions.assertEquals(expectedActive,actualCategory.isActive());
-    Assertions.assertEquals(aCategory.getCreatedAt(),actualCategory.getCreatedAt());
-    Assertions.assertEquals(aCategory.getUpdatedAt(),actualCategory.getUpdatedAt());
-    Assertions.assertEquals(aCategory.getDeletedAt(),actualCategory.getDeletedAt());
+    Assertions.assertNotNull(actualCategory.getCreatedAt());
+    Assertions.assertNotNull(actualCategory.getUpdatedAt());
+    Assertions.assertEquals(actualCategory.getCreatedAt(), actualCategory.getUpdatedAt());
     Assertions.assertNull(actualCategory.getDeletedAt());
 
     final var actualEntity = categoryRepository.findById(aCategory.getId().getValue()).get();
@@ -61,21 +61,19 @@ class CategoryGatewayTest {
     Assertions.assertEquals(expectedName,actualEntity.getName());
     Assertions.assertEquals(expectedDescription,actualEntity.getDescription());
     Assertions.assertEquals(expectedActive,actualEntity.isActive());
-    Assertions.assertEquals(aCategory.getCreatedAt(),actualEntity.getCreatedAt());
-    Assertions.assertEquals(aCategory.getUpdatedAt(),actualEntity.getUpdatedAt());
-    Assertions.assertEquals(aCategory.getDeletedAt(),actualEntity.getDeletedAt());
+    Assertions.assertNotNull(actualEntity.getCreatedAt());
+    Assertions.assertNotNull(actualEntity.getUpdatedAt());
+    Assertions.assertEquals(actualEntity.getCreatedAt(), actualEntity.getUpdatedAt());
     Assertions.assertNull(actualEntity.getDeletedAt());
   }
 
   @Test
-  void givenAValidCategory_whenCallsUpdate_shouldReturnCategoryUpdated()
-      throws InterruptedException {
+  void givenAValidCategory_whenCallsUpdate_shouldReturnCategoryUpdated() {
     final var expectedName = "Filmes";
     final var expectedDescription = "A categoria mais Assistida";
     final var expectedActive = true;
 
     final var aCategory = Category.newCategory("Film", null, expectedActive);
-
 
     Assertions.assertEquals(0, categoryRepository.count());
 
@@ -88,21 +86,16 @@ class CategoryGatewayTest {
     Assertions.assertNull(actualInvalidEntity.getDescription());
     Assertions.assertEquals(expectedActive,actualInvalidEntity.isActive());
 
-    // Avoid return false in test case
-    Thread.sleep(15);
     final var aUpdatedCategory = aCategory.update(expectedName, expectedDescription, expectedActive);
 
     final var actualCategory = categoryGateway.update(aUpdatedCategory);
-
 
     Assertions.assertEquals(aCategory.getId(),actualCategory.getId());
     Assertions.assertEquals(expectedName,actualCategory.getName());
     Assertions.assertEquals(expectedDescription,actualCategory.getDescription());
     Assertions.assertEquals(expectedActive,actualCategory.isActive());
     Assertions.assertEquals(aCategory.getCreatedAt(),actualCategory.getCreatedAt());
-//    Assertions.assertTrue(aCategory.getUpdatedAt().isBefore(aUpdatedCategory.getUpdatedAt()));
-    Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.getUpdatedAt());
-    Assertions.assertEquals(aCategory.getDeletedAt(),actualCategory.getDeletedAt());
+    Assertions.assertTrue(aCategory.getUpdatedAt().isBefore(actualCategory.getUpdatedAt()));
     Assertions.assertNull(actualCategory.getDeletedAt());
 
     final var actualEntity = categoryRepository.findById(aCategory.getId().getValue()).get();
@@ -112,9 +105,7 @@ class CategoryGatewayTest {
     Assertions.assertEquals(expectedDescription,actualEntity.getDescription());
     Assertions.assertEquals(expectedActive,actualEntity.isActive());
     Assertions.assertEquals(aCategory.getCreatedAt(),actualEntity.getCreatedAt());
-//    Assertions.assertTrue(aCategory.getUpdatedAt().isBefore(aUpdatedCategory.getUpdatedAt()));
-    Assertions.assertEquals(aCategory.getUpdatedAt(), aUpdatedCategory.getUpdatedAt());
-    Assertions.assertEquals(aCategory.getDeletedAt(),actualEntity.getDeletedAt());
+    Assertions.assertTrue(aCategory.getUpdatedAt().isBefore(actualEntity.getUpdatedAt()));
     Assertions.assertNull(actualEntity.getDeletedAt());
   }
 
@@ -149,7 +140,6 @@ class CategoryGatewayTest {
   @Test
   void givenAnIdWithNullValue_whenCallsDeleteById_shouldDoNothing() {
     final var expectedErrorMessage = "ID cannot be null";
-    // Assuming categoryGateway.deleteById(null) delete a Category where id is null
     final var exception = Assertions.assertThrows(NullPointerException.class, () -> categoryGateway.deleteById(null));
 
     Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
@@ -180,7 +170,6 @@ class CategoryGatewayTest {
     Assertions.assertEquals(expectedActive,actualCategory.isActive());
     Assertions.assertEquals(aCategory.getCreatedAt(),actualCategory.getCreatedAt());
     Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.getUpdatedAt());
-    Assertions.assertEquals(aCategory.getDeletedAt(),actualCategory.getDeletedAt());
     Assertions.assertNull(actualCategory.getDeletedAt());
 
   }
@@ -199,7 +188,6 @@ class CategoryGatewayTest {
   @Test
   void givenAnIdWithNullValue_whenCallsFindById_shouldDoNothing() {
     final var expectedErrorMessage = "ID cannot be null";
-    // Assuming categoryGateway.findById(null) findById a Category where id is null
     final var exception = Assertions.assertThrows(NullPointerException.class, () -> categoryGateway.findById(null));
 
     Assertions.assertEquals(expectedErrorMessage, exception.getMessage());

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-//import pt.amane.ApiTest;
 import pt.amane.E2ETest;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.e2e.MockDsl;
+import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.genre.models.UpdateGenreRequest;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
@@ -35,15 +36,26 @@ public class GenreE2ETest implements MockDsl {
   @Autowired
   private GenreRepository genreRepository;
 
+  @Autowired
+  private CategoryRepository categoryRepository;
+
   @Container
-  private static final MySQLContainer MYSQL_CONTAINER = new MySQLContainer("mysql:8.0.27")
+  private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:latest")
       .withPassword("123456")
       .withUsername("root")
       .withDatabaseName("adm_videos");
 
   @DynamicPropertySource
   public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
-    registry.add("mysql.port", () -> MYSQL_CONTAINER.getMappedPort(3306));
+    registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
+    registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
+    registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
+  }
+
+  @AfterEach
+  void tearDown() {
+    this.genreRepository.deleteAll();
+    this.categoryRepository.deleteAll();
   }
 
   @Override
@@ -212,7 +224,6 @@ public class GenreE2ETest implements MockDsl {
     Assertions.assertEquals(0, genreRepository.count());
 
     final var aRequest = get("/genres/123")
-//        .with(ApiTest.ADMIN_JWT)
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON);
 
@@ -232,7 +243,7 @@ public class GenreE2ETest implements MockDsl {
     final var expectedIsActive = true;
     final var expectedCategories = List.of(filmes);
 
-    final var actualId = givenAGenre("acao", expectedIsActive, expectedCategories);
+    final var actualId = givenAGenre("acao", true, List.of());
 
     final var aRequestBody = new UpdateGenreRequest(
         expectedName,

@@ -3,10 +3,11 @@ package pt.amane.domain.category;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pt.amane.UnitTest;
 import pt.amane.domain.exception.DomainException;
 import pt.amane.domain.validation.handler.ThrowsValidationHandler;
 
-class CategoryTest {
+class CategoryTest extends UnitTest {
 
   @Test
   void givenAnValidParams_whenCallNewCategory_thenInstantiateACategory() {

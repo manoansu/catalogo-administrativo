@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +37,21 @@ public class CastMemberE2ETest implements MockDsl {
     private CastMemberRepository castMemberRepository;
 
     @Container
-    private static final MySQLContainer MYSQL_CONTAINER = new MySQLContainer("mysql:latest")
+    private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:latest")
             .withPassword("123456")
             .withUsername("root")
             .withDatabaseName("adm_videos");
 
     @DynamicPropertySource
     public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
-        registry.add("mysql.port", () -> MYSQL_CONTAINER.getMappedPort(3306));
+        registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
+    }
+
+    @AfterEach
+    void tearDown() {
+        this.castMemberRepository.deleteAll();
     }
 
     @Override

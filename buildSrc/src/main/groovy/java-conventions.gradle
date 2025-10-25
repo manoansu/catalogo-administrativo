@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.vavr:vavr:0.10.6'
+
+    // The versions for JUnit and Mockito will be provided by the Spring Boot BOM
+    // that is applied in the root build.gradle file. This avoids dependency conflicts.
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testImplementation('org.mockito:mockito-junit-jupiter')
+
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+task unitTests(type: Test, group: "verification") {
+    useJUnitPlatform {
+        includeTags("unitTest")
+    }
+}
+task integrationTests(type: Test, group: "verification") {
+    useJUnitPlatform {
+        includeTags("integrationTest")
+    }
+}
+
+task e2eTests(type: Test, group: "verification") {
+    useJUnitPlatform {
+        includeTags("e2eTest")
+    }
+}

@@ -4,23 +4,24 @@ buildscript {
     }
     dependencies {
         classpath 'org.flywaydb:flyway-mysql:9.11.0'
-//        classpath 'org.snakeyaml:snakeyaml:2.2'
     }
 }
 
 plugins {
-    id('java')
+    id('java-conventions')
+    id('jacoco-report-aggregation')
     id('application')
-    id('org.springframework.boot') version('3.4.5')
-    id('io.spring.dependency-management') version('1.1.7')
+    id('org.springframework.boot')
+    id('io.spring.dependency-management')
     id('org.flywaydb.flyway') version('9.11.0')
 }
 
 group = 'pt.amane.infrastructure'
 version = '0.0.1-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+bootJar {
+    archiveFileName.set('application.jar')
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
 }
 
 dependencies {
@@ -31,9 +32,6 @@ dependencies {
 
     implementation("com.google.cloud:google-cloud-storage:2.56.0")
     implementation("com.google.guava:guava:33.4.8-jre")
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation("org.springdoc:springdoc-openapi-webmvc-core:1.8.0")
     implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
@@ -52,7 +50,6 @@ dependencies {
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-//    testImplementation('org.springframework.amqp:spring-rabbit-test:2.4.8')
     testImplementation("org.springframework.amqp:spring-rabbit-test:3.2.6")
 
 
@@ -65,14 +62,30 @@ dependencies {
 
     testImplementation 'com.h2database:h2'
 
-//    testRuntimeOnly('com.h2database:h2')
-
 }
 
 flyway {
     url = System.getenv('FLYWAY_DB') ?: 'jdbc:mysql://localhost:3306/adm_videos'
     user = System.getenv('FLYWAY_USER') ?: 'root'
     password = System.getenv('FLYWAY_PASS') ?: '123456'
+}
+
+testCodeCoverageReport {
+    reports {
+        xml {
+            enabled true
+            destination file("$rootDir/build/reports/jacoco/test/jacocoTestReport.xml")
+        }
+
+        html {
+            enabled true
+            destination file("$rootDir/build/reports/jacoco/test/")
+        }
+    }
+}
+
+tasks.named("jacocoTestReport") {
+    dependsOn tasks.named("testCodeCoverageReport", JacocoReport)
 }
 
 test {

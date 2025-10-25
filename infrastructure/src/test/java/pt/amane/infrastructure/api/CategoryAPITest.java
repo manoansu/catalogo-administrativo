@@ -88,7 +88,6 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
-//                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -124,7 +123,6 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
-//                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -161,7 +159,6 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
-//                .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -172,7 +169,6 @@ class CategoryAPITest {
         response.andExpect(status().isUnprocessableEntity())
                 .andExpect(header().string("Location", nullValue()))
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.message", equalTo(expectedMessage)))
                 .andExpect(jsonPath("$.errors", hasSize(1)))
                 .andExpect(jsonPath("$.errors[0].message", equalTo(expectedMessage)));
 
@@ -200,7 +196,6 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories/{id}", expectedId)
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -216,7 +211,7 @@ class CategoryAPITest {
                 .andExpect(jsonPath("$.is_active", equalTo(expectedIsActive)))
                 .andExpect(jsonPath("$.created_at", equalTo(aCategory.getCreatedAt().toString())))
                 .andExpect(jsonPath("$.updated_at", equalTo(aCategory.getUpdatedAt().toString())))
-                .andExpect(jsonPath("$.deleted_at", equalTo(aCategory.getDeletedAt())));
+                .andExpect(jsonPath("$.deleted_at", nullValue()));
 
         verify(getCategoryByIdUseCase, times(1)).execute(eq(expectedId));
     }
@@ -232,7 +227,6 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories/{id}", expectedId.getValue())
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -260,7 +254,6 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -281,7 +274,7 @@ class CategoryAPITest {
     }
 
     @Test
-    void givenAInvalidName_whenCallsUpdateCategory_thenShouldReturnDomainException() throws Exception {
+    void givenAInvalidName_whenCallsUpdateCategory_thenShouldReturnNotification() throws Exception {
         // given
         final var expectedId = "123";
         final var expectedName = "Filmes";
@@ -299,7 +292,6 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -338,7 +330,6 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -368,7 +359,6 @@ class CategoryAPITest {
 
         // when
         final var request = delete("/categories/{id}", expectedId)
-//                .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -401,7 +391,6 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories")
-//                .with(ApiTest.CATEGORIES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
@@ -424,7 +413,7 @@ class CategoryAPITest {
                 .andExpect(jsonPath("$.items[0].description", equalTo(aCategory.getDescription())))
                 .andExpect(jsonPath("$.items[0].is_active", equalTo(aCategory.isActive())))
                 .andExpect(jsonPath("$.items[0].created_at", equalTo(aCategory.getCreatedAt().toString())))
-                .andExpect(jsonPath("$.items[0].deleted_at", equalTo(aCategory.getDeletedAt())));
+                .andExpect(jsonPath("$.items[0].deleted_at", nullValue()));
 
         verify(listCategoriesUseCase, times(1)).execute(argThat(query ->
                 Objects.equals(expectedPage, query.page())

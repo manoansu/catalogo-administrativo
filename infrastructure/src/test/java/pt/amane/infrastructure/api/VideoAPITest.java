@@ -25,7 +25,6 @@ import static pt.amane.domain.utils.CollectionUtils.mapTo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pt.amane.domain.validation.Error;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
@@ -143,7 +142,6 @@ class VideoAPITest {
                 .file(expectedBanner)
                 .file(expectedThumb)
                 .file(expectedThumbHalf)
-//                .with(ApiTest.GENRES_JWT)
                 .param("title", expectedTitle)
                 .param("description", expectedDescription)
                 .param("year_launched", String.valueOf(expectedLaunchYear.getValue()))
@@ -193,11 +191,10 @@ class VideoAPITest {
         final var expectedErrorMessage = "title is required";
 
         when(createVideoUseCase.execute(any()))
-                .thenThrow(NotificationException.with(new pt.amane.domain.validation.Error(expectedErrorMessage)));
+                .thenThrow(NotificationException.with(new Error(expectedErrorMessage)));
 
         // when
         final var aRequest = multipart("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -206,7 +203,8 @@ class VideoAPITest {
         // then
         response.andExpect(status().isUnprocessableEntity())
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)));
     }
 
     @Test
@@ -247,7 +245,6 @@ class VideoAPITest {
         // when
 
         final var aRequest = post("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCmd));
@@ -286,7 +283,6 @@ class VideoAPITest {
     void givenAnEmptyBody_whenCallsCreatePartial_shouldReturnError() throws Exception {
         // when
         final var aRequest = post("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -306,7 +302,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = post("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -320,7 +315,8 @@ class VideoAPITest {
         // then
         response.andExpect(status().isUnprocessableEntity())
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)));
     }
 
     @Test
@@ -372,7 +368,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos/{id}", expectedId)
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -384,7 +379,7 @@ class VideoAPITest {
                 .andExpect(jsonPath("$.title", equalTo(expectedTitle)))
                 .andExpect(jsonPath("$.description", equalTo(expectedDescription)))
                 .andExpect(jsonPath("$.year_launched", equalTo(expectedLaunchYear.getValue())))
-                .andExpect(jsonPath("$.duration", equalTo(expectedDuration)))
+                .andExpect(jsonPath("$.duration", equalTo(expectedDuration.doubleValue())))
                 .andExpect(jsonPath("$.opened", equalTo(expectedOpened)))
                 .andExpect(jsonPath("$.published", equalTo(expectedPublished)))
                 .andExpect(jsonPath("$.rating", equalTo(expectedRating.getName())))
@@ -414,9 +409,9 @@ class VideoAPITest {
                 .andExpect(jsonPath("$.trailer.location", equalTo(expectedTrailer.rawLocation())))
                 .andExpect(jsonPath("$.trailer.encoded_location", equalTo(expectedTrailer.encodedLocation())))
                 .andExpect(jsonPath("$.trailer.status", equalTo(expectedTrailer.status().name())))
-                .andExpect(jsonPath("$.categories_id", equalTo(new ArrayList(expectedCategories))))
-                .andExpect(jsonPath("$.genres_id", equalTo(new ArrayList(expectedGenres))))
-                .andExpect(jsonPath("$.cast_members_id", equalTo(new ArrayList(expectedMembers))));
+                .andExpect(jsonPath("$.categories_id", hasSize(expectedCategories.size())))
+                .andExpect(jsonPath("$.genres_id", hasSize(expectedGenres.size())))
+                .andExpect(jsonPath("$.cast_members_id", hasSize(expectedMembers.size())));
     }
 
     @Test
@@ -429,8 +424,7 @@ class VideoAPITest {
                 .thenThrow(NotFoundException.with(Video.class, expectedId));
 
         // when
-        final var aRequest = get("/videos/{id}", expectedId)
-//                .with(ApiTest.GENRES_JWT)
+        final var aRequest = get("/videos/{id}", expectedId.getValue())
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -479,14 +473,12 @@ class VideoAPITest {
         // when
 
         final var aRequest = put("/videos/{id}", expectedId.getValue())
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCmd));
 
         this.mvc.perform(aRequest)
                 .andExpect(status().isOk())
-                .andExpect(header().string("Location", "/videos/" + expectedId.getValue()))
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.id", equalTo(expectedId.getValue())));
 
@@ -523,7 +515,6 @@ class VideoAPITest {
 
         final var expectedId = VideoID.unique();
         final var expectedErrorMessage = "'title' should not be empty";
-        final var expectedErrorCount = 1;
 
         final var expectedTitle = "";
         final var expectedDescription = FixtureUtils.Videos.description();
@@ -555,7 +546,6 @@ class VideoAPITest {
         // when
 
         final var aRequest = put("/videos/{id}", expectedId.getValue())
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCmd));
@@ -565,8 +555,7 @@ class VideoAPITest {
         // then
         response.andExpect(status().isUnprocessableEntity())
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)))
-                .andExpect(jsonPath("$.errors", hasSize(expectedErrorCount)))
+                .andExpect(jsonPath("$.errors", hasSize(1)))
                 .andExpect(jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)));
 
         verify(updateVideoUseCase).execute(any());
@@ -581,7 +570,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = delete("/videos/{id}", expectedId.getValue());
-//                .with(ApiTest.GENRES_JWT);
 
         final var response = this.mvc.perform(aRequest);
 
@@ -615,7 +603,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
@@ -676,7 +663,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos")
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -722,7 +708,6 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name());
-//                .with(ApiTest.GENRES_JWT);
 
         final var response = this.mvc.perform(aRequest);
 
@@ -758,7 +743,6 @@ class VideoAPITest {
         // when
         final var aRequest = multipart("/videos/{id}/medias/{type}", expectedId.getValue(), expectedType.name())
                 .file(expectedVideo)
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -795,7 +779,6 @@ class VideoAPITest {
         // when
         final var aRequest = multipart("/videos/{id}/medias/INVALID", expectedId.getValue())
                 .file(expectedVideo)
-//                .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
 

@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import pt.amane.IntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import pt.amane.Main;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.castmember.CastMemberID;
@@ -23,16 +26,19 @@ import pt.amane.domain.utils.FixtureUtils;
 import pt.amane.domain.video.AudioVideoMedia;
 import pt.amane.domain.video.ImageMedia;
 import pt.amane.domain.video.Video;
+import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoID;
 import pt.amane.domain.video.VideoSearchQuery;
 import pt.amane.infrastructure.video.persistence.VideoJpaEntity;
 import pt.amane.infrastructure.video.persistence.VideoRepository;
 
-@IntegrationTest
+@ActiveProfiles("test-integration")
+@SpringBootTest(classes = Main.class)
+@Transactional
 class VideoGatewayImplTest {
 
   @Autowired
-  private VideoGatewayImpl videoGateway;
+  private VideoGateway videoGateway;
 
   @Autowired
   private CastMemberGateway castMemberGateway;
@@ -146,6 +152,9 @@ class VideoGatewayImplTest {
     Assertions.assertEquals(expectedBanner.name(), actualVideo.getBanner().get().name());
     Assertions.assertEquals(expectedThumb.name(), actualVideo.getThumbnail().get().name());
     Assertions.assertEquals(expectedThumbHalf.name(), actualVideo.getThumbnailHalf().get().name());
+    Assertions.assertNotNull(actualVideo.getCreatedAt());
+    Assertions.assertNotNull(actualVideo.getUpdatedAt());
+    Assertions.assertEquals(actualVideo.getCreatedAt(), actualVideo.getUpdatedAt());
 
     final var persistedVideo = videoRepository.findById(actualVideo.getId().getValue()).get();
 
@@ -164,6 +173,9 @@ class VideoGatewayImplTest {
     Assertions.assertEquals(expectedBanner.name(), persistedVideo.getBanner().getName());
     Assertions.assertEquals(expectedThumb.name(), persistedVideo.getThumbnail().getName());
     Assertions.assertEquals(expectedThumbHalf.name(), persistedVideo.getThumbnailHalf().getName());
+    Assertions.assertNotNull(persistedVideo.getCreatedAt());
+    Assertions.assertNotNull(persistedVideo.getUpdatedAt());
+    Assertions.assertEquals(persistedVideo.getCreatedAt(), persistedVideo.getUpdatedAt());
   }
 
   @Test
@@ -215,6 +227,9 @@ class VideoGatewayImplTest {
     Assertions.assertTrue(actualVideo.getBanner().isEmpty());
     Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
     Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
+    Assertions.assertNotNull(actualVideo.getCreatedAt());
+    Assertions.assertNotNull(actualVideo.getUpdatedAt());
+    Assertions.assertEquals(actualVideo.getCreatedAt(), actualVideo.getUpdatedAt());
 
     final var persistedVideo = videoRepository.findById(actualVideo.getId().getValue()).get();
 
@@ -233,6 +248,9 @@ class VideoGatewayImplTest {
     Assertions.assertNull(persistedVideo.getBanner());
     Assertions.assertNull(persistedVideo.getThumbnail());
     Assertions.assertNull(persistedVideo.getThumbnailHalf());
+    Assertions.assertNotNull(persistedVideo.getCreatedAt());
+    Assertions.assertNotNull(persistedVideo.getUpdatedAt());
+    Assertions.assertEquals(persistedVideo.getCreatedAt(), persistedVideo.getUpdatedAt());
   }
 
   @Test
