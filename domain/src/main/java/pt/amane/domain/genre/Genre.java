@@ -31,7 +31,7 @@ public class Genre extends AggregateRoot<GenreID> {
     super(genreID);
     this.name = name;
     this.active = active;
-    this.categories = new ArrayList<>(categories);
+    this.categories = new ArrayList<>(categories != null ? categories : Collections.emptyList());
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
@@ -42,7 +42,7 @@ public class Genre extends AggregateRoot<GenreID> {
     final var genreID = GenreID.unique();
     final var now = InstantUtils.now();
     final var deletedAt = isActive ? null : now;
-    return new Genre(genreID, aName, isActive, List.of(), now, now, deletedAt);
+    return new Genre(genreID, aName, isActive, new ArrayList<>(), now, now, deletedAt);
   }
 
   public static Genre with(
@@ -143,6 +143,9 @@ public class Genre extends AggregateRoot<GenreID> {
     if (aCategoryID == null) {
       return this;
     }
+    if (this.categories == null) {
+      this.categories = new ArrayList<>();
+    }
     this.categories.add(aCategoryID);
     this.updatedAt = InstantUtils.now();
     return this;
@@ -155,6 +158,9 @@ public class Genre extends AggregateRoot<GenreID> {
     if (categories == null || categories.isEmpty()) {
       return this;
     }
+    if (this.categories == null) {
+      this.categories = new ArrayList<>();
+    }
     this.categories.addAll(categories);
     this.updatedAt = InstantUtils.now();
     return this;
@@ -166,6 +172,9 @@ public class Genre extends AggregateRoot<GenreID> {
   public Genre removeCategory(final CategoryID aCategoryID) {
     if (aCategoryID == null) {
       return this;
+    }
+    if (this.categories == null) {
+      this.categories = new ArrayList<>();
     }
     this.categories.remove(aCategoryID);
     this.updatedAt = InstantUtils.now();

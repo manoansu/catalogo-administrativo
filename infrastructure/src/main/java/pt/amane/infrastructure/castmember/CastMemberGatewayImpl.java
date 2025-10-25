@@ -1,6 +1,7 @@
 package pt.amane.infrastructure.castmember;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class CastMemberGatewayImpl implements CastMemberGateway {
     final var ids = StreamSupport.stream(castMemberIDS.spliterator(), false)
         .map(CastMemberID::getValue)
         .toList();
-    return this.castMemberRepository.existsByIdIn(ids).stream()
+    return this.castMemberRepository.idsThatExist(ids).stream()
         .map(CastMemberID::from)
         .toList();
   }

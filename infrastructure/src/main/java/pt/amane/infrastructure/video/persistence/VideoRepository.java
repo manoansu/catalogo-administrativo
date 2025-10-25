@@ -4,11 +4,12 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pt.amane.domain.video.VideoPreview;
 
-public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
+public interface VideoRepository extends JpaRepository<VideoJpaEntity, String>, JpaSpecificationExecutor<VideoJpaEntity> {
 
   @Query("""
             select distinct new pt.amane.domain.video.VideoPreview(

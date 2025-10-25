@@ -23,6 +23,7 @@ import pt.amane.domain.utils.CollectionUtils;
 import pt.amane.domain.video.Rating;
 import pt.amane.domain.video.Video;
 import pt.amane.domain.video.VideoID;
+import pt.amane.domain.video.VideoPreview;
 
 @Table(name = "videos")
 @Entity(name = "Video")
@@ -214,6 +215,16 @@ public class VideoJpaEntity {
         getCastMembers().stream()
             .map(it -> CastMemberID.from(it.getId().getCastMemberId()))
             .collect(Collectors.toSet())
+    );
+  }
+
+  public VideoPreview toPreview() {
+    return new VideoPreview(
+        getId(),
+        getTitle(),
+        getDescription(),
+        getCreatedAt(),
+        getUpdatedAt()
     );
   }
 

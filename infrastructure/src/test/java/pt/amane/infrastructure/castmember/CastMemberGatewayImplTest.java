@@ -334,12 +334,18 @@ class CastMemberGatewayImplTest {
   }
 
   private void mockMembers() {
-    castMemberRepository.saveAllAndFlush(List.of(
-        CastMemberJpaEntity.from(CastMember.newCastmember("Kit Harington", CastMemberType.ACTOR)),
-        CastMemberJpaEntity.from(CastMember.newCastmember("Vin Diesel", CastMemberType.ACTOR)),
-        CastMemberJpaEntity.from(CastMember.newCastmember("Quentin Tarantino", CastMemberType.DIRECTOR)),
-        CastMemberJpaEntity.from(CastMember.newCastmember("Jason Momoa", CastMemberType.ACTOR)),
-        CastMemberJpaEntity.from(CastMember.newCastmember("Martin Scorsese", CastMemberType.DIRECTOR))
-    ));
+    try {
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newCastmember("Kit Harington", CastMemberType.ACTOR)));
+        Thread.sleep(1);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newCastmember("Vin Diesel", CastMemberType.ACTOR)));
+        Thread.sleep(1);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newCastmember("Quentin Tarantino", CastMemberType.DIRECTOR)));
+        Thread.sleep(1);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newCastmember("Jason Momoa", CastMemberType.ACTOR)));
+        Thread.sleep(1);
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(CastMember.newCastmember("Martin Scorsese", CastMemberType.DIRECTOR)));
+    } catch (InterruptedException e) {
+        // ignore
+    }
   }
 }
