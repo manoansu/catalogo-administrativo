@@ -4,9 +4,9 @@ name: CI Pipeline
 # Na instrução on abaixo vai nos dizer através de qual gatilho esse ficheiro de workflows vai ser executado
 on:
   push:
-    branches:
-      - 'feature/**'
-      - 'bugfix/**'
+#    branches:
+#      - 'feature/**'
+#      - 'bugfix/**'
   # Habilita o gatilho manual através da interface do Github Actions
   workflow_dispatch:
 
@@ -27,5 +27,5 @@ jobs:
           distribution: 'adopt'
       # 3. Executar os testes da aplicação
       - name: Run application tests
-        run: gradle test  # Comando para executar os testes no windows
-#        run: ./gradlew test  # Comando para executar os testes no mac e linux
+#        run: gradle test  # Comando para executar os testes no windows
+        run: ./gradlew test  # Comando para executar os testes no mac e linux
