@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static pt.amane.domain.utils.CollectionUtils.mapTo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.validation.Error;
 import java.time.Year;
 import java.util.List;
@@ -56,7 +57,6 @@ import pt.amane.application.video.update.UpdateVideoUseCase;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.NotFoundException;
-import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.utils.FixtureUtils;
