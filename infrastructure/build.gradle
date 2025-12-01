@@ -11,7 +11,7 @@ plugins {
     id('java-conventions')
     id('jacoco-report-aggregation')
     id('application')
-    id('org.springframework.boot')
+    id('org.springframework.boot') version '3.4.5'
     id('io.spring.dependency-management')
     id('org.flywaydb.flyway') version('9.11.0')
 }
