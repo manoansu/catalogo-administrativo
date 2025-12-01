@@ -1,31 +1,31 @@
-## The name for the CI Pipeline workflows
-#name: CI Pipeline
-#
-## In the ‘on’ instruction below, it will tell us through which trigger this workflow file will be executed.
-#on:
-#  push:
-##    branches:
-##      - 'feature/**'
-##      - 'bugfix/**'
-#  # Enable the manual trigger through the GitHub Actions interface.
-#  workflow_dispatch:
-#
-#jobs:
-#  # Job for running/execution the tests
-#  tests:
-#    name: Tests runner
-#    runs-on: ubuntu-latest
-#    # Configuration of steps for our job
-#    steps:
-#      # 1. Resource code check-out
-#      - uses: actions/checkout@v3
-#      # 2. Configure/Set up the JDK on the machine
-#      - name: Set up JDK@21
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '21'
-#          distribution: 'adopt'
-#      # 3. Run the application tests
-#      - name: Run application tests
-##        run: gradle test  # Command to run the tests on Windows
-#        run: ./gradlew test  # Command to run the tests on Mac and Linux
+# The name for the CI Pipeline workflows
+name: CI Pipeline
+
+# In the ‘on’ instruction below, it will tell us through which trigger this workflow file will be executed.
+on:
+  push:
+#    branches:
+#      - 'feature/**'
+#      - 'bugfix/**'
+  # Enable the manual trigger through the GitHub Actions interface.
+  workflow_dispatch:
+
+jobs:
+  # Job for running/execution the tests
+  tests:
+    name: Tests runner
+    runs-on: ubuntu-latest
+    # Configuration of steps for our job
+    steps:
+      # 1. Resource code check-out
+      - uses: actions/checkout@v3
+      # 2. Configure/Set up the JDK on the machine
+      - name: Set up JDK@21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+      # 3. Run the application tests
+      - name: Run application tests
+#        run: gradle test  # Command to run the tests on Windows
+        run: ./gradlew test  # Command to run the tests on Mac and Linux
