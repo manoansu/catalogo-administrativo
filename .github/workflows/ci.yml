@@ -28,4 +28,4 @@ jobs:
       # 3. Run the application tests
       - name: Run application tests
 #        run: gradle test  # Command to run the tests on Windows
-        run: ./gradlew test --stacktrace # Command to run the tests on Mac and Linux
+        run: ./gradlew test --stacktrace # Command to run the tests and display logs on stacktrace on Mac and Linux environment
