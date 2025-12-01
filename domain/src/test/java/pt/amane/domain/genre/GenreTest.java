@@ -63,7 +63,6 @@ class GenreTest {
         Do mesmo modo, a estrutura atual da organização apresenta tendências no sentido de aprovar a
         manutenção das novas proposições.
         """;
-
     final var expectedIsActive = true;
     final var expectedErrorCount = 1;
     final var expectedErrorMessage = "'name' must be between 1 and 255 characters";
