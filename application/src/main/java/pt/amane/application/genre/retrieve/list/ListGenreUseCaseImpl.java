@@ -5,7 +5,7 @@ import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.pagination.SearchQuery;
 import pt.amane.domain.validation.ObjectsValidator;
 
-public non-sealed class ListGenreUseCaseImpl extends ListGenreUseCase{
+public class ListGenreUseCaseImpl extends ListGenreUseCase{
 
   private final GenreGateway genreGateway;
 

@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
-import pt.amane.Main;
+import pt.amane.IntegrationTest;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
@@ -18,12 +15,12 @@ import pt.amane.domain.genre.Genre;
 import pt.amane.domain.genre.GenreGateway;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.pagination.SearchQuery;
+import pt.amane.infrastructure.category.persistence.CategoryJpaEntity;
+import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.genre.persistence.GenreJpaEntity;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
-@ActiveProfiles("test-integration")
-@SpringBootTest(classes = Main.class)
-@Transactional
+@IntegrationTest
 class GenreGatewayImplTest {
 
   @Autowired
@@ -34,6 +31,9 @@ class GenreGatewayImplTest {
 
   @Autowired
   private GenreRepository genreRepository;
+
+  @Autowired
+  private CategoryRepository categoryRepository;
 
   @Test
   void testDependenciesInjected() {
@@ -128,14 +128,14 @@ class GenreGatewayImplTest {
   void givenAValidGenreWithoutCategories_whenCallsUpdateGenreWithCategories_shouldPersistGenre() {
     // given
     final var filmes =
-        categoryGateway.create(Category.newCategory("Filmes", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Filmes", null, true)));
 
     final var series =
-        categoryGateway.create(Category.newCategory("Séries", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Séries", null, true)));
 
     final var expectedName = "Ação";
     final var expectedIsActive = true;
-    final var expectedCategories = List.of(filmes.getId(), series.getId());
+    final var expectedCategories = List.of(CategoryID.from(filmes.getId()), CategoryID.from(series.getId()));
 
     final var aGenre = Genre.newGenre("ac", expectedIsActive);
 
@@ -179,17 +179,17 @@ class GenreGatewayImplTest {
   void givenAValidGenreWithCategories_whenCallsUpdateGenreCleaningCategories_shouldPersistGenre() {
     // given
     final var filmes =
-        categoryGateway.create(Category.newCategory("Filmes", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Filmes", null, true)));
 
     final var series =
-        categoryGateway.create(Category.newCategory("Séries", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Séries", null, true)));
 
     final var expectedName = "Ação";
     final var expectedIsActive = true;
     final var expectedCategories = List.<CategoryID>of();
 
     final var aGenre = Genre.newGenre("ac", expectedIsActive);
-    aGenre.addCategories(List.of(filmes.getId(), series.getId()));
+    aGenre.addCategories(List.of(CategoryID.from(filmes.getId()), CategoryID.from(series.getId())));
 
     final var expectedId = aGenre.getId();
 
@@ -369,14 +369,14 @@ class GenreGatewayImplTest {
   void givenAPrePersistedGenre_whenCallsFindById_shouldReturnGenre() {
     // given
     final var filmes =
-        categoryGateway.create(Category.newCategory("Filmes", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Filmes", null, true)));
 
     final var series =
-        categoryGateway.create(Category.newCategory("Séries", null, true));
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(Category.newCategory("Séries", null, true)));
 
     final var expectedName = "Ação";
     final var expectedIsActive = true;
-    final var expectedCategories = List.of(filmes.getId(), series.getId());
+    final var expectedCategories = List.of(CategoryID.from(filmes.getId()), CategoryID.from(series.getId()));
 
     final var aGenre = Genre.newGenre(expectedName, expectedIsActive);
     aGenre.addCategories(expectedCategories);
@@ -548,30 +548,11 @@ class GenreGatewayImplTest {
   }
 
   private void mockGenres() {
-    try {
-        categoryGateway.create(Category.newCategory("Comédia romântica", null, true));
-        Thread.sleep(1);
-        categoryGateway.create(Category.newCategory("Ação", null, true));
-        Thread.sleep(1);
-        categoryGateway.create(Category.newCategory("Drama", null, true));
-        Thread.sleep(1);
-        categoryGateway.create(Category.newCategory("Terror", null, true));
-        Thread.sleep(1);
-        categoryGateway.create(Category.newCategory("Ficção científica", null, true));
-        Thread.sleep(1);
-
-        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Comédia romântica", true)));
-        Thread.sleep(1);
-        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ação", true)));
-        Thread.sleep(1);
-        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Drama", true)));
-        Thread.sleep(1);
-        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Terror", true)));
-        Thread.sleep(1);
-        genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ficção científica", true)));
-    } catch (InterruptedException e) {
-        // ignore
-    }
+    genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Comédia romântica", true)));
+    genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ação", true)));
+    genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Drama", true)));
+    genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Terror", true)));
+    genreRepository.saveAndFlush(GenreJpaEntity.from(Genre.newGenre("Ficção científica", true)));
   }
 
   private List<CategoryID> sorted(final List<CategoryID> expectedCategories) {

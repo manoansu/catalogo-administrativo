@@ -4,7 +4,7 @@ import pt.amane.domain.genre.GenreGateway;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.validation.ObjectsValidator;
 
-public non-sealed class DeleteGenreUseCaseImpl extends DeleteGenreUseCase{
+public class DeleteGenreUseCaseImpl extends DeleteGenreUseCase{
 
   private final GenreGateway genreGateway;
 

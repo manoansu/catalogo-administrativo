@@ -7,7 +7,7 @@ import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.validation.handler.Notification;
 
-public non-sealed class CreateCategoryUseCaseImpl extends CreateCategoryUseCase {
+public class CreateCategoryUseCaseImpl extends CreateCategoryUseCase {
 
   private final CategoryGateway categoryGateway;
 

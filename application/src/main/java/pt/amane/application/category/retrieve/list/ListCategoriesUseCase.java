@@ -8,8 +8,7 @@ import pt.amane.domain.pagination.SearchQuery;
  * In java world, you always work for abstration, not for implmentation,
  * because when this class has a new feature , you can only change the implementation not abstration.
  */
-public sealed abstract class ListCategoriesUseCase
-    extends UseCase<SearchQuery, Pagination<CategoryListOutput>>
-    permits ListCategoriesUseCaseImpl {
+public abstract class ListCategoriesUseCase
+    extends UseCase<SearchQuery, Pagination<CategoryListOutput>> {
 
 }

@@ -23,19 +23,19 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.castmember.create.CreateCastMemberOutput;
-import pt.amane.application.castmember.create.CreateCastMemberUseCaseImpl;
-import pt.amane.application.castmember.delete.DeleteCastMemberUseCaseImpl;
+import pt.amane.application.castmember.create.CreateCastMemberUseCase;
+import pt.amane.application.castmember.delete.DeleteCastMemberUseCase;
 import pt.amane.application.castmember.retrieve.get.GetCastMemberByIdOutput;
-import pt.amane.application.castmember.retrieve.get.GetCastMemberByIdUseCaseImpl;
+import pt.amane.application.castmember.retrieve.get.GetCastMemberByIdUseCase;
 import pt.amane.application.castmember.retrieve.list.ListCastMembersOutput;
-import pt.amane.application.castmember.retrieve.list.ListCastMembersUseCaseImpl;
+import pt.amane.application.castmember.retrieve.list.ListCastMembersUseCase;
 import pt.amane.application.castmember.update.UpdateCastMemberOutput;
-import pt.amane.application.castmember.update.UpdateCastMemberUseCaseImpl;
+import pt.amane.application.castmember.update.UpdateCastMemberUseCase;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.castmember.CastMemberType;
@@ -47,7 +47,7 @@ import pt.amane.domain.validation.Error;
 import pt.amane.infrastructure.castmember.model.CreateCastMemberRequest;
 import pt.amane.infrastructure.castmember.model.UpdateCastMemberRequest;
 
-@ControllerTest(controllers = CastMemberAPI.class)
+@ControllerTest
 class CastMemberAPITest {
 
     @Autowired
@@ -56,20 +56,20 @@ class CastMemberAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockitoBean
-    private CreateCastMemberUseCaseImpl createCastMemberUseCase;
+    @MockBean
+    private CreateCastMemberUseCase createCastMemberUseCase;
 
-    @MockitoBean
-    private DeleteCastMemberUseCaseImpl deleteCastMemberUseCase;
+    @MockBean
+    private DeleteCastMemberUseCase deleteCastMemberUseCase;
 
-    @MockitoBean
-    private GetCastMemberByIdUseCaseImpl getCastMemberByIdUseCase;
+    @MockBean
+    private GetCastMemberByIdUseCase getCastMemberByIdUseCase;
 
-    @MockitoBean
-    private ListCastMembersUseCaseImpl listCastMembersUseCase;
+    @MockBean
+    private ListCastMembersUseCase listCastMembersUseCase;
 
-    @MockitoBean
-    private UpdateCastMemberUseCaseImpl updateCastMemberUseCase;
+    @MockBean
+    private UpdateCastMemberUseCase updateCastMemberUseCase;
 
     @Test
     void givenAValidCommand_whenCallsCreateCastMember_shouldReturnItsIdentifier() throws Exception {

@@ -6,7 +6,7 @@ import pt.amane.domain.genre.GenreGateway;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.validation.ObjectsValidator;
 
-public non-sealed class GetGenreByIdUseCaseImpl extends GetGenreByIdUseCase {
+public class GetGenreByIdUseCaseImpl extends GetGenreByIdUseCase {
 
   private  final GenreGateway genreGateway;
 

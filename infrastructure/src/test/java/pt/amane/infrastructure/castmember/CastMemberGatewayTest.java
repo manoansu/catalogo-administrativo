@@ -3,13 +3,16 @@ package pt.amane.infrastructure.castmember;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pt.amane.GatewayTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import pt.amane.Main;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.utils.FixtureUtils;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 
-@GatewayTest
+@ActiveProfiles("test-integration")
+@SpringBootTest(classes = Main.class)
 class CastMemberGatewayTest {
 
   @Autowired

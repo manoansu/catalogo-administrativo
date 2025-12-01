@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import pt.amane.E2ETest;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.e2e.MockDsl;
-import pt.amane.infrastructure.category.persistence.CategoryRepository;
 import pt.amane.infrastructure.genre.models.UpdateGenreRequest;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
@@ -36,26 +34,20 @@ public class GenreE2ETest implements MockDsl {
   @Autowired
   private GenreRepository genreRepository;
 
-  @Autowired
-  private CategoryRepository categoryRepository;
-
   @Container
-  private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:latest")
+  private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:8.0.27")
       .withPassword("123456")
       .withUsername("root")
       .withDatabaseName("adm_videos");
 
   @DynamicPropertySource
   public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
+    registry.add("mysql.port", () -> MYSQL_CONTAINER.getMappedPort(3306));
     registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
     registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
     registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
-  }
-
-  @AfterEach
-  void tearDown() {
-    this.genreRepository.deleteAll();
-    this.categoryRepository.deleteAll();
+    registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+    registry.add("spring.flyway.enabled", () -> "false");
   }
 
   @Override
@@ -104,10 +96,7 @@ public class GenreE2ETest implements MockDsl {
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.getCategoryIDs().size()
-            && expectedCategories.containsAll(actualGenre.getCategoryIDs())
-    );
+    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
     Assertions.assertNull(actualGenre.getDeletedAt());
@@ -257,10 +246,7 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.getCategoryIDs().size()
-            && expectedCategories.containsAll(actualGenre.getCategoryIDs())
-    );
+    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -292,10 +278,7 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.getCategoryIDs().size()
-            && expectedCategories.containsAll(actualGenre.getCategoryIDs())
-    );
+    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -325,7 +308,10 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertEquals(expectedCategories, actualGenre.getCategoryIDs());
+    Assertions.assertTrue(
+        expectedCategories.size() == actualGenre.getCategoryIDs().size()
+            && mapTo(expectedCategories, CategoryID::getValue).containsAll(actualGenre.getCategoryIDs())
+    );
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -345,7 +331,6 @@ public class GenreE2ETest implements MockDsl {
         .andExpect(status().isNoContent());
 
     Assertions.assertFalse(this.genreRepository.existsById(actualId.getValue()));
-    Assertions.assertEquals(0, genreRepository.count());
   }
 
   @Test

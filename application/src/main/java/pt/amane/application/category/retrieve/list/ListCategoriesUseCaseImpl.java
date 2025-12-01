@@ -5,7 +5,7 @@ import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.pagination.SearchQuery;
 
-public non-sealed class ListCategoriesUseCaseImpl extends ListCategoriesUseCase{
+public class ListCategoriesUseCaseImpl extends ListCategoriesUseCase{
 
   private final CategoryGateway categoryGateway;
 

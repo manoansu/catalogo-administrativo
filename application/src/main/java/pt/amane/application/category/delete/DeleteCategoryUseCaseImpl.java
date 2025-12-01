@@ -4,7 +4,7 @@ import java.util.Objects;
 import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 
-public non-sealed class DeleteCategoryUseCaseImpl extends DeleteCategoryUseCase {
+public class DeleteCategoryUseCaseImpl extends DeleteCategoryUseCase {
 
   private final CategoryGateway categoryGateway;
 

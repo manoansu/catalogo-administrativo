@@ -4,7 +4,7 @@ import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.validation.ObjectsValidator;
 
-public non-sealed class DeleteCastMemberUseCaseImpl extends DeleteCastMemberUseCase{
+public class DeleteCastMemberUseCaseImpl extends DeleteCastMemberUseCase{
 
   private final CastMemberGateway castMemberGateway;
 

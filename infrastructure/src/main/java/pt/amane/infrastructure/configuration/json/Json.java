@@ -1,5 +1,6 @@
 package pt.amane.infrastructure.configuration.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -35,6 +36,7 @@ public enum Json {
           DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES,
           SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
       )
+      .serializationInclusion(JsonInclude.Include.ALWAYS) // Add this line
       .modules(new JavaTimeModule(), new Jdk8Module(), afterburnerModule())
       .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
       .build();

@@ -37,7 +37,7 @@ public class CastMemberE2ETest implements MockDsl {
     private CastMemberRepository castMemberRepository;
 
     @Container
-    private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:latest")
+    private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:8.0.27")
             .withPassword("123456")
             .withUsername("root")
             .withDatabaseName("adm_videos");
@@ -47,6 +47,8 @@ public class CastMemberE2ETest implements MockDsl {
         registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.flyway.enabled", () -> "false");
     }
 
     @AfterEach

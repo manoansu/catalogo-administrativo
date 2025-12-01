@@ -6,7 +6,7 @@ import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.validation.ObjectsValidator;
 import pt.amane.domain.validation.handler.Notification;
 
-public non-sealed class CreateCastMemberUseCaseImpl extends CreateCastMemberUseCase {
+public class CreateCastMemberUseCaseImpl extends CreateCastMemberUseCase {
 
   private final CastMemberGateway castMemberGateway;
 

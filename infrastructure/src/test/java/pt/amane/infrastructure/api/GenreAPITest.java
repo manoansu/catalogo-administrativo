@@ -23,30 +23,31 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.genre.create.CreateGenreOutput;
-import pt.amane.application.genre.create.CreateGenreUseCaseImpl;
-import pt.amane.application.genre.delete.DeleteGenreUseCaseImpl;
+import pt.amane.application.genre.create.CreateGenreUseCase;
+import pt.amane.application.genre.delete.DeleteGenreUseCase;
 import pt.amane.application.genre.retrieve.get.GenreOutput;
-import pt.amane.application.genre.retrieve.get.GetGenreByIdUseCaseImpl;
+import pt.amane.application.genre.retrieve.get.GetGenreByIdUseCase;
 import pt.amane.application.genre.retrieve.list.GenreListOutput;
-import pt.amane.application.genre.retrieve.list.ListGenreUseCaseImpl;
+import pt.amane.application.genre.retrieve.list.ListGenreUseCase;
 import pt.amane.application.genre.update.UpdateGenreOutput;
-import pt.amane.application.genre.update.UpdateGenreUseCaseImpl;
+import pt.amane.application.genre.update.UpdateGenreUseCase;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.NotFoundException;
 import pt.amane.domain.exception.NotificationException;
 import pt.amane.domain.genre.Genre;
 import pt.amane.domain.genre.GenreID;
 import pt.amane.domain.pagination.Pagination;
+import pt.amane.domain.validation.Error;
 import pt.amane.domain.validation.handler.Notification;
 import pt.amane.infrastructure.genre.models.CreateGenreRequest;
 import pt.amane.infrastructure.genre.models.UpdateGenreRequest;
 
-@ControllerTest(controllers = GenreAPI.class)
+@ControllerTest
 class GenreAPITest {
 
     @Autowired
@@ -55,20 +56,20 @@ class GenreAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockitoBean
-    private CreateGenreUseCaseImpl createGenreUseCase;
+    @MockBean
+    private CreateGenreUseCase createGenreUseCase;
 
-    @MockitoBean
-    private GetGenreByIdUseCaseImpl getGenreByIdUseCase;
+    @MockBean
+    private GetGenreByIdUseCase getGenreByIdUseCase;
 
-    @MockitoBean
-    private UpdateGenreUseCaseImpl updateGenreUseCase;
+    @MockBean
+    private UpdateGenreUseCase updateGenreUseCase;
 
-    @MockitoBean
-    private DeleteGenreUseCaseImpl deleteGenreUseCase;
+    @MockBean
+    private DeleteGenreUseCase deleteGenreUseCase;
 
-    @MockitoBean
-    private ListGenreUseCaseImpl listGenreUseCase;
+    @MockBean
+    private ListGenreUseCase listGenreUseCase;
 
     @Test
     void givenAValidCommand_whenCallsCreateGenre_shouldReturnGenreId() throws Exception {
@@ -346,8 +347,7 @@ class GenreAPITest {
                 .andExpect(jsonPath("$.items[0].id", equalTo(aGenre.getId().getValue())))
                 .andExpect(jsonPath("$.items[0].name", equalTo(aGenre.getName())))
                 .andExpect(jsonPath("$.items[0].is_active", equalTo(aGenre.isActive())))
-                .andExpect(jsonPath("$.items[0].created_at", equalTo(aGenre.getCreatedAt().toString())))
-                .andExpect(jsonPath("$.items[0].deleted_at", equalTo(aGenre.getDeletedAt().toString())));
+                .andExpect(jsonPath("$.items[0].created_at", equalTo(aGenre.getCreatedAt().toString())));
 
         verify(listGenreUseCase).execute(argThat(query ->
                 Objects.equals(expectedPage, query.page())

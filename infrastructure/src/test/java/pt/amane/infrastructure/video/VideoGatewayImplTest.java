@@ -154,6 +154,7 @@ class VideoGatewayImplTest {
     Assertions.assertEquals(expectedThumbHalf.name(), actualVideo.getThumbnailHalf().get().name());
     Assertions.assertNotNull(actualVideo.getCreatedAt());
     Assertions.assertNotNull(actualVideo.getUpdatedAt());
+    Assertions.assertEquals(actualVideo.getCreatedAt(), actualVideo.getUpdatedAt());
 
     final var persistedVideo = videoRepository.findById(actualVideo.getId().getValue()).get();
 
@@ -174,6 +175,7 @@ class VideoGatewayImplTest {
     Assertions.assertEquals(expectedThumbHalf.name(), persistedVideo.getThumbnailHalf().getName());
     Assertions.assertNotNull(persistedVideo.getCreatedAt());
     Assertions.assertNotNull(persistedVideo.getUpdatedAt());
+    Assertions.assertEquals(persistedVideo.getCreatedAt(), persistedVideo.getUpdatedAt());
   }
 
   @Test
@@ -765,10 +767,53 @@ class VideoGatewayImplTest {
 
   @ParameterizedTest
   @CsvSource({
-      "createdAt,asc,0,10,4,4,System Design no Mercado Livre na prática",
-      "createdAt,desc,0,10,4,4,Aula de empreendedorismo",
+      "system,0,10,1,1,System Design no Mercado Livre na prática",
+      "microsser,0,10,1,1,Não cometa esses erros ao trabalhar com Microsserviços",
+      "empreendedorismo,0,10,1,1,Aula de empreendedorismo",
+      "21,0,10,1,1,21.1 Implementação dos testes integrados do findAll",
+  })
+  void givenAValidTerm_whenCallsFindAll_shouldReturnFiltered(
+      final String expectedTerms,
+      final int expectedPage,
+      final int expectedPerPage,
+      final int expectedItemsCount,
+      final long expectedTotal,
+      final String expectedVideo
+  ) {
+    // given
+    mockVideos();
+
+    final var expectedSort = "title";
+    final var expectedDirection = "asc";
+
+    final var aQuery = new VideoSearchQuery(
+        expectedPage,
+        expectedPerPage,
+        expectedTerms,
+        expectedSort,
+        expectedDirection,
+        Set.of(),
+        Set.of(),
+        Set.of()
+    );
+
+    // when
+    final var actualPage = videoGateway.findAll(aQuery);
+
+    // then
+    Assertions.assertEquals(expectedPage, actualPage.currentPage());
+    Assertions.assertEquals(expectedPerPage, actualPage.perPage());
+    Assertions.assertEquals(expectedTotal, actualPage.total());
+    Assertions.assertEquals(expectedItemsCount, actualPage.items().size());
+    Assertions.assertEquals(expectedVideo, actualPage.items().get(0).title());
+  }
+
+  @ParameterizedTest
+  @CsvSource({
       "title,asc,0,10,4,4,21.1 Implementação dos testes integrados do findAll",
       "title,desc,0,10,4,4,System Design no Mercado Livre na prática",
+      "createdAt,asc,0,10,4,4,System Design no Mercado Livre na prática",
+      "createdAt,desc,0,10,4,4,Aula de empreendedorismo",
   })
   void givenAValidSortAndDirection_whenCallsFindAll_shouldReturnOrdered(
       final String expectedSort,
@@ -806,107 +851,68 @@ class VideoGatewayImplTest {
     Assertions.assertEquals(expectedVideo, actualPage.items().get(0).title());
   }
 
-  @ParameterizedTest
-  @CsvSource({
-      "21,0,10,1,1,21.1 Implementação dos testes integrados do findAll",
-      "system,0,10,1,1,System Design no Mercado Livre na prática",
-      "empreendedorismo,0,10,1,1,Aula de empreendedorismo",
-      "microsser,0,10,1,1,Não cometa esses erros ao trabalhar com Microsserviços",
-  })
-  void givenAValidTerm_whenCallsFindAll_shouldReturnFiltered(
-      final String expectedTerms,
-      final int expectedPage,
-      final int expectedPerPage,
-      final int expectedItemsCount,
-      final long expectedTotal,
-      final String expectedVideo
-  ) {
-    // given
-    mockVideos();
-
-    final var expectedSort = "title";
-    final var expectedDirection = "asc";
-
-    final var aQuery = new VideoSearchQuery(
-        expectedPage,
-        expectedPerPage,
-        expectedTerms,
-        expectedSort,
-        expectedDirection,
-        Set.of(),
-        Set.of(),
-        Set.of()
-    );
-
-    // when
-    final var actualPage = videoGateway.findAll(aQuery);
-
-    // then
-    Assertions.assertEquals(expectedPage, actualPage.currentPage());
-    Assertions.assertEquals(expectedPerPage, actualPage.perPage());
-    Assertions.assertEquals(expectedItemsCount, actualPage.items().size());
-    Assertions.assertEquals(expectedVideo, actualPage.items().get(0).title());
-    Assertions.assertEquals(expectedTotal, actualPage.total());
-  }
-
   private void mockVideos() {
-    final var video1 = Video.newVideo(
-        "System Design no Mercado Livre na prática",
-        FixtureUtils.Videos.description(),
-        Year.of(2022),
-        FixtureUtils.duration(),
-        FixtureUtils.bool(),
-        FixtureUtils.bool(),
-        FixtureUtils.Videos.rating(),
-        Set.of(lives.getId()),
-        Set.of(tech.getId()),
-        Set.of(wesley.getId(), gabriel.getId())
-    );
+    try {
+        final var video1 = Video.newVideo(
+            "System Design no Mercado Livre na prática",
+            FixtureUtils.Videos.description(),
+            Year.of(2022),
+            FixtureUtils.duration(),
+            FixtureUtils.bool(),
+            FixtureUtils.bool(),
+            FixtureUtils.Videos.rating(),
+            Set.of(lives.getId()),
+            Set.of(tech.getId()),
+            Set.of(wesley.getId(), gabriel.getId())
+        );
+        videoRepository.saveAndFlush(VideoJpaEntity.from(video1));
+        Thread.sleep(1);
 
-    final var video2 = Video.newVideo(
-        "Não cometa esses erros ao trabalhar com Microsserviços",
-        FixtureUtils.Videos.description(),
-        Year.of(FixtureUtils.year()),
-        FixtureUtils.duration(),
-        FixtureUtils.bool(),
-        FixtureUtils.bool(),
-        FixtureUtils.Videos.rating(),
-        Set.of(),
-        Set.of(),
-        Set.of()
-    );
+        final var video2 = Video.newVideo(
+            "Não cometa esses erros ao trabalhar com Microsserviços",
+            FixtureUtils.Videos.description(),
+            Year.of(FixtureUtils.year()),
+            FixtureUtils.duration(),
+            FixtureUtils.bool(),
+            FixtureUtils.bool(),
+            FixtureUtils.Videos.rating(),
+            Set.of(),
+            Set.of(),
+            Set.of()
+        );
+        videoRepository.saveAndFlush(VideoJpaEntity.from(video2));
+        Thread.sleep(1);
 
-    final var video3 = Video.newVideo(
-        "21.1 Implementação dos testes integrados do findAll",
-        FixtureUtils.Videos.description(),
-        Year.of(FixtureUtils.year()),
-        FixtureUtils.duration(),
-        FixtureUtils.bool(),
-        FixtureUtils.bool(),
-        FixtureUtils.Videos.rating(),
-        Set.of(aulas.getId()),
-        Set.of(tech.getId()),
-        Set.of(gabriel.getId())
-    );
+        final var video3 = Video.newVideo(
+            "21.1 Implementação dos testes integrados do findAll",
+            FixtureUtils.Videos.description(),
+            Year.of(FixtureUtils.year()),
+            FixtureUtils.duration(),
+            FixtureUtils.bool(),
+            FixtureUtils.bool(),
+            FixtureUtils.Videos.rating(),
+            Set.of(aulas.getId()),
+            Set.of(tech.getId()),
+            Set.of(gabriel.getId())
+        );
+        videoRepository.saveAndFlush(VideoJpaEntity.from(video3));
+        Thread.sleep(1);
 
-    final var video4 = Video.newVideo(
-        "Aula de empreendedorismo",
-        FixtureUtils.Videos.description(),
-        Year.of(FixtureUtils.year()),
-        FixtureUtils.duration(),
-        FixtureUtils.bool(),
-        FixtureUtils.bool(),
-        FixtureUtils.Videos.rating(),
-        Set.of(aulas.getId()),
-        Set.of(business.getId()),
-        Set.of(wesley.getId())
-    );
-
-    videoRepository.saveAllAndFlush(List.of(
-        VideoJpaEntity.from(video1),
-        VideoJpaEntity.from(video2),
-        VideoJpaEntity.from(video3),
-        VideoJpaEntity.from(video4)
-    ));
+        final var video4 = Video.newVideo(
+            "Aula de empreendedorismo",
+            FixtureUtils.Videos.description(),
+            Year.of(FixtureUtils.year()),
+            FixtureUtils.duration(),
+            FixtureUtils.bool(),
+            FixtureUtils.bool(),
+            FixtureUtils.Videos.rating(),
+            Set.of(aulas.getId()),
+            Set.of(business.getId()),
+            Set.of(wesley.getId())
+        );
+        videoRepository.saveAndFlush(VideoJpaEntity.from(video4));
+    } catch (InterruptedException e) {
+        // ignore
+    }
   }
 }

@@ -11,7 +11,7 @@ import pt.amane.domain.exception.DomainException;
 import pt.amane.domain.exception.NotFoundException;
 import pt.amane.domain.validation.handler.Notification;
 
-public non-sealed class UpdateCategoryUseCaseImpl extends UpdateCategoryUseCase {
+public class UpdateCategoryUseCaseImpl extends UpdateCategoryUseCase {
 
   private final CategoryGateway categoryGateway;
 

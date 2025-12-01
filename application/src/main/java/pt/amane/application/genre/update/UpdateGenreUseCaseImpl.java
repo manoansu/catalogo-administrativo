@@ -17,7 +17,7 @@ import pt.amane.domain.validation.ObjectsValidator;
 import pt.amane.domain.validation.ValidationHandler;
 import pt.amane.domain.validation.handler.Notification;
 
-public non-sealed class UpdateGenreUseCaseImpl extends UpdateGenreUseCase{
+public class UpdateGenreUseCaseImpl extends UpdateGenreUseCase{
 
   private final CategoryGateway categoryGateway;
   private final GenreGateway genreGateway;

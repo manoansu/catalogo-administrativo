@@ -5,7 +5,7 @@ import pt.amane.domain.pagination.Pagination;
 import pt.amane.domain.pagination.SearchQuery;
 import pt.amane.domain.validation.ObjectsValidator;
 
-public non-sealed class ListCastMembersUseCaseImpl extends ListCastMembersUseCase {
+public class ListCastMembersUseCaseImpl extends ListCastMembersUseCase {
 
   private final CastMemberGateway castMemberGateway;
 

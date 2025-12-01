@@ -26,7 +26,7 @@ import pt.amane.domain.video.VideoGateway;
 import pt.amane.domain.video.VideoMediaType;
 import pt.amane.domain.video.VideoResource;
 
-public non-sealed class CreateVideoUseCaseImpl extends CreateVideoUseCase {
+public class CreateVideoUseCaseImpl extends CreateVideoUseCase {
 
   private final CategoryGateway categoryGateway;
   private final CastMemberGateway castMemberGateway;

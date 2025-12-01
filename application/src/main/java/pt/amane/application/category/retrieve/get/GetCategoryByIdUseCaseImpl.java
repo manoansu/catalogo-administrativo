@@ -7,7 +7,7 @@ import pt.amane.domain.category.CategoryGateway;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.NotFoundException;
 
-public non-sealed class GetCategoryByIdUseCaseImpl extends GetCategoryByIdUseCase{
+public class GetCategoryByIdUseCaseImpl extends GetCategoryByIdUseCase{
 
   private final CategoryGateway categoryGateway;
 

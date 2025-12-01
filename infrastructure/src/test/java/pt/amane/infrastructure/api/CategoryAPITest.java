@@ -26,19 +26,19 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.category.create.CreateCategoryOutput;
-import pt.amane.application.category.create.CreateCategoryUseCaseImpl;
-import pt.amane.application.category.delete.DeleteCategoryUseCaseImpl;
+import pt.amane.application.category.create.CreateCategoryUseCase;
+import pt.amane.application.category.delete.DeleteCategoryUseCase;
 import pt.amane.application.category.retrieve.get.CategoryOutput;
-import pt.amane.application.category.retrieve.get.GetCategoryByIdUseCaseImpl;
+import pt.amane.application.category.retrieve.get.GetCategoryByIdUseCase;
 import pt.amane.application.category.retrieve.list.CategoryListOutput;
-import pt.amane.application.category.retrieve.list.ListCategoriesUseCaseImpl;
+import pt.amane.application.category.retrieve.list.ListCategoriesUseCase;
 import pt.amane.application.category.update.UpdateCategoryOutput;
-import pt.amane.application.category.update.UpdateCategoryUseCaseImpl;
+import pt.amane.application.category.update.UpdateCategoryUseCase;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.exception.DomainException;
@@ -49,7 +49,7 @@ import pt.amane.domain.validation.handler.Notification;
 import pt.amane.infrastructure.category.model.CreateCategoryRequest;
 import pt.amane.infrastructure.category.model.UpdateCategoryRequest;
 
-@ControllerTest(controllers = CategoryAPI.class)
+@ControllerTest
 class CategoryAPITest {
 
     @Autowired
@@ -58,20 +58,20 @@ class CategoryAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockitoBean
-    private CreateCategoryUseCaseImpl createCategoryUseCase;
+    @MockBean
+    private CreateCategoryUseCase createCategoryUseCase;
 
-    @MockitoBean
-    private GetCategoryByIdUseCaseImpl getCategoryByIdUseCase;
+    @MockBean
+    private GetCategoryByIdUseCase getCategoryByIdUseCase;
 
-    @MockitoBean
-    private UpdateCategoryUseCaseImpl updateCategoryUseCase;
+    @MockBean
+    private UpdateCategoryUseCase updateCategoryUseCase;
 
-    @MockitoBean
-    private DeleteCategoryUseCaseImpl deleteCategoryUseCase;
+    @MockBean
+    private DeleteCategoryUseCase deleteCategoryUseCase;
 
-    @MockitoBean
-    private ListCategoriesUseCaseImpl listCategoriesUseCase;
+    @MockBean
+    private ListCategoriesUseCase listCategoriesUseCase;
 
     @Test
     void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() throws Exception {
