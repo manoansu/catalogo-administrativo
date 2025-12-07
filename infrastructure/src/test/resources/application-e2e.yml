@@ -15,5 +15,5 @@ spring:
     password: guest
 
 # Keycloak Config
-  keycloak:
-    auth-server-url: http://localhost:8080/auth
+keycloak:
+  auth-server-url: http://localhost:8080/auth
