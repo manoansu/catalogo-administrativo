@@ -27,9 +27,8 @@ jacoco {
     toolVersion = "0.8.11"
 }
 
-tasks.named("test") {
-    dependsOn(unitTests)
-    useJUnitPlatform()
+tasks.named("check") {
+    dependsOn(unitTests, integrationTests, e2eTests)
 }
 
 task unitTests(type: Test, group: "verification") {
@@ -37,6 +36,7 @@ task unitTests(type: Test, group: "verification") {
         includeTags("unitTest")
     }
 }
+
 task integrationTests(type: Test, group: "verification") {
     useJUnitPlatform {
         includeTags("integrationTest")
@@ -47,4 +47,8 @@ task e2eTests(type: Test, group: "verification") {
     useJUnitPlatform {
         includeTags("e2eTest")
     }
+}
+
+tasks.named("test") {
+    enabled = false
 }
