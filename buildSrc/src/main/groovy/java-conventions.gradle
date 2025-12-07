@@ -31,6 +31,10 @@ tasks.named("test") {
     useJUnitPlatform()
 }
 
+tasks.named("test") {
+    dependsOn(unitTests)
+}
+
 task unitTests(type: Test, group: "verification") {
     useJUnitPlatform {
         includeTags("unitTest")
