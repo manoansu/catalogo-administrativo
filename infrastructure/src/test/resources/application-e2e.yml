@@ -26,3 +26,11 @@ keycloak:
   auth-server-url: http://localhost:8080/auth
   realm: master
   resource: admin-videos
+
+# Google Cloud Storage Config
+google:
+  cloud:
+    storage:
+      bucket-name=test
+      project-id=test
+      credentials-file=test
