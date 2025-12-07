@@ -28,11 +28,8 @@ jacoco {
 }
 
 tasks.named("test") {
-    useJUnitPlatform()
-}
-
-tasks.named("test") {
     dependsOn(unitTests)
+    useJUnitPlatform()
 }
 
 task unitTests(type: Test, group: "verification") {
