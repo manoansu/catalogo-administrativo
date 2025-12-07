@@ -126,7 +126,7 @@ class CastMemberTest extends UnitTest {
     Assertions.assertEquals(expectedName, aCastMember.getName());
     Assertions.assertEquals(expectedType,aCastMember.getType());
     Assertions.assertEquals(actualCreatedAt,aCastMember.getCreatedAt());
-    Assertions.assertNotEquals(actualUpdatedAt, aCastMember.getUpdatedAt());
+    Assertions.assertTrue(aCastMember.getUpdatedAt().isAfter(actualUpdatedAt));
 
   }
 
