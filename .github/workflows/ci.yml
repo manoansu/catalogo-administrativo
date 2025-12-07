@@ -4,9 +4,10 @@ name: CI Pipeline
 # In the ‘on’ instruction below, it will tell us through which trigger this workflow file will be executed.
 on:
   push:
-#    branches:
-#      - 'feature/**'
-#      - 'bugfix/**'
+    branches:
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'modulos/**'
   # Enable the manual trigger through the GitHub Actions interface.
   workflow_dispatch:
 
