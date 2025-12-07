@@ -7,7 +7,7 @@ on:
     branches:
       - 'feature/**'
       - 'bugfix/**'
-      - 'modulos/**'
+#      - 'modulos/**'
   # Enable the manual trigger through the GitHub Actions interface.
   workflow_dispatch:
 

@@ -1,0 +1,90 @@
+# The name for the CI/CD Pipeline workflows, helps to configure and build the application, test,
+#docker image and deployment application on GitHub Actions and push it to docker hub.
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - 'hotfix/**'
+      - 'release/**'
+      - 'modulos/**'
+  workflow_dispatch:
+
+env:
+  # The name of the Docker Hub image, created when we created the repository to push the image.
+  IMAGE_NAME: amane25/catalogo-administrativo-de-video-java
+
+jobs:
+  # Job to run the tests.
+  tests:
+    name: Tests runner
+    runs-on: ubuntu-latest
+    # Configuration of the steps of our job
+    steps:
+      # 1. Check out the source code
+      - uses: actions/checkout@v3
+      # 2. Configure the JDK on the machine
+      - name: Set up JDK@21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+      # 3. Run the application tests.
+      - name: Run application tests
+        run: ./gradlew test
+
+  # Job to build the application.
+  build:
+    name: Build runner
+    needs: tests
+    runs-on: ubuntu-latest
+    # Configuration of the steps of our job
+    steps:
+      # 1. Check out the source code.
+      - uses: actions/checkout@v3
+      # 2. Configure the JDK on the machine
+      - name: Set up JDK@17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+      # 3. Validate the existence of the Gradle wrapper.
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v3
+#        uses: gradle/actions/wrapper-validation@v3
+#        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      # 4. Realizar o build para gerar o artefato final
+      - name: Build da aplicação
+        uses: gradle/actions/setup-gradle@v3
+#        uses: gradle/gradle-build-action@v3
+#        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: clean build -x test
+      # 5. Define the variable branch name
+      - name: Set BUILD_TAG
+        run: |
+          echo BUILD_TAG=$(echo ${{ github.head_ref || github.ref_name }} | sed "s,/,_,g")-${{ github.run_number }} >> $GITHUB_ENV
+      # 6. Print BUILD_TAG
+      - name: Print BUILD_TAG defined
+        run: |
+          echo "Branch     ---> ${{ github.head_ref || github.ref_name }}"
+          echo "Run number ---> ${{ github.run_number }}"
+          echo "Tag        ---> ${{ env.BUILD_TAG }}"
+      # 7. Log in to DockerHub
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          # Environment variable, created in git secrets variable action (username and password)
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      # 8. Build & Deploy image
+      - name: Build & push da imagem do docker
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          build-args: VERSION=${{ env.BUILD_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.BUILD_TAG }}
