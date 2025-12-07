@@ -31,6 +31,6 @@ keycloak:
 google:
   cloud:
     storage:
-      bucket-name=test
-      project-id=test
-      credentials-file=test
+      bucket-name: test
+      project-id: test
+      credentials-file: test
