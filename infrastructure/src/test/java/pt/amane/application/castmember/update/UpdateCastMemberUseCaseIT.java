@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.castmember.CastMember;
 import pt.amane.domain.castmember.CastMemberGateway;
@@ -21,7 +21,7 @@ import pt.amane.domain.utils.FixtureUtils;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 
 @IntegrationTest
-public class UpdateCastMemberUseCaseIT {
+class UpdateCastMemberUseCaseIT {
 
     @Autowired
     private UpdateCastMemberUseCase useCase;
@@ -29,7 +29,7 @@ public class UpdateCastMemberUseCaseIT {
     @Autowired
     private CastMemberRepository castMemberRepository;
 
-    @MockBean
+     @MockitoBean
     private CastMemberGateway castMemberGateway;
 
     @Test

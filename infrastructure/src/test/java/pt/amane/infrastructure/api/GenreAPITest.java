@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.genre.create.CreateGenreOutput;
@@ -56,19 +56,19 @@ class GenreAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockBean
+     @MockitoBean
     private CreateGenreUseCase createGenreUseCase;
 
-    @MockBean
+     @MockitoBean
     private GetGenreByIdUseCase getGenreByIdUseCase;
 
-    @MockBean
+     @MockitoBean
     private UpdateGenreUseCase updateGenreUseCase;
 
-    @MockBean
+     @MockitoBean
     private DeleteGenreUseCase deleteGenreUseCase;
 
-    @MockBean
+     @MockitoBean
     private ListGenreUseCase listGenreUseCase;
 
     @Test

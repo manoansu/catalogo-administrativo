@@ -1,9 +1,13 @@
 package pt.amane.application.genre.delete;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.genre.Genre;
 import pt.amane.domain.genre.GenreGateway;
@@ -11,17 +15,13 @@ import pt.amane.domain.genre.GenreID;
 import pt.amane.infrastructure.genre.persistence.GenreJpaEntity;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-
 @IntegrationTest
-public class DeleteGenreUseCaseIT {
+class DeleteGenreUseCaseIT {
 
     @Autowired
     private DeleteGenreUseCase useCase;
 
-    @SpyBean
+     @MockitoSpyBean
     private GenreGateway genreGateway;
 
     @Autowired

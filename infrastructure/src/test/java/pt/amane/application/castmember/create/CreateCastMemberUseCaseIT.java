@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.castmember.CastMemberGateway;
 import pt.amane.domain.castmember.CastMemberType;
@@ -24,7 +24,7 @@ class CreateCastMemberUseCaseIT {
     @Autowired
     private CastMemberRepository castMemberRepository;
 
-    @SpyBean // Reverted to SpyBean
+     @MockitoSpyBean
     private CastMemberGateway castMemberGateway;
 
     @Test

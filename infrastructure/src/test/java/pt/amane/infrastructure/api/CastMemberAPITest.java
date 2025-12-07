@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.castmember.create.CreateCastMemberOutput;
@@ -56,19 +56,19 @@ class CastMemberAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockBean
+     @MockitoBean
     private CreateCastMemberUseCase createCastMemberUseCase;
 
-    @MockBean
+     @MockitoBean
     private DeleteCastMemberUseCase deleteCastMemberUseCase;
 
-    @MockBean
+     @MockitoBean
     private GetCastMemberByIdUseCase getCastMemberByIdUseCase;
 
-    @MockBean
+     @MockitoBean
     private ListCastMembersUseCase listCastMembersUseCase;
 
-    @MockBean
+     @MockitoBean
     private UpdateCastMemberUseCase updateCastMemberUseCase;
 
     @Test

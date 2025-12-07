@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
@@ -28,10 +28,10 @@ class UpdateGenreUseCaseIT {
     @Autowired
     private UpdateGenreUseCase useCase;
 
-    @MockBean
+     @MockitoBean
     private CategoryGateway categoryGateway;
 
-    @MockBean
+     @MockitoBean
     private GenreGateway genreGateway;
 
     @Autowired

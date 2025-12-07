@@ -1,12 +1,14 @@
 package pt.amane.application.genre.retrieve.get;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import pt.amane.IntegrationTest;
 import pt.amane.domain.category.Category;
 import pt.amane.domain.category.CategoryGateway;
@@ -16,19 +18,16 @@ import pt.amane.domain.genre.Genre;
 import pt.amane.domain.genre.GenreGateway;
 import pt.amane.domain.genre.GenreID;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-
 @IntegrationTest
 class GetGenreByIdUseCaseIT {
 
     @Autowired
     private GetGenreByIdUseCase useCase;
 
-    @MockBean
+     @MockitoBean
     private CategoryGateway categoryGateway;
 
-    @MockBean
+     @MockitoBean
     private GenreGateway genreGateway;
 
     @Test

@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pt.amane.ControllerTest;
 import pt.amane.application.category.create.CreateCategoryOutput;
@@ -58,19 +58,19 @@ class CategoryAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-    @MockBean
+     @MockitoBean
     private CreateCategoryUseCase createCategoryUseCase;
 
-    @MockBean
+     @MockitoBean
     private GetCategoryByIdUseCase getCategoryByIdUseCase;
 
-    @MockBean
+     @MockitoBean
     private UpdateCategoryUseCase updateCategoryUseCase;
 
-    @MockBean
+     @MockitoBean
     private DeleteCategoryUseCase deleteCategoryUseCase;
 
-    @MockBean
+     @MockitoBean
     private ListCategoriesUseCase listCategoriesUseCase;
 
     @Test
