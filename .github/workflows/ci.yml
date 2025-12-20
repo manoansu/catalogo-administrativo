@@ -20,6 +20,7 @@ jobs:
       docker:
         image: docker:24.0.5-dind
         options: --privileged
+
     # Configuration of steps for our job
     steps:
       # 1. Resource code check-out
@@ -30,6 +31,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
       # 3. Run the application tests
       - name: Run application tests
 #        run: gradle test  # Command to run the tests on Windows
