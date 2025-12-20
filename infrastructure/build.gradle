@@ -74,13 +74,13 @@ flyway {
 testCodeCoverageReport {
     reports {
         xml {
-            enabled true
-            destination file("$rootDir/build/reports/jacoco/test/jacocoTestReport.xml")
+            required.set(true)
+            outputLocation.set(file("${rootDir}/build/reports/jacoco/test/jacocoTestReport.xml"))
         }
 
         html {
-            enabled true
-            destination file("$rootDir/build/reports/jacoco/test/")
+            required.set(true)
+            outputLocation.set(file("${rootDir}/build/reports/jacoco/test/"))
         }
     }
 }
