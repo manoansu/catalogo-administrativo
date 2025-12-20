@@ -42,6 +42,11 @@ public class InMemoryStorageService implements StorageService {
 
   @Override
   public void deleteAll(final List<String> ids) {
-    ids.forEach(this.storage::remove);
+    final var namesToRemove = this.storage.keySet().stream()
+        .filter(key -> ids.stream()
+            .anyMatch(key::startsWith))
+        .toList();
+
+    namesToRemove.forEach(this.storage::remove);
   }
 }

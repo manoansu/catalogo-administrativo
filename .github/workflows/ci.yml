@@ -30,3 +30,11 @@ jobs:
       - name: Run application tests
 #        run: gradle test  # Command to run the tests on Windows
         run: ./gradlew test --stacktrace # Command to run the tests and display logs on stacktrace on Mac and Linux environment
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3.3.2
+        with:
+          cache-read-only: true
+
+      - name: Build application artifact
+        run: ./gradlew clean build -x check

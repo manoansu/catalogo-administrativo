@@ -1,5 +1,62 @@
-# Tell hibernate to create or update the schema, but not drop it on shutdown.
+# DataSource Config
+server:
+  port: 0
+
 spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  # RabbitMQ Config
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: adm_videos
+    password: 123456
+
+  # JPA Config
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+        hibernate:
+            dialect: org.hibernate.dialect.MySQL8Dialect
+  flyway:
+    enabled: false
+# Keycloak Config
+keycloak:
+  auth-server-url: http://localhost:8080/auth
+  realm: master
+  resource: admin-videos
+  credentials:
+    secret: test
+
+# Google Cloud Storage Config
+google:
+  cloud:
+    storage:
+      bucket-name: test
+      project-id: test
+      credentials-file: test
+
+# AMQP Queues Config
+amqp:
+  exchanges:
+    video-events: test.video.events
+  queues:
+    video-events:
+      queue: test.video.launched
+      exchange: test.video.events
+      routing-key: test.video.launched
+    video-created:
+      queue: test.video.created
+      exchange: test.video.events
+      routing-key: dummy-test-routing-key
+    video-encoded:
+      queue: test.video.encoded
+      exchange: test.video.events
+      routing-key: test.video.encoded

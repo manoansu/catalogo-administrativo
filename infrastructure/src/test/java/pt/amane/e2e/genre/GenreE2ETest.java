@@ -8,25 +8,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import pt.amane.E2ETest;
 import pt.amane.domain.category.CategoryID;
 import pt.amane.domain.genre.GenreID;
+import pt.amane.e2e.E2ETestListener;
 import pt.amane.e2e.MockDsl;
+import pt.amane.e2e.MySQLCleanUpExtension;
 import pt.amane.infrastructure.genre.models.UpdateGenreRequest;
 import pt.amane.infrastructure.genre.persistence.GenreRepository;
 
 @E2ETest
 @Testcontainers
-public class GenreE2ETest implements MockDsl {
+@ExtendWith(MySQLCleanUpExtension.class)
+public class GenreE2ETest extends E2ETestListener implements MockDsl {
 
   @Autowired
   private MockMvc mvc;
@@ -34,20 +36,10 @@ public class GenreE2ETest implements MockDsl {
   @Autowired
   private GenreRepository genreRepository;
 
-  @Container
-  private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:8.0.27")
-      .withPassword("123456")
-      .withUsername("root")
-      .withDatabaseName("adm_videos");
-
-  @DynamicPropertySource
-  public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
-    registry.add("mysql.port", () -> MYSQL_CONTAINER.getMappedPort(3306));
-    registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
-    registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
-    registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
-    registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
-    registry.add("spring.flyway.enabled", () -> "false");
+  @BeforeEach
+  @Transactional
+  void clean() {
+    genreRepository.deleteAll();
   }
 
   @Override
@@ -57,9 +49,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToCreateANewGenreWithValidValues() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var expectedName = "Ação";
     final var expectedIsActive = true;
     final var expectedCategories = List.<CategoryID>of();
@@ -70,10 +59,8 @@ public class GenreE2ETest implements MockDsl {
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.getCategoryIDs().size()
-            && expectedCategories.containsAll(actualGenre.getCategoryIDs())
-    );
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.getCategoryIDs().size());
+    Assertions.assertTrue(expectedCategories.containsAll(actualGenre.getCategoryIDs()));
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
     Assertions.assertNull(actualGenre.getDeletedAt());
@@ -81,9 +68,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToCreateANewGenreWithCategories() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var filmes = givenACategory("Filmes", null, true);
 
     final var expectedName = "Ação";
@@ -96,7 +80,8 @@ public class GenreE2ETest implements MockDsl {
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
-    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.getCategoryIDs().size());
+    Assertions.assertTrue(mapTo(expectedCategories, CategoryID::getValue).containsAll(mapTo(actualGenre.getCategoryIDs(), CategoryID::getValue)));
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
     Assertions.assertNull(actualGenre.getDeletedAt());
@@ -104,9 +89,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToNavigateThruAllGenres() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     givenAGenre("Ação", true, List.of());
     givenAGenre("Esportes", true, List.of());
     givenAGenre("Drama", true, List.of());
@@ -145,9 +127,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToSearchBetweenAllGenres() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     givenAGenre("Ação", true, List.of());
     givenAGenre("Esportes", true, List.of());
     givenAGenre("Drama", true, List.of());
@@ -163,9 +142,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToSortAllGenresByNameDesc() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     givenAGenre("Ação", true, List.of());
     givenAGenre("Esportes", true, List.of());
     givenAGenre("Drama", true, List.of());
@@ -183,9 +159,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToGetAGenreByItsIdentifier() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var filmes = givenACategory("Filmes", null, true);
 
     final var expectedName = "Ação";
@@ -197,10 +170,8 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = retrieveAGenre(actualId);
 
     Assertions.assertEquals(expectedName, actualGenre.name());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.categories().size()
-            && mapTo(expectedCategories, CategoryID::getValue).containsAll(actualGenre.categories())
-    );
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.categories().size());
+    Assertions.assertTrue(mapTo(expectedCategories, CategoryID::getValue).containsAll(actualGenre.categories()));
     Assertions.assertEquals(expectedIsActive, actualGenre.active());
     Assertions.assertNotNull(actualGenre.createdAt());
     Assertions.assertNotNull(actualGenre.updatedAt());
@@ -209,9 +180,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToSeeATreatedErrorByGettingANotFoundGenre() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var aRequest = get("/genres/123")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON);
@@ -223,9 +191,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToUpdateAGenreByItsIdentifier() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var filmes = givenACategory("Filmes", null, true);
 
     final var expectedName = "Ação";
@@ -246,7 +211,8 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.getCategoryIDs().size());
+    Assertions.assertTrue(mapTo(expectedCategories, CategoryID::getValue).containsAll(mapTo(actualGenre.getCategoryIDs(), CategoryID::getValue)));
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -255,9 +221,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToInactivateAGenreByItsIdentifier() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var filmes = givenACategory("Filmes", null, true);
 
     final var expectedName = "Ação";
@@ -278,7 +241,8 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertTrue(expectedCategories.size() == actualGenre.getCategoryIDs().size());
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.getCategoryIDs().size());
+    Assertions.assertTrue(mapTo(expectedCategories, CategoryID::getValue).containsAll(mapTo(actualGenre.getCategoryIDs(), CategoryID::getValue)));
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -287,9 +251,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToActivateAGenreByItsIdentifier() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var expectedName = "Ação";
     final var expectedIsActive = true;
     final var expectedCategories = List.<CategoryID>of();
@@ -308,10 +269,8 @@ public class GenreE2ETest implements MockDsl {
     final var actualGenre = genreRepository.findById(actualId.getValue()).get();
 
     Assertions.assertEquals(expectedName, actualGenre.getName());
-    Assertions.assertTrue(
-        expectedCategories.size() == actualGenre.getCategoryIDs().size()
-            && mapTo(expectedCategories, CategoryID::getValue).containsAll(actualGenre.getCategoryIDs())
-    );
+    Assertions.assertEquals(expectedCategories.size(), actualGenre.getCategoryIDs().size());
+    Assertions.assertTrue(mapTo(expectedCategories, CategoryID::getValue).containsAll(mapTo(actualGenre.getCategoryIDs(), CategoryID::getValue)));
     Assertions.assertEquals(expectedIsActive, actualGenre.isActive());
     Assertions.assertNotNull(actualGenre.getCreatedAt());
     Assertions.assertNotNull(actualGenre.getUpdatedAt());
@@ -320,9 +279,6 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldBeAbleToDeleteAGenreByItsIdentifier() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     final var filmes = givenACategory("Filmes", null, true);
 
     final var actualId = givenAGenre("Ação", true, List.of(filmes));
@@ -335,12 +291,8 @@ public class GenreE2ETest implements MockDsl {
 
   @Test
   void asACatalogAdminIShouldNotSeeAnErrorByDeletingANotExistentGenre() throws Exception {
-    Assertions.assertTrue(MYSQL_CONTAINER.isRunning());
-    Assertions.assertEquals(0, genreRepository.count());
-
     deleteAGenre(GenreID.from("12313"))
         .andExpect(status().isNoContent());
-
     Assertions.assertEquals(0, genreRepository.count());
   }
 }

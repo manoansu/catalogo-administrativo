@@ -7,28 +7,30 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pt.amane.e2e.MySQLCleanUpExtension.MYSQL_CONTAINER;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import pt.amane.E2ETest;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.castmember.CastMemberType;
 import pt.amane.domain.utils.FixtureUtils;
+import pt.amane.e2e.E2ETestListener;
 import pt.amane.e2e.MockDsl;
+import pt.amane.e2e.MySQLCleanUpExtension;
 import pt.amane.infrastructure.castmember.persistence.CastMemberRepository;
 
 @E2ETest
 @Testcontainers
-public class CastMemberE2ETest implements MockDsl {
+@ExtendWith(MySQLCleanUpExtension.class)
+public class CastMemberE2ETest extends E2ETestListener implements MockDsl {
 
     @Autowired
     private MockMvc mvc;
@@ -36,24 +38,10 @@ public class CastMemberE2ETest implements MockDsl {
     @Autowired
     private CastMemberRepository castMemberRepository;
 
-    @Container
-    private static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>("mysql:8.0.27")
-            .withPassword("123456")
-            .withUsername("root")
-            .withDatabaseName("adm_videos");
-
-    @DynamicPropertySource
-    public static void setDatasourceProperties(final DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
-        registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
-        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
-        registry.add("spring.flyway.enabled", () -> "false");
-    }
-
-    @AfterEach
-    void tearDown() {
-        this.castMemberRepository.deleteAll();
+    @BeforeEach
+    @Transactional
+    void clean() {
+        castMemberRepository.deleteAll();
     }
 
     @Override
