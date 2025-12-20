@@ -1,9 +1,8 @@
 services:
   app:
     container_name: adm_videos_app
-    build:
-      context: .
-      dockerfile: Dockerfile
+#    build:
+    image: amane25/catalogo-administrativo-de-video-java:latest
     profiles: ["app"]
     restart: unless-stopped
     env_file:
