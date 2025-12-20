@@ -19,6 +19,7 @@ jobs:
     services:
       docker:
         image: docker:24.0.5-dind
+        options: --privileged
     # Configuration of steps for our job
     steps:
       # 1. Resource code check-out
@@ -41,3 +42,6 @@ jobs:
 
       - name: Build application artifact
         run: ./gradlew clean build -x check
+
+      - name: Run integration tests
+        run: ./gradlew :infrastructure:integrationTests --stacktrace --info
