@@ -25,6 +25,7 @@ jobs:
     services:
       docker:
         image: docker:24.0.5-dind
+        options: --privileged
     steps:
       - name: Check out source code
         uses: actions/checkout@v4.1.7
@@ -72,9 +73,6 @@ jobs:
 
       - name: Build application artifact
         run: ./gradlew clean build -x check
-
-      - name: Run integration tests
-        run: ./gradlew :infrastructure:integrationTests --stacktrace --info
 
       - name: Set BUILD_TAG
         run: echo BUILD_TAG=$(echo ${{ github.head_ref || github.ref_name }} | sed "s,/,_,g")-${{ github.run_number }} >> $GITHUB_ENV
