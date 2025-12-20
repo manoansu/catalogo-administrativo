@@ -1,5 +1,6 @@
 package pt.amane.infrastructure.services.local;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class InMemoryStorageService implements StorageService {
   }
 
   @Override
-  public void deleteAll(final List<String> ids) {
+  public void deleteAll(final Collection<String> ids) {
     final var namesToRemove = this.storage.keySet().stream()
         .filter(key -> ids.stream()
             .anyMatch(key::startsWith))

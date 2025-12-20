@@ -1,5 +1,6 @@
 package pt.amane.infrastructure.services;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import pt.amane.domain.video.Resource;
@@ -15,6 +16,6 @@ public interface StorageService {
 
   List<String> list(String prefix);
 
-  void deleteAll(final List<String> ids);
+  void deleteAll(final Collection<String> ids);
 
 }

@@ -3,6 +3,7 @@ package pt.amane.infrastructure.services.impl;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -51,7 +52,7 @@ public class GCStorageService implements StorageService {
   }
 
   @Override
-  public void deleteAll(final List<String> ids) {
+  public void deleteAll(final Collection<String> ids) {
     if (ids == null || ids.isEmpty())
       return;
 
