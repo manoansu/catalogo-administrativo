@@ -44,6 +44,7 @@ class MediaResourceGatewayImplTest {
 
   @Test
   void givenValidResource_whenCallsStorageAudioVideo_shouldStoreIt() {
+
     // given
     final var expectedVideoId = VideoID.unique();
     final var expectedType = VideoMediaType.VIDEO;
@@ -71,6 +72,7 @@ class MediaResourceGatewayImplTest {
 
   @Test
   void givenValidResource_whenCallsStorageImage_shouldStoreIt() {
+
     // given
     final var expectedVideoId = VideoID.unique();
     final var expectedType = VideoMediaType.BANNER;
@@ -94,6 +96,7 @@ class MediaResourceGatewayImplTest {
 
   @Test
   void givenValidVideoId_whenCallsGetResource_shouldReturnIt() {
+
     // given
     final var videoOne = VideoID.unique();
     final var expectedType = VideoMediaType.VIDEO;
@@ -114,6 +117,7 @@ class MediaResourceGatewayImplTest {
 
   @Test
   void givenInvalidType_whenCallsGetResource_shouldReturnEmpty() {
+
     // given
     final var videoOne = VideoID.unique();
     final var expectedType = VideoMediaType.THUMBNAIL;
@@ -133,6 +137,7 @@ class MediaResourceGatewayImplTest {
 
   @Test
   void givenValidVideoId_whenCallsClearResources_shouldDeleteAll() {
+
     // given
     final var videoOne = VideoID.unique();
     final var videoTwo = VideoID.unique();
