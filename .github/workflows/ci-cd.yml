@@ -19,7 +19,7 @@ env:
 
 jobs:
   # Job to run the tests.
-  build-tests:
+  tests:
     name: Tests runner
     runs-on: ubuntu-latest
     services:
