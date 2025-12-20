@@ -13,19 +13,22 @@ on:
 
 jobs:
   # Job for running/execution the tests
-  tests:
+  build-tests:
     name: Tests runner
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:24.0.5-dind
     # Configuration of steps for our job
     steps:
       # 1. Resource code check-out
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.7
       # 2. Configure/Set up the JDK on the machine
       - name: Set up JDK@21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4.2.1
         with:
           java-version: '21'
-          distribution: 'adopt'
+          distribution: 'temurin'
       # 3. Run the application tests
       - name: Run application tests
 #        run: gradle test  # Command to run the tests on Windows

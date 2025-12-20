@@ -19,9 +19,12 @@ env:
 
 jobs:
   # Job to run the tests.
-  tests:
+  build-tests:
     name: Tests runner
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:24.0.5-dind
     steps:
       - name: Check out source code
         uses: actions/checkout@v4.1.7
@@ -30,7 +33,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: '21'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3.3.2
@@ -45,6 +48,9 @@ jobs:
     name: Build runner
     needs: tests
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:24.0.5-dind
     steps:
       - name: Check out source code
         uses: actions/checkout@v4.1.7
@@ -53,7 +59,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: '21'
-          distribution: 'adopt'
+          distribution: 'temurin'
       # 3. Validate the existence of the Gradle wrapper.
       - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v3.3.2
