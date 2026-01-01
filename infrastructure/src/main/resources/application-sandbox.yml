@@ -20,5 +20,5 @@ server:
   port: 8080
   undertow:
     threads:
-      worker: 10 # Generally this should be reasonably high, at lest 10 per CPU core:
-      io: 2 # One IO thread per CPU ia a resonable default
+     worker: 10 # Generally this should be reasonably high, at lest 10 per CPU core:
+     io: 2 # One IO thread per CPU ia a resonable default
