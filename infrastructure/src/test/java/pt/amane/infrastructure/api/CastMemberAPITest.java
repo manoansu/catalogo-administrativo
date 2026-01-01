@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import pt.amane.ApiTest;
 import pt.amane.ControllerTest;
 import pt.amane.application.castmember.create.CreateCastMemberOutput;
 import pt.amane.application.castmember.create.CreateCastMemberUseCase;
@@ -86,7 +87,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = post("/cast_members")
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -121,7 +122,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = post("/cast_members")
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -155,7 +156,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = get("/cast_members/{id}", expectedId)
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -183,7 +184,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = get("/cast_members/{id}", expectedId.getValue())
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);
@@ -213,7 +214,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = put("/cast_members/{id}", expectedId.getValue())
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -251,7 +252,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = put("/cast_members/{id}", expectedId.getValue())
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -290,7 +291,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = put("/cast_members/{id}", expectedId.getValue())
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -319,8 +320,8 @@ class CastMemberAPITest {
                 .when(deleteCastMemberUseCase).execute(any());
 
         // when
-        final var aRequest = delete("/cast_members/{id}", expectedId);
-//                .with(ApiTest.CAST_MEMBERS_JWT);
+        final var aRequest = delete("/cast_members/{id}", expectedId)
+                .with(ApiTest.CAST_MEMBERS_JWT);
 
         final var response = this.mvc.perform(aRequest);
 
@@ -351,7 +352,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = get("/cast_members")
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("search", expectedTerms)
@@ -402,7 +403,7 @@ class CastMemberAPITest {
 
         // when
         final var aRequest = get("/cast_members")
-//                .with(ApiTest.CAST_MEMBERS_JWT)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(aRequest);

@@ -2,24 +2,28 @@ package pt.amane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import pt.amane.infrastructure.configuration.WebServerConfig;
 
 @SpringBootApplication(scanBasePackages = "pt.amane")
-//@EnableJpaRepositories(basePackages = "pt.amane.infrastructure.video.persistence")
-//@EntityScan(basePackages = "pt.amane.infrastructure.video.persistence")
 public class Main {
 
   private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
   public static void main(String[] args) {
     LOG.info("[step:to-be-init] [id:1] Inicializando o Spring");
-    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "development");
+    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "sandbox");
+
+    if (System.getenv("AMQP_RABBIT_HOST") == null) {
+      System.setProperty("AMQP_RABBIT_HOST", "127.0.0.1");
+      System.setProperty("AMQP_RABBIT_PORT", "5672");
+      System.setProperty("AMQP_RABBIT_USERNAME", "guest");
+      System.setProperty("AMQP_RABBIT_PASSWORD", "guest");
+      System.setProperty("spring.rabbitmq.listener.simple.auto-startup", "false");
+    }
+
     SpringApplication.run(WebServerConfig.class, args);
     LOG.info("[step:inittialized] [id:2] Spring inicializado..");
   }

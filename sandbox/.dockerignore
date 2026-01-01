@@ -1,0 +1,3 @@
+###This file, its when we are building some image to copy all directory to docker file,  it will ignore this to avoid the dependency ciclic here ###
+
+sandbox/.docker

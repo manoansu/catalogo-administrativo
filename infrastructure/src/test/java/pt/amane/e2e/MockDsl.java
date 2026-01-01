@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import pt.amane.ApiTest;
 import pt.amane.Identifier;
 import pt.amane.domain.castmember.CastMemberID;
 import pt.amane.domain.castmember.CastMemberType;
@@ -146,7 +147,7 @@ public interface MockDsl {
 
   private String given(final String url, final Object body) throws Exception {
     final var aRequest = MockMvcRequestBuilders.post(url)
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .contentType(MediaType.APPLICATION_JSON)
         .content(Json.writeValueAsString(body));
 
@@ -161,7 +162,7 @@ public interface MockDsl {
 
   private ResultActions givenResult(final String url, final Object body) throws Exception {
     final var aRequest = MockMvcRequestBuilders.post(url)
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .contentType(MediaType.APPLICATION_JSON)
         .content(Json.writeValueAsString(body));
 
@@ -170,7 +171,7 @@ public interface MockDsl {
 
   private ResultActions list(final String url, final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
     final var aRequest = MockMvcRequestBuilders.get(url)
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .queryParam("page", String.valueOf(page))
         .queryParam("perPage", String.valueOf(perPage))
         .queryParam("search", search)
@@ -184,7 +185,7 @@ public interface MockDsl {
 
   private <T> T retrieve(final String url, final Identifier anId, final Class<T> clazz) throws Exception {
     final var aRequest = MockMvcRequestBuilders.get(url + anId.getValue())
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .accept(MediaType.APPLICATION_JSON_UTF8)
         .contentType(MediaType.APPLICATION_JSON_UTF8);
 
@@ -198,7 +199,7 @@ public interface MockDsl {
 
   private ResultActions retrieveResult(final String url, final Identifier anId) throws Exception {
     final var aRequest = MockMvcRequestBuilders.get(url + anId.getValue())
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .accept(MediaType.APPLICATION_JSON_UTF8)
         .contentType(MediaType.APPLICATION_JSON_UTF8);
 
@@ -207,7 +208,7 @@ public interface MockDsl {
 
   private ResultActions delete(final String url, final Identifier anId) throws Exception {
     final var aRequest = MockMvcRequestBuilders.delete(url + anId.getValue())
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .contentType(MediaType.APPLICATION_JSON);
 
     return this.mvc().perform(aRequest);
@@ -215,7 +216,7 @@ public interface MockDsl {
 
   private ResultActions update(final String url, final Identifier anId, final Object aRequestBody) throws Exception {
     final var aRequest = MockMvcRequestBuilders.put(url + anId.getValue())
-//        .with(ApiTest.ADMIN_JWT)
+        .with(ApiTest.ADMIN_JWT)
         .contentType(MediaType.APPLICATION_JSON)
         .content(Json.writeValueAsString(aRequestBody));
 

@@ -1,10 +1,14 @@
-amqp:
-  admin:
-    auto-create: true
-  host: localhost
-  port: 5672
-  username: adm_videos
-  password: 123456
+#amqp:
+#  admin:
+#    auto-create: true
+#  host: localhost
+#  port: 5672
+#  username: adm_videos
+#  password: 123456
+#
+#keycloak:
+#  host: http://localhost:8443
+#  realm: catalogo_administrativo
 
 mysql:
   username: root
@@ -12,9 +16,16 @@ mysql:
   schema: adm_videos
   url: localhost:3306
 
-server:
-  port: 8080
-  undertow:
-    threads:
-      worker: 10 # Generally this should be reasonably high, at lest 10 per CPU core:
-      io: 2 # One IO thread per CPU ia a resonable default
+#server:
+#  port: 8080
+#  undertow:
+#    threads:
+#      worker: 10 # Generally this should be reasonably high, at lest 10 per CPU core:
+#      io: 2 # One IO thread per CPU ia a resonable default
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration

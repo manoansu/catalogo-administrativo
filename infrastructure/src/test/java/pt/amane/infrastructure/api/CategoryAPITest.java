@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import pt.amane.ApiTest;
 import pt.amane.ControllerTest;
 import pt.amane.application.category.create.CreateCategoryOutput;
 import pt.amane.application.category.create.CreateCategoryUseCase;
@@ -88,6 +89,7 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
+            .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -123,6 +125,7 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
+            .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -159,6 +162,7 @@ class CategoryAPITest {
 
         // when
         final var request = post("/categories")
+            .with(ApiTest.CATEGORIES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aInput));
 
@@ -196,6 +200,7 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories/{id}", expectedId)
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -227,6 +232,7 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories/{id}", expectedId.getValue())
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -254,6 +260,7 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -292,6 +299,7 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -330,6 +338,7 @@ class CategoryAPITest {
 
         // when
         final var request = put("/categories/{id}", expectedId)
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
@@ -359,6 +368,7 @@ class CategoryAPITest {
 
         // when
         final var request = delete("/categories/{id}", expectedId)
+            .with(ApiTest.CATEGORIES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -391,6 +401,7 @@ class CategoryAPITest {
 
         // when
         final var request = get("/categories")
+            .with(ApiTest.CATEGORIES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)

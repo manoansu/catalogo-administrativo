@@ -10,6 +10,13 @@ amqp:
       exchange: video.events
       routing-key: video.encoded
       queue: video.encoded.queue
+  # Add :localhost to provide a default value
+  host: ${AMQP_RABBIT_HOST:localhost}
+  port: ${AMQP_RABBIT_PORT:5672}
+  username: ${AMQP_RABBIT_USERNAME:guest}
+  password: ${AMQP_RABBIT_PASSWORD:guest}
+  # ... other configs
+
 
 server:
   port: 8081
@@ -39,6 +46,10 @@ spring:
       minimum-idle: 10
       pool-name: master
   flyway:
+    url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&sessionVariables=sql_mode='NO_ENGINE_SUBST
+    user: ${mysql.username}
+    password: ${mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     baseline-description: true
     baseline-on-migrate: true
     create-schemas: true
@@ -50,10 +61,16 @@ spring:
     init:
       mode: ALWAYS
 
-#  servlet:
-#    multipart:
-#      max-file-size: 10GB
-#      max-request-size: 100GB
+  servlet:
+    multipart:
+      max-file-size: 10GB # Max file size.
+      max-request-size: 100GB # Max request size.
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${keycloak.host}/realms/${keycloak.realm}/protocol/openid-connect/certs
+          issuer-uri: ${keycloak.host}/realms/${keycloak.realm}
 
   jpa:
     open-in-view: false

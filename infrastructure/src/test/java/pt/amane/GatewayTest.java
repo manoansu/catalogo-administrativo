@@ -32,25 +32,3 @@ import pt.amane.Main;
 @Tag("integrationTest")
 public @interface GatewayTest {
 }
-
-
-//@Target(ElementType.TYPE)
-//@Retention(RetentionPolicy.RUNTIME)
-//@Inherited
-//@ActiveProfiles("test-integration")
-//@SpringBootTest(
-//    classes = Main.class,
-//    properties = {
-//        "spring.datasource.url=jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1",
-//        "spring.datasource.username=sa",
-//        "spring.datasource.password=",
-//        "spring.datasource.driverClassName=org.h2.Driver",
-//        "spring.jpa.hibernate.ddl-auto=validate",
-//        "spring.flyway.enabled=true"
-//    }
-//)
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-//@Tag("integrationTest")
-//public @interface GatewayTest {
-//
-//}
