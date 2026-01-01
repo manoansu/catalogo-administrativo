@@ -17,7 +17,6 @@ amqp:
   password: ${AMQP_RABBIT_PASSWORD:guest}
   # ... other configs
 
-
 server:
   port: 8081
   servlet:
